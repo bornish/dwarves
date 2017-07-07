@@ -1,0 +1,3477 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bridge.Pixi</name>
+    </assembly>
+    <members>
+        <member name="T:Bridge.Pixi.BlendMode">
+            <summary>
+            Various blend modes supported by PIXI.
+            IMPORTANT - The WebGL renderer only supports the Normal, Add, Multiply and Screen blend modes.
+            Anything else will silently act like Normal.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.GraphicsData.Clone">
+            <summary>
+            Creates a new GraphicsData object with the same values as this one.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.GraphicsData.Destroy">
+            <summary>
+            Destroys the Graphics data.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Interaction.InteractionData">
+            <summary>
+            Holds all information related to an Interaction event.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionData.Global">
+            <summary>
+            This point stores the global coordinates of where the touch/mouse event happened.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionData.OriginalEvent">
+            <summary>
+            When passed to an event handler, this will be the original DOM Event that was captured.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionData.Target">
+            <summary>
+            The target Sprite that was interacted with.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Interaction.InteractionData.Map(Bridge.Pixi.Rectangle,Bridge.Pixi.Rectangle)">
+            <summary>
+            Maps two Rectangle to the quad.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Interaction.InteractionData.GetLocalPosition(Bridge.Pixi.DisplayObject,Bridge.Pixi.Point,Bridge.Pixi.Point)">
+            <summary>
+            This will return the local coordinates of the specified DisplayObject for this InteractionData.
+            </summary>
+            <param name="displayObject">The DisplayObject that you would like the local coordinates of.</param>
+            <param name="point">A Point object in which to store the value.</param>
+            <param name="globalPos">A Point object containing your custom global coordinates.</param>
+            <returns>
+            A point containing the coordinates of the InteractionData position relative to the DisplayObject.
+            </returns>
+        </member>
+        <member name="T:Bridge.Pixi.Interaction.InteractionManager">
+            <summary>
+            The interaction manager deals with mouse and touch events. Any DisplayObject can be
+            interactive if its interactive parameter is set to true.
+            This manager also supports multitouch.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionManager.AutoPreventDefault">
+            <summary>
+            Should default browser actions automatically be prevented.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionManager.CurrentCursorStyle">
+            <summary>
+            The css style of the cursor that is being used.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionManager.EventData">
+            <summary>
+            An event data object to handle all the event tracking/dispatching.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionManager.InteractionFrequency">
+            <summary>
+            As this frequency increases the interaction events will be checked more often.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionManager.Renderer">
+            <summary>
+            The renderer this interaction manager works for.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionManager.Resolution">
+            <summary>
+            The current resolution.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Interaction.InteractionManager.Destroy">
+            <summary>
+            Destroys the interaction manager.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Interaction.InteractionManager.MapPositionToPoint(Bridge.Pixi.Point,System.Single,System.Single)">
+            <summary>
+            Maps x and y coords from a DOM object and maps them correctly to the pixi view.
+            The resulting value is stored in the point.
+            This takes into account the fact that the DOM element could be scaled and positioned
+            anywhere on the screen.
+            </summary>
+            <param name="point">The point that the result will be stored in.</param>
+            <param name="x">The x coord of the position to map.</param>
+            <param name="y">The y coord of the position to map.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Interaction.InteractionManager.Update(System.Single)">
+            <summary>
+            Updates the state of interactive objects.
+            Invoked by a throttled ticker update from SharedTicker.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionManagerOptions.AutoPreventDefault">
+            <summary>
+            Should the manager automatically prevent default browser actions.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Interaction.InteractionManagerOptions.InteractionFrequency">
+            <summary>
+            Frequency increases the interaction events will be checked.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Circle.Bounds">
+            <summary>
+            Returns the framing rectangle of the circle.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Circle.Type">
+            <summary>
+            The type of the object, mainly used to avoid instanceof checks.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Circle.Clone">
+            <summary>
+            Creates a clone of this Circle.
+            </summary>
+            <returns>A copy of the Circle.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Circle.Contains(System.Single,System.Single)">
+            <summary>
+            Checks whether the x and y coordinates given are contained within this Circle.
+            </summary>
+            <param name="x">The X coordinate of the point to test.</param>
+            <param name="y">The Y coordinate of the point to test.</param>
+            <returns>Whether the x and y coordinates are within this Circle.</returns>
+        </member>
+        <member name="T:Bridge.Pixi.Ellipse">
+            <summary>
+            The Ellipse object can be used to specify a hit area for DisplayObjects.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ellipse.Bounds">
+            <summary>
+            Returns the framing rectangle of the ellipse.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ellipse.Type">
+            <summary>
+            The type of the object, mainly used to avoid instanceof checks.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Ellipse.Clone">
+            <summary>
+            Creates a clone of this Ellipse.
+            </summary>
+            <returns>A copy of the rectangle.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Ellipse.Contains(System.Single,System.Single)">
+            <summary>
+            Checks whether the x and y coordinates given are contained within this Ellipse.
+            </summary>
+            <param name="x">The X coordinate of the point to test.</param>
+            <param name="y">The Y coordinate of the point to test.</param>
+            <returns>Whether the x and y coordinates are within this Ellipse.</returns>
+        </member>
+        <member name="P:Bridge.Pixi.IHitArea.Type">
+            <summary>
+            The type of the object, mainly used to avoid instanceof checks.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.IShape.Contains(System.Single,System.Single)">
+            <summary>
+            Checks whether the x and y coordinates given are contained within this Shape.
+            </summary>
+            <param name="x">The X coordinate of the point to test.</param>
+            <param name="y">The Y coordinate of the point to test.</param>
+            <returns>Whether the x and y coordinates are within this Shape.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Polygon.#ctor(Bridge.Union{Bridge.Pixi.Point[],System.Single[],Bridge.Pixi.Point})">
+            <param name="points">
+            This can be an array of Points that form the polygon, a flat array of numbers that
+            will be interpreted as [x,y, x,y, ...], or the arguments passed can be all the points
+            of the polygon e.g. new Polygon(new Point(), new Point(), ...),
+            or the arguments passed can be flat x,y values e.g. new Polygon(x,y, x,y, x,y, ...)
+            where x and y are floats.
+            </param>
+        </member>
+        <member name="P:Bridge.Pixi.Polygon.Points">
+            <summary>
+            An array of the points of this polygon.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Polygon.Type">
+            <summary>
+            The type of the object, mainly used to avoid instanceof checks.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Polygon.Clone">
+            <summary>
+            Creates a clone of this Polygon.
+            </summary>
+            <returns>A copy of the Polygon.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Polygon.Contains(System.Single,System.Single)">
+            <summary>
+            Checks whether the x and y coordinates given are contained within this Polygon.
+            </summary>
+            <param name="x">The X coordinate of the point to test.</param>
+            <param name="y">The Y coordinate of the point to test.</param>
+            <returns>Whether the x and y coordinates are within this Polygon.</returns>
+        </member>
+        <member name="T:Bridge.Pixi.RoundedRectangle">
+            <summary>
+            The Rounded Rectangle object is an area that has nice rounded corners,
+            as indicated by its top-left corner point (x, y) and by its width and its height and its radius.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RoundedRectangle.Type">
+            <summary>
+            The type of the object, mainly used to avoid instanceof checks.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RoundedRectangle.Clone">
+            <summary>
+            Creates a clone of this RoundedRectangle.
+            </summary>
+            <returns>A copy of the rectangle.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.RoundedRectangle.Contains(System.Single,System.Single)">
+            <summary>
+            Checks whether the x and y coordinates given are contained within this RoundedRectangle.
+            </summary>
+            <param name="x">The X coordinate of the point to test.</param>
+            <param name="y">The Y coordinate of the point to test.</param>
+            <returns>Whether the x and y coordinates are within this RoundedRectangle.</returns>
+        </member>
+        <member name="T:Bridge.Pixi.ParticleContainer">
+            <summary>
+            The ParticleContainer class is a really fast version of the Container built solely for speed,
+            so use when you need a lot of sprites or particles. The tradeoff of the ParticleContainer
+            is that advanced functionality will not work. ParticleContainer implements only the basic
+            object transform (position, scale, rotation). Any other functionality like tinting, masking,
+            etc will not work on sprites in this batch.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.ParticleContainer.#ctor(System.Int32,Bridge.Pixi.ParticleContainerProperties,System.Int32)">
+            <param name="maxSize">The maximum number of particles that can be renderer by the container.</param>
+            <param name="properties">The properties of children that should be uploaded to the gpu and applied.</param>
+            <param name="batchSize">Number of particles per batch.</param>
+        </member>
+        <member name="P:Bridge.Pixi.ParticleContainer.BlendMode">
+            <summary>
+            The blend mode to be applied to the sprite. Apply a value of Normal to reset the blend mode.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.ParticleContainer.RoundPixels">
+            <summary>
+            Used for canvas renderering. If true then the elements will be positioned at the
+            nearest pixel. This provides a nice speed boost.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.ParticleContainerProperties.Scale">
+            <summary>
+            When true, scale be uploaded and applied.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.ParticleContainerProperties.Position">
+            <summary>
+            When true, position be uploaded and applied.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.ParticleContainerProperties.Rotation">
+            <summary>
+            When true, rotation be uploaded and applied.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.ParticleContainerProperties.UVs">
+            <summary>
+            When true, uvs be uploaded and applied.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.ParticleContainerProperties.Alpha">
+            <summary>
+            When true, alpha be uploaded and applied.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasBuffer.#ctor(System.Single,System.Single)">
+            <summary>
+            Creates a Canvas element of the given size.
+            </summary>
+            <param name="width">The width for the newly created canvas.</param>
+            <param name="height">The height for the newly created canvas.</param>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasBuffer.Canvas">
+            <summary>
+            The Canvas object that belongs to this CanvasBuffer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasBuffer.Context">
+            <summary>
+            A CanvasRenderingContext2D object representing a two-dimensional rendering context.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasBuffer.Height">
+            <summary>
+            The height of the canvas buffer in pixels.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasBuffer.Width">
+            <summary>
+            The width of the canvas buffer in pixels.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasBuffer.Destroy">
+            <summary>
+            Destroys this canvas.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasBuffer.Resize(System.Single,System.Single)">
+            <summary>
+            Resizes the canvas to the specified width and height.
+            </summary>
+            <param name="width">The new width of the canvas.</param>
+            <param name="height">The new height of the canvas.</param>
+        </member>
+        <member name="T:Bridge.Pixi.CanvasGraphics">
+            <summary>
+            A set of functions used by the canvas renderer to draw the primitive graphics data.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.TintMethod">
+            <summary>
+            Tinting method.
+            </summary>
+            <param name="texture">The texture to tint.</param>
+            <param name="color">The color to use to tint the sprite with.</param>
+            <param name="canvas">The current canvas.</param>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasTinter.CacheStepsPerColorChannel">
+            <summary>
+            Number of steps which will be used as a cap when rounding colors.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasTinter.CanUseMultiply">
+            <summary>
+            Whether or not the Canvas BlendModes are supported,
+            consequently the ability to tint using the multiply method.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasTinter.ConvertTintToImage">
+            <summary>
+            Tint cache boolean flag.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasTinter.TintMethod">
+            <summary>
+            The tinting method that will be used.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasTinter.GetTintedTexture(Bridge.Pixi.Sprite,System.Int32)">
+            <summary>
+            Basically this method just needs a sprite and a color and
+            tints the sprite with the given color.
+            </summary>
+            <param name="sprite">The sprite to tint.</param>
+            <param name="color">The color to use to tint the sprite with.</param>
+            <returns>The tinted canvas</returns>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasTinter.RoundColor(System.Int32)">
+            <summary>
+            Rounds the specified color according to the CacheStepsPerColorChannel.
+            </summary>
+            <param name="color">The color to round, should be a hex color.</param>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasTinter.TintWithMultiply(Bridge.Pixi.Texture,System.Int32,Bridge.Html5.HTMLCanvasElement)">
+            <summary>
+            Tint a texture using the 'multiply' operation.
+            </summary>
+            <param name="texture">The texture to tint.</param>
+            <param name="color">The color to use to tint the sprite with.</param>
+            <param name="canvas">The current canvas.</param>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasTinter.TintWithOverlay(Bridge.Pixi.Texture,System.Int32,Bridge.Html5.HTMLCanvasElement)">
+            <summary>
+            Tint a texture using the 'overlay' operation.
+            </summary>
+            <param name="texture">The texture to tint.</param>
+            <param name="color">The color to use to tint the sprite with.</param>
+            <param name="canvas">The current canvas.</param>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasTinter.TintWithPerPixel(Bridge.Pixi.Texture,System.Int32,Bridge.Html5.HTMLCanvasElement)">
+            <summary>
+            Tint a texture pixel per pixel.
+            </summary>
+            <param name="texture">The texture to tint.</param>
+            <param name="color">The color to use to tint the sprite with.</param>
+            <param name="canvas">The current canvas.</param>
+        </member>
+        <member name="T:Bridge.Pixi.DrawMode">
+            <summary>
+            Various webgl draw modes. These can be used to specify which GL DrawMode
+            to use under certain situations and renderers.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Graphics">
+            <summary>
+            The Graphics class contains methods used to draw primitive shapes such as lines,
+            circles and rectangles to the display, and to color and fill them.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Graphics.BlendMode">
+            <summary>
+            The blend mode to be applied to the graphic shape. Apply a value of Normal to reset the blend mode.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Graphics.BoundsPadding">
+            <summary>
+            The bounds' padding used for bounds calculation.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Graphics.FillAlpha">
+            <summary>
+            The alpha value used when filling the Graphics object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Graphics.IsMask">
+            <summary>
+            Whether this shape is being used as a mask.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Graphics.LineColor">
+            <summary>
+            The color of any lines drawn.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Graphics.LineWidth">
+            <summary>
+            The width (thickness) of any lines drawn.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Graphics.Tint">
+            <summary>
+            The tint applied to the graphic shape. This is a hex value.
+            A value of 0xFFFFFF will remove any tint effect.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.Arc(System.Single,System.Single,System.Single,System.Single,System.Single,System.Boolean)">
+            <summary>
+            Creates an arc/curve (used to create circles, or parts of circles).
+            </summary>
+            <param name="cx">The x-coordinate of the center of the circle.</param>
+            <param name="cy">The y-coordinate of the center of the circle.</param>
+            <param name="radius">The radius of the circle.</param>
+            <param name="startAngle">
+            The starting angle, in radians(0 is at the 3 o'clock position of the arc's circle).
+            </param>
+            <param name="endAngle">The ending angle, in radians.</param>
+            <param name="antiClockwise">
+            Specifies whether the drawing should be counterclockwise or clockwise.
+            </param>
+            <returns></returns>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.ArcTo(System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Creates an arc/curve between two tangents on the canvas.
+            </summary>
+            <param name="x1">The x-coordinate of the beginning of the arc.</param>
+            <param name="y1">The y-coordinate of the beginning of the arc.</param>
+            <param name="x2">The x-coordinate of the end of the arc.</param>
+            <param name="y2">The y-coordinate of the end of the arc.</param>
+            <param name="radius">The radius of the arc.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.BeginFill(System.Int32,System.Single)">
+            <summary>
+            Specifies a simple one-color fill that subsequent calls to other Graphics methods
+            (such as LineTo or DrawCircle) use when drawing.
+            </summary>
+            <param name="color">The color of the fill.</param>
+            <param name="alpha">The alpha of the fill.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.BezierCurveTo(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Calculate the points for a bezier curve and then draws it.
+            </summary>
+            <param name="cpX">Control point X.</param>
+            <param name="cpY">Control point Y.</param>
+            <param name="cpX2">Second control point X.</param>
+            <param name="cpY2">Second control point Y.</param>
+            <param name="toX">Destination point X.</param>
+            <param name="toY">Destination point Y.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.Clear">
+            <summary>
+            Clears the graphics that were drawn to this Graphics object,
+            and resets fill and line style settings.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.Clone">
+            <summary>
+            Creates a new Graphics object with the same values as this one.
+            Note that the only the properties of the object are cloned,
+            not its transform (position, scale, etc.).
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.ContainsPoint(Bridge.Pixi.Point)">
+            <summary>
+            Tests if a point is inside this graphics object.
+            </summary>
+            <param name="point">The point to test.</param>
+            <returns>The result of the test.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.Destroy">
+            <summary>
+            Destroys the Graphics object.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.DrawCircle(System.Single,System.Single,System.Single)">
+            <summary>
+            Draws a circle.
+            </summary>
+            <param name="x">The X coordinate of the center of the circle.</param>
+            <param name="y">The Y coordinate of the center of the circle.</param>
+            <param name="radius">The radius of the circle.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.DrawEllipse(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Draws an ellipse.
+            </summary>
+            <param name="x">The X coordinate of the center of the ellipse.</param>
+            <param name="y">The Y coordinate of the center of the ellipse.</param>
+            <param name="width">The half width of the ellipse.</param>
+            <param name="height">The half height of the ellipse.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.DrawPolygon(Bridge.Union{System.Single[],Bridge.Pixi.Point[]})">
+            <summary>
+            Draws a polygon using the given path.
+            </summary>
+            <param name="path">The path data used to construct the polygon.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.DrawRect(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Draws a rectangle.
+            </summary>
+            <param name="x">The X coord of the top-left of the rectangle.</param>
+            <param name="y">The Y coord of the top-left of the rectangle.</param>
+            <param name="width">The width of the rectangle.</param>
+            <param name="height">The height of the rectangle.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.DrawRoundedRect(System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Draws a rounded rectangle.
+            </summary>
+            <param name="x">The X coord of the top-left of the rectangle.</param>
+            <param name="y">The Y coord of the top-left of the rectangle.</param>
+            <param name="width">The width of the rectangle.</param>
+            <param name="height">The height of the rectangle.</param>
+            <param name="radius">Radius of the rectangle corners.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.DrawShape(Bridge.Pixi.IShape)">
+            <summary>
+            Draws the given shape to this Graphics object. Can be any of Circle, Rectangle,
+            Ellipse or Polygon.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.EndFill">
+            <summary>
+            Applies a fill to the lines and shapes that were added since the last call to the BeginFill method.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.GenerateTexture(Bridge.Pixi.IRenderer,Bridge.Pixi.ScaleMode,System.Nullable{Bridge.Pixi.Resolution})">
+            <summary>
+            Useful function that returns a texture of the display object that can then be used to create sprites.
+            This can be quite useful if your displayObject is static/complicated and needs to be reused multiple times.
+            </summary>
+            <param name="renderer">The renderer used to generate the texture.</param>
+            <param name="scaleMode">The scale mode of the texture being generated.</param>
+            <param name="resolution">The resolution of the texture being generated.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.LineStyle(System.Single,System.Int32,System.Single)">
+            <summary>
+            Specifies the line style used for subsequent calls to Graphics methods such as the
+            LineTo method or the DrawCircle method.
+            </summary>
+            <param name="lineWidth">Width of the line to draw, will update the objects stored style.</param>
+            <param name="color">Color of the line to draw, will update the objects stored style.</param>
+            <param name="alpha">Alpha of the line to draw, will update the objects stored style</param>
+            <returns></returns>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.LineTo(System.Single,System.Single)">
+            <summary>
+            Draws a line using the current line style from the current drawing position to (x, y);
+            The current drawing position is then set to (x, y).
+            </summary>
+            <param name="x">The X coordinate to draw to.</param>
+            <param name="y">The Y coordinate to draw to.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.MoveTo(System.Single,System.Single)">
+            <summary>
+            Moves the current drawing position to x, y.
+            </summary>
+            <param name="x">The X coordinate to move to.</param>
+            <param name="y">The Y coordinate to move to.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.QuadraticCurveTo(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Calculate the points for a quadratic bezier curve and then draws it.
+            </summary>
+            <param name="cpX">Control point X.</param>
+            <param name="cpY">Control point Y.</param>
+            <param name="toX">Destination point X.</param>
+            <param name="toY">Destination point Y.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Graphics.UpdateLocalBounds">
+            <summary>
+            Update the bounds of the object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.AutoResize">
+            <summary>
+            Whether the render view should be resized automatically.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.BackgroundColor">
+            <summary>
+            The background color to fill if not transparent.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.BlendModes">
+            <summary>
+            INTERFACE IS NOT IMPLEMENTED YET.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.ClearBeforeRender">
+            <summary>
+            This sets if the CanvasRenderer will clear the canvas or not before the new render pass.
+            If the scene is NOT transparent Pixi will use a canvas sized FillRect operation every
+            frame to set the canvas background color. If the scene is transparent Pixi will use ClearRect
+            to clear the canvas every frame. Disable this by setting this to false.
+            For example if your game has a canvas filling background image you often don't need this set.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.Height">
+            <summary>
+            The height of the canvas view.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.PreserveDrawingBuffer">
+            <summary>
+            Whether or not the contents of the stencil buffer is retained after rendering.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.Resolution">
+            <summary>
+            The resolution of the renderer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.RoundPixels">
+            <summary>
+            If true Pixi will Math.Floor() x/y values when rendering, stopping pixel interpolation.
+            Handy for crisp pixel art and speed on legacy devices.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.Transparent">
+            <summary>
+            Whether the render view is transparent.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.Type">
+            <summary>
+            The type of the renderer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.View">
+            <summary>
+            The canvas element that everything is drawn to.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.IRenderer.Width">
+            <summary>
+            The width of the canvas view.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.IRenderer.Destroy(System.Boolean)">
+            <summary>
+            Removes everything from the renderer.
+            </summary>
+            <param name="removeView">Removes the Canvas element from the DOM.</param>
+        </member>
+        <member name="M:Bridge.Pixi.IRenderer.Render(Bridge.Pixi.DisplayObject)">
+            <summary>
+            Renders the object to this view.
+            </summary>
+            <param name="object">The object to be rendered.</param>
+        </member>
+        <member name="M:Bridge.Pixi.IRenderer.Resize(System.Single,System.Single)">
+            <summary>
+            Resizes the canvas view to the specified width and height.
+            </summary>
+            <param name="width">The new width of the canvas view.</param>
+            <param name="height">The new height of the canvas view.</param>
+        </member>
+        <member name="T:Bridge.Pixi.External.EventEmitter">
+            <summary>
+            https://github.com/primus/eventemitter3
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Extras.BitmapText">
+            <summary>
+            A BitmapText object will create a line or multiple lines of text using bitmap font.
+            To split a line you can use '\n', '\r' or '\r\n' in your string. You can generate the fnt files using:
+            http://www.angelcode.com/products/bmfont/ for windows or http://www.bmglyph.com/ for mac.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapText.Align">
+            <summary>
+            The alignment of the BitmapText object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapText.Dirty">
+            <summary>
+            The dirty state of this object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapText.Font">
+            <summary>
+            The font descriptor of the BitmapText object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapText.MaxLineHeight">
+            <summary>
+            The max line height. This is useful when trying to use the total height of the Text,
+            i.e.: when trying to vertically align.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapText.MaxLineWidth">
+            <summary>
+            The max width of this bitmap text in pixels. If the text provided is longer than the
+            value provided, line breaks will be automatically inserted in the last whitespace.
+            Disable by setting value to 0.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapText.Value">
+            <summary>
+            The text of the BitmapText object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapText.TextHeight">
+            <summary>
+            The height of the overall text, different from FontSize,
+            which is defined in the style object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapText.TextWidth">
+            <summary>
+            The width of the overall text, different from FontSize,
+            which is defined in the style object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapTextStyle.Font">
+            <summary>
+            The font descriptor for the object, can be passed as a string of form "24px FontName" or "FontName"
+            or as an object with explicit name/size properties.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapTextStyle.Align">
+            <summary>
+            Alignment for multiline text, does not affect single line text.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.BitmapTextStyle.Tint">
+            <summary>
+            The tint color.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.Font.Name">
+            <summary>
+            The bitmap font id.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.Font.Size">
+            <summary>
+            The size of the font in pixels, e.g. 24.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.Frame.Texture">
+            <summary>
+            The Texture of the frame.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.Frame.Time">
+            <summary>
+            The duration of the frame in ms.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Extras.MovieClip">
+            <summary>
+            A MovieClip is a simple way to display an animation depicted by a list of textures.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.MovieClip.FromFrames(System.String[])">
+            <summary>
+            A short hand way of creating a MovieClip from an array of frame ids.
+            </summary>
+            <param name="frames">The array of frames ids the MovieClip will use as its texture frames.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.MovieClip.FromImages(System.String[])">
+            <summary>
+            A short hand way of creating a movieclip from an array of image urls.
+            </summary>
+            <param name="images">The array of image urls the MovieClip will use as its texture frames.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.MovieClip.#ctor(Bridge.Union{Bridge.Pixi.Texture[],Bridge.Pixi.Extras.Frame[]})">
+            <param name="textures">
+            An array of Texture or frame objects that make up the animation
+            </param>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.MovieClip.AnimationSpeed">
+            <summary>
+            The speed that the MovieClip will play at. Higher is faster, lower is slower.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.MovieClip.CurrentFrame">
+            <summary>
+            The MovieClips current frame index.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.MovieClip.Loop">
+            <summary>
+            The MovieClips current frame index.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.MovieClip.Playing">
+            <summary>
+            Indicates if the MovieClip is currently playing.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.MovieClip.Textures">
+            <summary>
+            The array of textures used for this MovieClip.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.MovieClip.TotalFrames">
+            <summary>
+            TotalFrames is the total number of frames in the MovieClip.
+            This is the same as number of textures assigned to the MovieClip.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.MovieClip.GotoAndPlay(System.Int32)">
+            <summary>
+            Goes to a specific frame and begins playing the MovieClip.
+            </summary>
+            <param name="frameNumber">Frame index to start at.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.MovieClip.GotoAndStop(System.Int32)">
+            <summary>
+            Stops the MovieClip and goes to a specific frame.
+            </summary>
+            <param name="frameNumber">Frame index to stop at.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.MovieClip.Play">
+            <summary>
+            Plays the MovieClip.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.MovieClip.Stop">
+            <summary>
+            Stops the MovieClip.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Extras.TilingSprite">
+            <summary>
+            A tiling sprite is a fast way of rendering a tiling image.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.TilingSprite.FromFrame(System.String,System.Single,System.Single)">
+            <summary>
+            Helper function that creates a tiling sprite that will use a texture from the TextureCache
+            based on the frameId The frame ids are created when a Texture packer file has been loaded.
+            </summary>
+            <param name="frameId">The frame Id of the texture in the cache.</param>
+            <param name="width">The width of the tiling sprite.</param>
+            <param name="height">The height of the tiling sprite.</param>
+            <returns>A new TilingSprite using a texture from the texture cache matching the frameId.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.TilingSprite.FromImage(System.String,System.Single,System.Single,System.Boolean,Bridge.Pixi.ScaleMode)">
+            <summary>
+            Helper function that creates a sprite that will contain a texture based on an image url.
+            If the image is not in the texture cache it will be loaded.
+            </summary>
+            <param name="imageId">The image url of the texture.</param>
+            <param name="width">The width of the tiling sprite.</param>
+            <param name="height">The height of the tiling sprite.</param>
+            <param name="crossorigin">If you want to specify the cross-origin parameter.</param>
+            <param name="scaleMode">The scale mode of the texture.</param>
+            <returns>A new TilingSprite using a texture from the texture cache matching the image id.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Extras.TilingSprite.FromImages(System.String[])">
+            <summary>
+            A short hand way of creating a movieclip from an array of image urls.
+            </summary>
+            <param name="images">The array of image urls the MovieClip will use as its texture frames.</param>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.TilingSprite.TilePosition">
+            <summary>
+            The offset position of the image that is being tiled.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Extras.TilingSprite.TileScale">
+            <summary>
+            The scaling of the image that is being tiled.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ASCIIFilter.Size">
+            <summary>
+            The pixel size used by the filter.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.BloomFilter">
+            <summary>
+            The BloomFilter applies a Gaussian blur to an object.
+            The strength of the blur can be set for x- and y-axis separately.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BloomFilter.Blur">
+            <summary>
+            Sets the strength of both the blurX and blurY properties simultaneously.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BloomFilter.BlurX">
+            <summary>
+            Sets the strength of the blurX property.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BloomFilter.BlurY">
+            <summary>
+            Sets the strength of the blurY property.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.BlurDirFilter">
+            <summary>
+            The BlurDirFilter applies a Gaussian blur toward a direction to an object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurDirFilter.Blur">
+            <summary>
+            Sets the strength of blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurDirFilter.Passes">
+            <summary>
+            Sets the number of passes for blur. More passes means higher quaility bluring.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurDirFilter.DirX">
+            <summary>
+            Sets the X direction of the blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurDirFilter.DirY">
+            <summary>
+            Sets the Y direction of the blur.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.BlurFilter">
+            <summary>
+            The BlurFilter applies a Gaussian blur to an object.
+            The strength of the blur can be set for x- and y-axis separately.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurFilter.Blur">
+            <summary>
+            Sets the strength of both the blurX and blurY properties simultaneously.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurFilter.BlurX">
+            <summary>
+            Sets the strength of the blurX property.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurFilter.BlurY">
+            <summary>
+            Sets the strength of the blurY property.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurFilter.Passes">
+            <summary>
+            Sets the number of passes for blur. More passes means higher quaility bluring.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.BlurXFilter">
+            <summary>
+            The BlurXFilter applies a horizontal Gaussian blur to an object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurXFilter.Blur">
+            <summary>
+            Sets the strength of blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurXFilter.Passes">
+            <summary>
+            Sets the number of passes for blur. More passes means higher quaility bluring.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.BlurYFilter">
+            <summary>
+            The BlurYFilter applies a horizontal Gaussian blur to an object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurYFilter.Blur">
+            <summary>
+            Sets the strength of blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurYFilter.Passes">
+            <summary>
+            Sets the number of passes for blur. More passes means higher quaility bluring.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.BlurYTintFilter">
+            <summary>
+            The BlurYTintFilter applies a vertical Gaussian blur to an object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurYTintFilter.Blur">
+            <summary>
+            Sets the strength of blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.BlurYTintFilter.Passes">
+            <summary>
+            Sets the number of passes for blur. More passes means higher quaility bluring.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.ColorMatrixFilter">
+            <summary>
+            The ColorMatrixFilter class lets you apply a 5x4 matrix transformation on the RGBA color
+            and alpha values of every pixel on your displayObject to produce a result with a new set
+            of RGBA color and alpha values. It's pretty powerful!
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ColorMatrixFilter.Matrix">
+            <summary>
+            Sets the matrix of the color matrix filter.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.ColorMatrix(System.Single[])">
+            <summary>
+            Create a Float32 Array and normalize the offset component to 0-1.
+            </summary>
+            <param name="matrix">(mat 5x4)</param>
+            <returns>(mat 5x4) with all values between 0-1.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.LoadMatrix(System.Single[],System.Boolean)">
+            <summary>
+            Transforms current matrix and set the new one.
+            </summary>
+            <param name="matrix">(mat 5x4)</param>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Multiply(System.Single[],System.Single[],System.Single[])">
+            <summary>
+            Multiplies two mat5's
+            </summary>
+            <param name="out">(mat 5x4) the receiving matrix.</param>
+            <param name="a">(mat 5x4) the first operand.</param>
+            <param name="b">(mat 5x4) the second operand.</param>
+            <returns>out (mat 5x4).</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.BlackAndWhite(System.Boolean)">
+            <summary>
+            Set the black and white matrice Multiply the current matrix.
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Brightness(System.Single,System.Boolean)">
+            <summary>
+            Adjusts brightness.
+            </summary>
+            <param name="brightness">Value of the brightness (0 is black)</param>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Browni(System.Boolean)">
+            <summary>
+            Brown delicious browni filter.
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Contrast(System.Single,System.Boolean)">
+            <summary>
+            Set the contrast matrix, increase the separation between dark and bright.
+            Increase contrast: shadows darker and highlights brighter.
+            Decrease contrast: bring the shadows up and the highlights down.
+            </summary>
+            <param name="amount">Value of the contrast.</param>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Desaturate(System.Boolean)">
+            <summary>
+            Desaturate image (remove color).
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Greyscale(System.Single,System.Boolean)">
+            <summary>
+            Set the matrices in grey scales.
+            </summary>
+            <param name="scale">Value of the grey (0 is black).</param>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Hue(System.Single,System.Boolean)">
+            <summary>
+            Set the hue property of the color.
+            </summary>
+            <param name="scale">In degrees.</param>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Kodachrome(System.Boolean)">
+            <summary>
+            Color reversal film introduced by Eastman Kodak in 1935.
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Negative(System.Boolean)">
+            <summary>
+            Negative image (inverse of classic rgb matrix).
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Polaroid(System.Boolean)">
+            <summary>
+            Polaroid filter.
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Saturate(System.Single,System.Boolean)">
+            <summary>
+            Set the saturation matrix, increase the separation between colors.
+            Increase saturation: increase contrast, brightness, and sharpness.
+            </summary>
+            <param name="amount">Value of the saturation.</param>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Sepia(System.Boolean)">
+            <summary>
+            Sepia image.
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.Technicolor(System.Boolean)">
+            <summary>
+            Color motion picture process invented in 1916.
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ColorMatrixFilter.ToBGR(System.Boolean)">
+            <summary>
+            Filter who transforms : Red -> Blue and Blue -> Red.
+            </summary>
+            <param name="multiply">
+            If true, current matrix and matrix are multiplied.
+            If false, just set the current matrix with provided matrix.
+            </param>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ColorStepFilter.Step">
+            <summary>
+            The number of steps to reduce the palette by.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.ConvolutionFilter">
+            <summary>
+            The ConvolutionFilter class applies a matrix convolution filter effect.A convolution
+            combines pixels in the input image with neighboring pixels to produce a new image.
+            A wide variety of image effects can be achieved through convolutions, including blurring,
+            edge detection, sharpening, embossing, and beveling. The matrix should be specified as a
+            9 point Array. See http://docs.gimp.org/en/plug-in-convmatrix.html for more info.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.ConvolutionFilter.#ctor(System.Single[],System.Single,System.Single)">
+            <param name="matrix">
+            An array of values used for matrix transformation. Specified as a 9 point Array.
+            </param>
+            <param name="width">Width of the object you are transforming.</param>
+            <param name="height">Height of the object you are transforming.</param>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ConvolutionFilter.Height">
+            <summary>
+            Height of the object you are transforming.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ConvolutionFilter.Matrix">
+            <summary>
+            An array of values used for matrix transformation. Specified as a 9 point Array.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ConvolutionFilter.Width">
+            <summary>
+            Width of the object you are transforming.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.DisplacementFilter">
+            <summary>
+            The DisplacementFilter class uses the pixel values from the specified texture (called the
+            displacement map) to perform a displacement of an object. You can use this filter to apply
+            all manor of crazy warping effects Currently the r property of the texture is used to offset
+            the x and the g property of the texture is used to offset the y.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.DisplacementFilter.#ctor(Bridge.Pixi.Sprite)">
+            <param name="sprite">
+            The sprite used for the displacement map. (make sure its added to the scene!)
+            </param>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DisplacementFilter.Map">
+            <summary>
+            The texture used for the displacement map. Must be power of 2 sized texture.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.DotScreenFilter">
+            <summary>
+            This filter applies a dotscreen effect making display objects appear to be made
+            out of black and white halftone dots like an old printer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DotScreenFilter.Angle">
+            <summary>
+            The radius of the effect.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DotScreenFilter.Scale">
+            <summary>
+            The scale of the effect.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.DropShadowFilter">
+            <summary>
+            The DropShadowFilter applies a Gaussian blur to an object.
+            The strength of the blur can be set for x- and y-axis separately.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DropShadowFilter.Alpha">
+            <summary>
+            Sets the alpha of the shadow.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DropShadowFilter.Angle">
+            <summary>
+            Sets the angle of the shadow.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DropShadowFilter.Blur">
+            <summary>
+            Sets the strength of both the blurX and blurY properties simultaneously.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DropShadowFilter.BlurX">
+            <summary>
+            Sets the strength of the blurX property.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DropShadowFilter.BlurY">
+            <summary>
+            Sets the strength of the blurY property.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DropShadowFilter.Color">
+            <summary>
+            Sets the color of the shadow.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.DropShadowFilter.Distance">
+            <summary>
+            Sets the distance of the shadow.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.GrayFilter">
+            <summary>
+            This greyscales the palette of your Display Objects.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.GrayFilter.Gray">
+            <summary>
+            The strength of the gray. 1 will make the object black and white,
+            0 will make the object its normal color.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.InvertFilter">
+            <summary>
+            This inverts your Display Objects colors.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.InvertFilter.Invert">
+            <summary>
+            The strength of the invert. 1 will fully invert the colors,
+            and 0 will make the object its normal color.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.NoiseFilter">
+            <summary>
+            A Noise effect filter.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.NoiseFilter.Noise">
+            <summary>
+            The amount of noise to apply.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.PixelateFilter">
+            <summary>
+            This filter applies a pixelate effect making display objects appear 'blocky'.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.PixelateFilter.Size">
+            <summary>
+            This a point that describes the size of the blocks.
+            x is the width of the block and y is the height.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.TwistFilter">
+            <summary>
+            This filter applies a twist effect making display objects appear twisted in the given direction.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TwistFilter.Angle">
+            <summary>
+            This angle of the twist.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TwistFilter.Offset">
+            <summary>
+            This point describes the the offset of the twist.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TwistFilter.Radius">
+            <summary>
+            This radius of the twist.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.RGBSplitFilter">
+            <summary>
+            An RGB Split Filter.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.RGBSplitFilter.Blue">
+            <summary>
+            Blue offset.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.RGBSplitFilter.Green">
+            <summary>
+            Green channel offset.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.RGBSplitFilter.Red">
+            <summary>
+            Red channel offset.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.SepiaFilter">
+            <summary>
+            This applies a sepia effect to your Display Objects.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.SepiaFilter.Sepia">
+            <summary>
+            The strength of the sepia. 1 will apply the full sepia effect,
+            and 0 will make the object its normal color.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ShockwaveFilter.Center">
+            <summary>
+            Sets the center of the shockwave in normalized screen coords.
+            That is (0,0) is the top-left and (1,1) is the bottom right.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ShockwaveFilter.Params">
+            <summary>
+            Sets the params of the shockwave.
+            These modify the look and behavior of the shockwave as it ripples out.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.ShockwaveFilter.Time">
+            <summary>
+            Sets the elapsed time of the shockwave.
+            This controls the speed at which the shockwave ripples out.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.SmartBlurFilter">
+             <summary>
+            A Smart Blur Filter.
+             </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TiltShiftAxisFilter.Blur">
+            <summary>
+            The strength of the blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TiltShiftAxisFilter.End">
+            <summary>
+            The X value to end the effect at.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TiltShiftAxisFilter.GradientBlur">
+            <summary>
+            The strength of the gradient blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TiltShiftAxisFilter.Start">
+            <summary>
+            The X value to start the effect at.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.TiltShiftAxisFilter.UpdateDelta">
+            <summary>
+            Updates the filter delta values. This is overridden in the X and Y filters,
+            does nothing for this class.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Filters.TiltShiftFilter">
+            <summary>
+            A TiltShift Filter. Manages the pass of both a TiltShiftXFilter and TiltShiftYFilter.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TiltShiftFilter.Blur">
+            <summary>
+            The strength of the blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TiltShiftFilter.End">
+            <summary>
+            The X value to end the effect at.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TiltShiftFilter.GradientBlur">
+            <summary>
+            The strength of the gradient blur.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Filters.TiltShiftFilter.Start">
+            <summary>
+            The X value to start the effect at.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.TiltShiftXFilter.UpdateDelta">
+            <summary>
+            Updates the filter delta values.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Filters.TiltShiftYFilter.UpdateDelta">
+            <summary>
+            Updates the filter delta values.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Loaders.Loader">
+            <summary>
+            The new loader, extends Resource Loader by Chad Engler : https://github.com/englercj/resource-loader.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Loaders.Loader.#ctor(System.String,System.Int32)">
+            <param name="baseUrl">The base url for all resources loaded by this loader.</param>
+            <param name="concurrency">The number of resources to load concurrently.</param>
+        </member>
+        <member name="T:Bridge.Pixi.AbstractFilter">
+            <summary>
+            This is the base class for creating a Pixi filter.
+            Currently only WebGL supports filters.
+            If you want to make a custom filter this should be your base class.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.AbstractFilter.#ctor(Bridge.Union{System.String,System.String[]},Bridge.Union{System.String,System.String[]},System.Object)">
+            <param name="vertexSrc">The vertex shader source.</param>
+            <param name="fragmentSrc">The fragment shader source.</param>
+            <param name="uniforms">An object containing the uniforms for this filter.</param>
+        </member>
+        <member name="P:Bridge.Pixi.AbstractFilter.Padding">
+            <summary>
+            The extra padding that the filter might need.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.AbstractFilter.Uniforms">
+            <summary>
+            The uniforms as an object.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.AbstractFilter.ApplyFilter(Bridge.Pixi.WebGLRenderer,Bridge.Pixi.RenderTarget,Bridge.Pixi.RenderTarget,System.Boolean)">
+            <summary>
+            Applies the filter.
+            </summary>
+            <param name="renderer">The renderer to retrieve the filter from.</param>
+            <param name="clear">Whether or not we want to clear the outputTarget.</param>
+        </member>
+        <member name="M:Bridge.Pixi.AbstractFilter.GetShader(Bridge.Pixi.WebGLRenderer)">
+            <summary>
+            Grabs a shader from the current renderer.
+            </summary>
+            <param name="renderer">The renderer to retrieve the shader from.</param>
+        </member>
+        <member name="M:Bridge.Pixi.AbstractFilter.SyncUniform(System.Object)">
+            <summary>
+            Syncs a uniform between the class object and the shaders.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.FXAAFilter">
+            <summary>
+            Basic FXAA implementation based on the code on geeks3d.com with the modification that the
+            texture2DLod stuff was removed since it's unsupported by WebGL.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.FXAAFilter.ApplyFilter(Bridge.Pixi.WebGLRenderer,Bridge.Pixi.RenderTarget,Bridge.Pixi.RenderTarget)">
+            <summary>
+            Applies the filter.
+            </summary>
+            <param name="renderer">The renderer to retrieve the filter from.</param>
+        </member>
+        <member name="P:Bridge.Pixi.SpriteMaskFilter.Map">
+            <summary>
+            The texture used for the displacement map. Must be power of 2 sized texture.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SpriteMaskFilter.Offset">
+            <summary>
+            The offset used to move the displacement map.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.SpriteMaskFilter.ApplyFilter(Bridge.Pixi.WebGLRenderer,Bridge.Pixi.RenderTarget,Bridge.Pixi.RenderTarget)">
+            <summary>
+            Applies the filter.
+            </summary>
+            <param name="renderer">The renderer to retrieve the filter from.</param>
+        </member>
+        <member name="P:Bridge.Pixi.BlendModeManager.BlendMode">
+            <summary>
+            BlendMode from WebGL's point of view.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.FilterManager.GetRenderTarget(System.Boolean)">
+            <summary>
+            Grabs an render target from the internal pool.
+            </summary>
+            <param name="clear">Whether or not we need to clear the RenderTarget.</param>
+        </member>
+        <member name="M:Bridge.Pixi.FilterManager.PopFilter">
+            <summary>
+            Removes the last filter from the filter stack and returns it.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.FilterManager.PushFilter(Bridge.Pixi.DisplayObject,Bridge.Pixi.AbstractFilter[])">
+            <summary>
+            Applies the filter and adds it to the current filter stack.
+            </summary>
+            <param name="target">Target.</param>
+            <param name="filters">The filters that will be pushed to the current filter stack.</param>
+        </member>
+        <member name="M:Bridge.Pixi.MaskManager.PopMask(Bridge.Pixi.RenderTarget,System.Object[])">
+            <summary>
+            Removes the last mask from the mask stack and doesn't return it.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.MaskManager.PopSpriteMask">
+            <summary>
+            Removes the last filter from the filter stack and doesn't return it.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.MaskManager.PopStencilMask(Bridge.Pixi.RenderTarget,System.Object[])">
+            <summary>
+            Removes the last filter from the filter stack and doesn't return it.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.MaskManager.PushMask(Bridge.Pixi.Graphics,System.Object[])">
+            <summary>
+            Applies the Mask and adds it to the current filter stack.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.MaskManager.PushSpriteMask(Bridge.Pixi.RenderTarget,System.Object[])">
+            <summary>
+            Applies the Mask and adds it to the current filter stack.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.MaskManager.PushStencilMask(Bridge.Pixi.RenderTarget,System.Object[])">
+            <summary>
+            Applies the Mask and adds it to the current filter stack.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.ObjectRenderer">
+            <summary>
+            Base for a common object renderer that can be used as a system renderer plugin.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Quad.Colors">
+            <summary>
+            The color components of the triangles.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Quad.UVs">
+            <summary>
+            The UVs of the quad.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Quad.Vertices">
+            <summary>
+            An array of vertices.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Quad.Map(Bridge.Pixi.Rectangle,Bridge.Pixi.Rectangle)">
+            <summary>
+            Maps two Rectangle to the quad.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Quad.Upload">
+            <summary>
+            Binds the buffer and uploads the data.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Shader">
+            <summary>
+            Base shader class for Pixi managed shaders.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Shader.#ctor(Bridge.Pixi.ShaderManager,System.String,System.String,System.Object,System.Object)">
+            <param name="shaderManager">The webgl shader manager this shader works for.</param>
+            <param name="vertexSrc">The source of the vertex shader.</param>
+            <param name="fragmentSrc">The source of the fragment shader.</param>
+            <param name="uniforms">Uniforms for this shader.</param>
+            <param name="attributes">Attributes for this shader.</param>
+        </member>
+        <member name="P:Bridge.Pixi.Shader.FragmentSource">
+            <summary>
+            The fragment shader as an array of strings.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Shader.GL">
+            <summary>
+            The current WebGL drawing context.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Shader.Program">
+            <summary>
+            The WebGL program.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Shader.UID">
+            <summary>
+            A unique id.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Shader.VertexSource">
+            <summary>
+            The vertex shader as an array of strings.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Shader.Destroy">
+            <summary>
+            Destroys the shader.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Shader.InitSampler2D(System.Object)">
+            <summary>
+            Initializes a Sampler2D uniform (which may only be available later on after
+            InitUniforms once the texture has loaded).
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Shader.SyncUniform(System.Object)">
+            <summary>
+            Adds a new uniform.
+            </summary>
+            <param name="uniform">The new uniform to attach.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Shader.SyncUniforms">
+            <summary>
+            Updates the shader uniform values.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.ShaderManager.Destroy">
+            <summary>
+            Destroys this object.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.ShaderManager.OnContextChange">
+            <summary>
+            Called when there is a WebGL context change.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.ShaderManager.SetAttributes(System.Object[])">
+            <summary>
+            Takes the attributes given in parameters and uploads them.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.ShaderManager.SetShader(Bridge.Pixi.Shader)">
+            <summary>
+            Sets the current shader.
+            </summary>
+            <param name="shader">The shader to upload.</param>
+        </member>
+        <member name="T:Bridge.Pixi.ComplexPrimitiveShader">
+            <summary>
+            This shader is used to draw complex primitive shapes for Graphics.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.PrimitiveShader">
+            <summary>
+            This shader is used to draw simple primitive shapes for Graphics.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextureShader.DefaultVertexSource">
+            <summary>
+            The default vertex shader source.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextureShader.DefaultFragmentSource">
+            <summary>
+            The default fragment shader source.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.TextureShader.#ctor(Bridge.Pixi.ShaderManager,System.String,System.String,System.Object,System.Object)">
+            <param name="shaderManager">The webgl shader manager this shader works for.</param>
+            <param name="vertexSrc">The source of the vertex shader.</param>
+            <param name="fragmentSrc">The source of the fragment shader.</param>
+            <param name="uniforms">Uniforms for this shader.</param>
+            <param name="attributes">Attributes for this shader.</param>
+        </member>
+        <member name="M:Bridge.Pixi.StencilManager.PopMask(System.Object[])">
+            <summary>
+            Removes the last mask from the mask stack and doesn't return it.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.StencilManager.PopStencil(Bridge.Pixi.Graphics,System.Object[])">
+            <summary>
+            Removes the last mask from the stencil stack and doesn't return it.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.StencilManager.PushMask(System.Object[])">
+            <summary>
+            Applies the Mask and adds it to the current filter stack.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.StencilManager.PushStencil(Bridge.Pixi.Graphics,System.Object[])">
+            <summary>
+            Applies the Mask and adds it to the current filter stack.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Text">
+            <summary>
+            A Text Object will create a line or multiple lines of text.
+            To split a line you can use '\n' in your text string, or add a wordWrap property set to
+            true and and WordWrapWidth property with a value in the style object.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Text.#ctor(System.String,Bridge.Pixi.TextStyle,System.Nullable{Bridge.Pixi.Resolution})">
+            <param name="text">The copy that you would like the text to display.</param>
+            <param name="style"></param>
+        </member>
+        <member name="P:Bridge.Pixi.Text.Canvas">
+            <summary>
+            The canvas element that everything is drawn to.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Text.Context">
+            <summary>
+            The canvas 2d context that everything is drawn with.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Text.Resolution">
+            <summary>
+            The resolution of the canvas.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Text.Style">
+            <summary>
+            Set the style of the text.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Text.Value">
+            <summary>
+            Set the copy for the text object. To split a line you can use '\n'.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Text.Destroy(System.Boolean)">
+            <summary>
+            Destroys this text object.
+            </summary>
+            <param name="destroyBaseTexture">Whether to destroy the base texture as well.</param>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.Font">
+            <summary>
+            The style and size of the font. Default 'bold 20px Arial'.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.Fill">
+            <summary>
+            A canvas fillstyle that will be used on the text e.g 'red', '#00FF00'.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.Align">
+            <summary>
+            Alignment for multiline text, does not affect single line text.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.Stroke">
+            <summary>
+            A canvas fillstyle that will be used on the text stroke e.g 'blue', '#FCFF00'.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.StrokeThickness">
+            <summary>
+            A number that represents the thickness of the stroke. Default is 0 (no stroke).
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.WordWrap">
+            <summary>
+            Indicates if word wrap should be used.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.WordWrapWidth">
+            <summary>
+            The width at which text will wrap, it needs wordWrap to be set to true.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.LineHeight">
+            <summary>
+            The line height, a number that represents the vertical space that a letter uses.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.DropShadow">
+            <summary>
+            Set a drop shadow for the text.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.DropShadowColor">
+            <summary>
+            A fill style to be used on the dropshadow e.g 'red', '#00FF00'.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.DropShadowAngle">
+            <summary>
+            Set a angle of the drop shadow.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.DropShadowDistance">
+            <summary>
+            Set a distance of the drop shadow.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.Padding">
+            <summary>
+            Occasionally some fonts are cropped on top or bottom.
+            Adding some padding will prevent this from happening by adding padding
+            to the top and bottom of text height.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.TextBaseLine">
+            <summary>
+            The baseline of the text that is rendered.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.LineJoin">
+            <summary>
+            The lineJoin property sets the type of corner created, it can resolve spiked text issues.
+            Default is 'miter' (creates a sharp corner).
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.TextStyle.MiterLimit">
+            <summary>
+            The miter limit to use when using the 'miter' LineJoin mode.
+            This can reduce or increase the spikiness of rendered text.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.BaseTexture">
+            <summary>
+            A texture stores the information that represents an image. All textures have a base texture.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.BaseTexture.FromCanvas(Bridge.Html5.HTMLCanvasElement,Bridge.Pixi.ScaleMode)">
+            <summary>
+            Helper function that creates a base texture from the given canvas element.
+            </summary>
+            <param name="canvas">The canvas element source of the texture.</param>
+            <param name="scaleMode">The scale mode of the texture.</param>
+        </member>
+        <member name="M:Bridge.Pixi.BaseTexture.FromImage(System.String,System.Boolean,Bridge.Pixi.ScaleMode)">
+            <summary>
+            Helper function that creates a base texture from the given image url.
+            If the image is not in the base texture cache it will be created and loaded.
+            </summary>
+            <param name="imageUrl">The image url of the texture.</param>
+            <param name="crossorigin">Should use anonymous CORS? Defaults to true if the URL is not a data-URI.</param>
+            <param name="scaleMode">The scale mode of the texture.</param>
+        </member>
+        <member name="M:Bridge.Pixi.BaseTexture.#ctor(Bridge.Union{Bridge.Html5.HTMLImageElement,Bridge.Html5.HTMLCanvasElement},Bridge.Pixi.ScaleMode,System.Nullable{Bridge.Pixi.Resolution})">
+            <param name="source">The source object of the texture.</param>
+            <param name="scaleMode">The scale mode of the texture.</param>
+            <param name="resolution">The resolution of the texture for devices with different pixel ratios.</param>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.HasLoaded">
+            <summary>
+            Set to true once the base texture has successfully loaded.
+            This is never true if the underlying source fails to load or has no texture data.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.Height">
+            <summary>
+            The height of the base texture set when the image has loaded.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.IsLoading">
+            <summary>
+            Set to true if the source is currently loading. If an Image source is loading
+            the 'loaded' or 'error' event will be dispatched when the operation ends.
+            An underlying source that is immediately-available bypasses loading entirely.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.Mipmap">
+            <summary>
+            Set this to true if a mipmap of this texture needs to be generated.
+            This value needs to be set before the texture is used.
+            Also the texture must be a power of two size to work.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.PremultipliedAlpha">
+            <summary>
+            Controls if RGB channels should be pre-multiplied by Alpha (WebGL only).
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.RealHeight">
+            <summary>
+            Used to store the actual height of the source of this texture.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.RealWidth">
+            <summary>
+            Used to store the actual width of the source of this texture.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.Resolution">
+            <summary>
+            The Resolution of the texture.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.ScaleMode">
+            <summary>
+            The scale mode to apply when scaling this texture.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.Source">
+            <summary>
+            The image source that is used to create the texture.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.BaseTexture.Width">
+            <summary>
+            The width of the base texture set when the image has loaded.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.BaseTexture.Destroy">
+            <summary>
+            Destroys this base texture.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.BaseTexture.Dispose">
+            <summary>
+            Frees the texture from WebGL memory without destroying this texture object.
+            This means you can still use the texture later which will upload it to GPU memory again.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.BaseTexture.LoadSource(Bridge.Union{Bridge.Html5.HTMLImageElement,Bridge.Html5.HTMLCanvasElement})">
+            <summary>
+            Load a source. If the source is not-immediately-available, such as an image that
+            needs to be downloaded, then the 'loaded' or 'error' event will be dispatched in the
+            future and hasLoaded will remain false after this call.
+            </summary>
+            <param name="source">The source object of the texture.</param>
+        </member>
+        <member name="M:Bridge.Pixi.BaseTexture.Update">
+            <summary>
+            Updates the texture on all the WebDL renderers, this also assumes the src has changed.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.BaseTexture.UpdateSourceImage(System.String)">
+            <summary>
+            Changes the source image of the texture. The original source must be an Image element.
+            </summary>
+            <param name="newSrc">The path of the image.</param>
+        </member>
+        <member name="T:Bridge.Pixi.Container">
+            <summary>
+            A Container represents a collection of display objects.
+            It is the base class of all display objects that act as a container for other objects.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Container.Children">
+            <summary>
+            The array of children of this container.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Container.Height">
+            <summary>
+            The height of the Container, setting this will actually modify the scale to achieve the value set.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Container.LocalBounds">
+            <summary>
+            Retrieves the non-global local bounds of the Container as a rectangle.
+            The calculation takes all visible children into consideration.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Container.Width">
+            <summary>
+            The width of the Container, setting this will actually modify the scale to achieve the value set.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Container.AddChild(Bridge.Pixi.DisplayObject)">
+            <summary>
+            Adds a child to the container.
+            </summary>
+            <param name="child">The DisplayObject to add to the container</param>
+            <returns>The child that was added.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.AddChildAt(Bridge.Pixi.DisplayObject,System.Int32)">
+            <summary>
+            Adds a child to the container at a specified index. If the index is out of bounds an error will be thrown.
+            </summary>
+            <param name="child">The child to add</param>
+            <param name="index">The index to place the child in</param>
+            <returns>The child that was added.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.Destroy(System.Boolean)">
+            <summary>
+            Destroys the container
+            </summary>
+            <param name="destroyChildren">
+            if set to true, all the children will have their destroy method called as well
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.Container.GenerateTexture(Bridge.Pixi.IRenderer,Bridge.Pixi.ScaleMode,System.Nullable{Bridge.Pixi.Resolution})">
+            <summary>
+            Useful function that returns a texture of the display object that can then be used to create sprites.
+            This can be quite useful if your displayObject is static/complicated and needs to be reused multiple times.
+            </summary>
+            <param name="renderer">The renderer used to generate the texture.</param>
+            <param name="scaleMode">The scale mode of the texture being generated.</param>
+            <param name="resolution">The resolution of the texture being generated.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.GetChildAt(System.Int32)">
+            <summary>
+            Returns the child at the specified index.
+            </summary>
+            <param name="index">The index to get the child at.</param>
+            <returns>The child at the given index, if any.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.GetChildIndex(Bridge.Pixi.DisplayObject)">
+            <summary>
+            Returns the index position of a child DisplayObject instance.
+            </summary>
+            <param name="child">The DisplayObject instance to identify.</param>
+            <returns>The index position of the child display object to identify.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.RemoveChild(Bridge.Pixi.DisplayObject)">
+            <summary>
+            Removes a child from the container.
+            </summary>
+            <param name="child">The DisplayObject to remove.</param>
+            <returns>The child that was removed.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.RemoveChildAt(System.Int32)">
+            <summary>
+            Removes a child from the specified index position.
+            </summary>
+            <param name="index">The index to get the child from.</param>
+            <returns>The child that was removed.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.RemoveChildren(System.Int32)">
+            <summary>
+            Removes all children from this container that begin from certain index.
+            </summary>
+            <param name="beginIndex">The beginning position.</param>
+            <returns>Children that were removed.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.RemoveChildren(System.Int32,System.Int32)">
+            <summary>
+            Removes all children from this container that are within the begin and end indexes.
+            </summary>
+            <param name="beginIndex">The beginning position.</param>
+            <param name="endIndex">The ending position.</param>
+            <returns>Children that were removed.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Container.RenderCanvas(Bridge.Pixi.CanvasRenderer)">
+            <summary>
+            Renders the object using the Canvas renderer.
+            </summary>
+            <param name="renderer">The renderer.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Container.RenderWebGL(Bridge.Pixi.WebGLRenderer)">
+            <summary>
+            Renders the object using the WebGL renderer.
+            </summary>
+            <param name="renderer">The renderer.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Container.SetChildIndex(Bridge.Pixi.DisplayObject,System.Int32)">
+            <summary>
+            Changes the position of an existing child in the display object container.
+            </summary>
+            <param name="child">
+            The child DisplayObject instance for which you want to change the index number.
+            </param>
+            <param name="index">The resulting index number for the child display object.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Container.SwapChildren(Bridge.Pixi.DisplayObject,Bridge.Pixi.DisplayObject)">
+            <summary>
+            Swaps the position of 2 Display Objects within this container.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.DisplayObject">
+            <summary>
+            The base class for all objects that are rendered on the screen.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Alpha">
+            <summary>
+            The opacity of the object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.CacheAsBitmap">
+            <summary>
+            Set this to true if you want this display object to be cached as a bitmap.
+            This basically takes a snap shot of the display object as it is at that moment.
+            It can provide a performance benefit for complex static DisplayObjects.
+            To remove simply set this property to 'null'.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.FilterArea">
+            <summary>
+            The area the filter is applied to. This is used as more of an optimisation rather than
+            figuring out the dimensions of the DisplayObject each frame you can set this rectangle.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Filters">
+            <summary>
+            Sets the filters for the DisplayObject.
+            IMPORTANT: This is a WebGL only feature and will be ignored by the canvas renderer.
+            To remove filters simply set this property to null.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Interactive">
+            <summary>
+            Defines whether this object reacts to On and Once events.
+            Note: set this to true BEFORE calling On and Once methods.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.LocalBounds">
+            <summary>
+            Retrieves the local bounds of the DisplayObject as a rectangle object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Mask">
+            <summary>
+            Sets a mask for the DisplayObject. A mask is an object that limits the visibility of
+            an object to the shape of the mask applied to it.
+            In Pixi a regular mask must be a Graphics or a Sprite object.
+            This allows for much faster masking in canvas as it utilises shape clipping.
+            To remove a mask, set this property to null.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Parent">
+            <summary>
+            The display object container that contains this display object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Pivot">
+            <summary>
+            The pivot point of the displayObject that it rotates around.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Position">
+            <summary>
+            The coordinate of the object relative to the local coordinates of the parent.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Renderable">
+            <summary>
+            Can this object be rendered, if false the object will not be drawn but the
+            UpdateTransform methods will still be called.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Rotation">
+            <summary>
+            The rotation of the object in radians.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Scale">
+            <summary>
+            The scale factor of the object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Visible">
+            <summary>
+            The visibility of the object.
+            If false the object will not be drawn, and the updateTransform function will not be called.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.WorldAlpha">
+            <summary>
+            The multiplied alpha of the DisplayObject.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.WorldTransform">
+            <summary>
+            Current transform of the object based on world (parent) factors.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.WorldVisible">
+            <summary>
+            Indicates if the sprite is globally visible.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.X">
+            <summary>
+            The position of the displayObject on the x axis relative to the local coordinates of the parent.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.DisplayObject.Y">
+            <summary>
+            The position of the displayObject on the y axis relative to the local coordinates of the parent.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.DisplayObject.Display">
+            <summary>
+            Base destroy method for generic display objects.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.DisplayObject.Destroy">
+            <summary>
+            Base destroy method for generic display objects.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.DisplayObject.GenerateTexture(Bridge.Pixi.IRenderer,Bridge.Pixi.ScaleMode,System.Nullable{Bridge.Pixi.Resolution})">
+            <summary>
+            Useful function that returns a texture of the display object that can then be used to create sprites.
+            This can be quite useful if your displayObject is static/complicated and needs to be reused multiple times.
+            </summary>
+            <param name="renderer">The renderer used to generate the texture.</param>
+            <param name="scaleMode">The scale mode of the texture being generated.</param>
+            <param name="resolution">The resolution of the texture being generated.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Bridge.Pixi.DisplayObject.GetBounds(Bridge.Pixi.Matrix)">
+            <summary>
+            Retrieves the bounds of the DisplayObject as a rectangle object.
+            </summary>
+            <param name="matrix">The transformation matrix of the sprite.</param>
+            <returns>The framing rectangle.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.DisplayObject.ToGlobal(Bridge.Pixi.Point)">
+            <summary>
+            Calculates the global position of the display object.
+            </summary>
+            <param name="position">The world origin to calculate from.</param>
+            <returns>A point object representing the position of this object.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.DisplayObject.ToLocal(Bridge.Pixi.Point,Bridge.Pixi.DisplayObject)">
+            <summary>
+            Calculates the local position of the display object relative to another point.
+            </summary>
+            <param name="position">The world origin to calculate from.</param>
+            <param name="from">The DisplayObject to calculate the global position from.</param>
+            <returns>A point object representing the position of this object.</returns>
+        </member>
+        <member name="T:Bridge.Pixi.Matrix">
+            <summary>
+            The pixi Matrix class as an object, which makes it a lot faster,
+            here is a representation of it:
+            <para>| a | b | tx|</para>
+            <para>| c | d | ty|</para>
+            <para>| 0 | 0 | 1 |</para>
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Matrix.Identity">
+            <summary>
+            A default (identity) matrix.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Matrix.TempMatrix">
+            <summary>
+            A temp matrix.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Append(Bridge.Pixi.Matrix)">
+            <summary>
+            Appends the given Matrix to this Matrix.
+            </summary>
+            <returns>Matrix. Good for chaining method calls.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Apply(Bridge.Pixi.Point,Bridge.Pixi.Point)">
+            <summary>
+            Get a new position with the current transformation applied.
+            Can be used to go from a child's coordinate space to the world coordinate space. (e.g. rendering)
+            </summary>
+            <param name="pos">The origin.</param>
+            <param name="newPos">The point that the new position is assigned to (allowed to be same as input).</param>
+            <returns>The new point, transformed through this matrix.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.ApplyInverse(Bridge.Pixi.Point,Bridge.Pixi.Point)">
+            <summary>
+            Get a new position with the inverse of the current transformation applied.
+            Can be used to go from a child's coordinate space to the world coordinate space. (e.g. rendering)
+            </summary>
+            <param name="pos">The origin.</param>
+            <param name="newPos">The point that the new position is assigned to (allowed to be same as input).</param>
+            <returns>The new point, inverse-transformed through this matrix.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Clone">
+            <summary>
+            Creates a new Matrix object with the same values as this one.
+            </summary>
+            <returns>A copy of this matrix. Good for chaining method calls.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Copy(Bridge.Pixi.Matrix)">
+            <summary>
+            Changes the values of the given matrix to be the same as the ones in this matrix.
+            </summary>
+            <returns>The matrix given in parameter with its values updated.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.FromArray(System.Single[])">
+            <summary>
+            Creates a Matrix object based on the given array. The Element to Matrix mapping order is as follows:
+            <para>a = array[0]</para>
+            <para>b = array[1]</para>
+            <para>tx = array[2]</para>
+            <para>c = array[3]</para>
+            <para>d = array[4]</para>
+            <para>ty = array[5]</para>
+            </summary>
+            <param name="array">The array that the matrix will be populated from.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.ToIdentity">
+            <summary>
+            Resets this Matix to an identity (default) matrix.
+            </summary>
+            <returns>This matrix. Good for chaining method calls.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Invert">
+            <summary>
+            Inverts this matrix.
+            </summary>
+            <returns>This matrix. Good for chaining method calls.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Prepend(Bridge.Pixi.Matrix)">
+            <summary>
+            Prepends the given Matrix to this Matrix.
+            </summary>
+            <returns>This matrix. Good for chaining method calls.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Rotate(System.Single)">
+            <summary>
+            Applies a rotation transformation to the matrix.
+            </summary>
+            <param name="angle">The angle in radians.</param>
+            <returns>This matrix. Good for chaining method calls.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Scale(System.Single,System.Single)">
+            <summary>
+            Applies a scale transformation to the matrix.
+            </summary>
+            <param name="x">The amount to scale horizontally.</param>
+            <param name="y">The amount to scale vertically.</param>
+            <returns>This matrix. Good for chaining method calls.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.ToArray(System.Boolean)">
+            <summary>
+            Creates an array from the current Matrix object.
+            </summary>
+            <param name="transpose">Whether we need to transpose the matrix or not.</param>
+            <returns>The newly created array which contains the matrix</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Matrix.Translate(System.Single,System.Single)">
+            <summary>
+            Translates the matrix on the x and y.
+            </summary>
+            <param name="x">The amount to translate horizontally.</param>
+            <param name="y">The amount to translate vertically.</param>
+            <returns>This matrix. Good for chaining method calls.</returns>
+        </member>
+        <member name="T:Bridge.Pixi.Point">
+            <summary>
+            The Point object represents a location in a two-dimensional coordinate system,
+            where x represents the horizontal axis and y represents the vertical axis.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Point.Clone">
+            <summary>
+            Creates a clone of this point.
+            </summary>
+            <returns>A copy of the point.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Point.Copy(Bridge.Pixi.Point)">
+            <summary>
+            Copies x and y from the given point.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Point.Equals(Bridge.Pixi.Point)">
+            <summary>
+            Returns true if the given point is equal to this point.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Point.Set(System.Single,System.Single)">
+            <summary>
+            Sets the point to a new x and y position.
+            If y is omitted, both x and y will be set to x.
+            </summary>
+            <param name="x">Position of the point on the x axis.</param>
+            <param name="y">Position of the point on the y axis.</param>
+        </member>
+        <member name="T:Bridge.Pixi.Rectangle">
+            <summary>
+            The Rectangle object is an area defined by its position, as indicated by its
+            top-left corner point (x, y) and by its width and its height.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Rectangle.Empty">
+            <summary>
+            A constant empty rectangle.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Rectangle.Type">
+            <summary>
+            The type of the object, mainly used to avoid instanceof checks.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Rectangle.Clone">
+            <summary>
+            Creates a clone of this Rectangle.
+            </summary>
+            <returns>A copy of the rectangle.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Rectangle.Contains(System.Single,System.Single)">
+            <summary>
+            Checks whether the x and y coordinates given are contained within this Rectangle.
+            </summary>
+            <param name="x">The X coordinate of the point to test.</param>
+            <param name="y">The Y coordinate of the point to test.</param>
+            <returns>Whether the x and y coordinates are within this Rectangle.</returns>
+        </member>
+        <member name="T:Bridge.Pixi.CanvasMaskManager">
+            <summary>
+            A set of functions used to handle masking.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasMaskManager.PopMask(Bridge.Pixi.IRenderer)">
+            <summary>
+            Restores the current drawing context to the state it was before the mask was applied.
+            </summary>
+            <param name="renderer">The renderer context to use.</param>
+        </member>
+        <member name="M:Bridge.Pixi.CanvasMaskManager.PushMask(System.Object,Bridge.Pixi.IRenderer)">
+            <summary>
+            This method adds it to the current stack of masks.
+            </summary>
+            <param name="maskData">The mask data that will be pushed.</param>
+            <param name="renderer">The renderer context to use.</param>
+        </member>
+        <member name="T:Bridge.Pixi.CanvasRenderer">
+            <summary>
+            The CanvasRenderer draws the scene and all its content onto a 2D canvas.
+            This renderer should be used for browsers that do not support WebGL.
+            Don't forget to add the CanvasRenderer.View to your DOM or you will not see anything :)
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasRenderer.Context">
+            <summary>
+            The canvas 2D context that everything is drawn with.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasRenderer.MaskManager">
+            <summary>
+            Instance of a CanvasMaskManager, handles masking when using the canvas renderer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasRenderer.Refresh">
+            <summary>
+            Boolean flag controlling canvas refresh.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.CanvasRenderer.SmoothProperty">
+            <summary>
+            The canvas property used to set the canvas smoothing property.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.DefaultScaleMode">
+            <summary>
+            The Default scale mode that affects the default scaling mode of future operations.
+            It can be re-assigned to either Linear or Nearest, depending upon suitability.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.SharedTicker">
+            <summary>
+            The shared ticker instance used by MovieClip and by InteractionManager.
+            The property AutoStart is set to true for this instance.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.TargetFPMS">
+            <summary>
+            Target frames per millisecond.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.DefaultRendererOptions">
+            <summary>
+            The default render options if none are supplied to WebGLRenderer or CanvasRenderer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.DegToRad">
+            <summary>
+            Constant conversion factor for converting degrees to radians.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.Loader">
+            <summary>
+            A premade instance of the loader that can be used to loader resources.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.Pi2">
+            <summary>
+            Two Pi.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.RadToDeg">
+            <summary>
+            Constant conversion factor for converting radians to degrees.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.RetinaPrefix">
+            <summary>
+            The prefix that denotes a URL is for a retina asset.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Pixi.Version">
+            <summary>
+            String of the current PIXI version.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Pixi.AutoDetectRenderer(System.Single,System.Single,Bridge.Pixi.RendererOptions,System.Boolean)">
+            <summary>
+            This helper function will automatically detect which renderer you should be using.
+            WebGL is the preferred renderer as it is a lot faster.
+            If webGL is not supported by the browser then this function will return a canvas renderer.
+            </summary>
+            <param name="width">The width of the renderers view.</param>
+            <param name="height">The height of the renderers view.</param>
+            <param name="options">The optional renderer parameters.</param>
+            <param name="noWebGL">Prevents selection of WebGL renderer, even if such is present.</param>
+            <returns>Returns WebGL renderer if available, otherwise CanvasRenderer.</returns>
+        </member>
+        <member name="T:Bridge.Pixi.Mesh.DrawMode">
+            <summary>
+            Different drawing buffer modes supported
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Mesh.Mesh">
+            <summary>
+            Base mesh class.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Mesh.Mesh.BlendMode">
+            <summary>
+            The blend mode to be applied to the sprite. Apply a value of Normal to reset the blend mode.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Mesh.Mesh.CanvasPadding">
+            <summary>
+            Triangles in canvas mode are automatically antialiased,
+            use this value to force triangles to overlap a bit with each other.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Mesh.Mesh.Dirty">
+            <summary>
+            Whether the Mesh is dirty or not.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Mesh.Mesh.DrawMode">
+            <summary>
+            The way the Mesh should be drawn.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Mesh.Mesh.Texture">
+            <summary>
+            The texture that the sprite is using.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Mesh.Mesh.UVs">
+            <summary>
+            The UVs of the mesh.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Mesh.Mesh.Vertices">
+            <summary>
+            An array of vertices.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Mesh.Mesh.ContainsPoint(Bridge.Pixi.Point)">
+            <summary>
+            Tests if a point is inside this mesh. Works only for TriangleMesh.
+            </summary>
+            <param name="point">The point to test.</param>
+            <returns>The result of the test.</returns>
+        </member>
+        <member name="T:Bridge.Pixi.Mesh.Rope">
+            <summary>
+            The rope allows you to draw a texture across several points and them manipulate these points.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Mesh.Rope.#ctor(Bridge.Pixi.Texture,Bridge.Pixi.Point[])">
+            <param name="texture">The texture to use on the rope.</param>
+            <param name="points">An array of Point objects to construct this rope.</param>
+        </member>
+        <member name="P:Bridge.Pixi.Mesh.Rope.Points">
+            <summary>
+            An array of points that determine the rope.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.View">
+            <summary>
+            The canvas to use as a view.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.Transparent">
+            <summary>
+            If the render view is transparent.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.Antialias">
+            <summary>
+            Sets antialias (only applicable in Chrome at the moment).
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.PreserveDrawingBuffer">
+            <summary>
+            Enables drawing buffer preservation, enable this if you need to call ToDataUrl on the WebGL context.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.RoundPixels">
+            <summary>
+            If true Pixi will Math.Floor() x/y values when rendering, stopping pixel interpolation.
+            Handy for crisp pixel art and speed on legacy devices.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.ForceFXAA">
+            <summary>
+            Forces FXAA antialiasing to be used over native.
+            FXAA is faster, but may not always look as great.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.Resolution">
+            <summary>
+            The resolution of the renderer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.BackgroundColor">
+            <summary>
+            The background color of the rendered area (shown if not transparent).
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.AutoResize">
+            <summary>
+            If the render view is automatically resized.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RendererOptions.ClearBeforeRender">
+            <summary>
+            This sets if the CanvasRenderer will clear the canvas or not before the new render pass.
+            If you wish to set this to false, you must set PreserveDrawingBuffer to true.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.AutoResize">
+            <summary>
+            Whether the render view should be resized automatically.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.BackgroundColor">
+            <summary>
+            The background color to fill if not transparent.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.BlendModes">
+            <summary>
+            INTERFACE IS NOT IMPLEMENTED YET.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.ClearBeforeRender">
+            <summary>
+            This sets if the CanvasRenderer will clear the canvas or not before the new render pass.
+            If the scene is NOT transparent Pixi will use a canvas sized FillRect operation every
+            frame to set the canvas background color. If the scene is transparent Pixi will use ClearRect
+            to clear the canvas every frame. Disable this by setting this to false.
+            For example if your game has a canvas filling background image you often don't need this set.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.Height">
+            <summary>
+            The height of the canvas view.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.PreserveDrawingBuffer">
+            <summary>
+            Whether or not the contents of the stencil buffer is retained after rendering.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.Resolution">
+            <summary>
+            The resolution of the renderer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.RoundPixels">
+            <summary>
+            If true Pixi will Math.Floor() x/y values when rendering, stopping pixel interpolation.
+            Handy for crisp pixel art and speed on legacy devices.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.Transparent">
+            <summary>
+            Whether the render view is transparent.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.Type">
+            <summary>
+            The type of the renderer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.View">
+            <summary>
+            The canvas element that everything is drawn to.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.SystemRenderer.Width">
+            <summary>
+            The width of the canvas view.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.SystemRenderer.Destroy(System.Boolean)">
+            <summary>
+            Removes everything from the renderer.
+            </summary>
+            <param name="removeView">Removes the Canvas element from the DOM.</param>
+        </member>
+        <member name="M:Bridge.Pixi.SystemRenderer.Render(Bridge.Pixi.DisplayObject)">
+            <summary>
+            Renders the object to this view.
+            </summary>
+            <param name="object">The object to be rendered.</param>
+        </member>
+        <member name="M:Bridge.Pixi.SystemRenderer.Resize(System.Single,System.Single)">
+            <summary>
+            Resizes the canvas view to the specified width and height.
+            </summary>
+            <param name="width">The new width of the canvas view.</param>
+            <param name="height">The new height of the canvas view.</param>
+        </member>
+        <member name="T:Bridge.Pixi.WebGLRenderer">
+            <summary>
+            The WebGLRenderer draws the scene and all its content onto a WebGL enabled canvas.
+            This renderer should be used for browsers that support WebGL.
+            This Render works by automatically managing WebGLBatches, so no need for Sprite Batches or Sprite Clouds.
+            Don't forget to add the view to your DOM or you will not see anything :)
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLRenderer.BlendModeManager">
+            <summary>
+            Manages the BlendModes.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLRenderer.Renderer">
+            <summary>
+            The currently active ObjectRenderer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLRenderer.RenderTarget">
+            <summary>
+            Holds the current render target.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLRenderer.DrawCount">
+            <summary>
+            Counter for the number of draws made each frame
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLRenderer.FilterManager">
+            <summary>
+            Manages the filters.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLRenderer.MaskManager">
+            <summary>
+            Manages the masks using the stencil buffer.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLRenderer.ShaderManager">
+            <summary>
+            Deals with managing the shader programs and their attributes.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLRenderer.StencilManager">
+            <summary>
+            Manages the stencil buffer.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.WebGLRenderer.DestroyTexture(Bridge.Union{Bridge.Pixi.BaseTexture,Bridge.Pixi.Texture})">
+            <summary>
+            Deletes the texture from WebGL.
+            </summary>
+            <param name="texture">The texture to destroy.</param>
+        </member>
+        <member name="M:Bridge.Pixi.WebGLRenderer.RenderDisplayObject(Bridge.Pixi.DisplayObject,Bridge.Pixi.RenderTarget)">
+            <summary>
+            Renders a Display Object.
+            </summary>
+            <param name="displayObject">The DisplayObject to render.</param>
+            <param name="renderTarget">The render target to use to render this display object.</param>
+        </member>
+        <member name="M:Bridge.Pixi.WebGLRenderer.UpdateTexture(Bridge.Union{Bridge.Pixi.BaseTexture,Bridge.Pixi.Texture})">
+            <summary>
+            Updates and/or Creates a WebGL texture for the renderer's context.
+            </summary>
+            <param name="texture">The texture to update.</param>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTarget.#ctor(Bridge.Html5.IWebGLRenderingContext,System.Single,System.Single,Bridge.Pixi.ScaleMode,Bridge.Pixi.Resolution,System.Boolean)">
+            <param name="gl">The current WebGL drawing context.</param>
+            <param name="width">The horizontal range of the filter.</param>
+            <param name="height">The vertical range of the filter.</param>
+            <param name="scaleMode">The current scale mode.</param>
+            <param name="resolution">The current resolution.</param>
+            <param name="root">Whether this object is the root element or not.</param>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.FilterStack">
+            <summary>
+            Stores filter data for the render target.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.Frame">
+            <summary>
+            The frame.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.FrameBuffer">
+            <summary>
+            INTERFACE IS NOT IMPLEMENTED YET.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.GL">
+            <summary>
+            The current WebGL drawing context.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.ProjectionMatrix">
+            <summary>
+            The projection matrix.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.Resolution">
+            <summary>
+            The current resolution.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.Root">
+            <summary>
+            Whether this object is the root element or not.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.ScaleMode">
+            <summary>
+            The scale mode.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.Size">
+            <summary>
+            The size of the object as a rectangle.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.StencilBuffer">
+            <summary>
+            INTERFACE IS NOT IMPLEMENTED YET.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.StencilMaskStack">
+            <summary>
+            The data structure for the stencil masks.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.Texture">
+            <summary>
+            The texture.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTarget.Transform">
+            <summary>
+            The object's transform.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTarget.Activate">
+            <summary>
+            Binds the buffers and initializes the viewport.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTarget.AttachStencilBuffer">
+            <summary>
+            Binds the stencil buffer.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTarget.CalculateProjection(Bridge.Pixi.Rectangle)">
+            <summary>
+            Updates the projection matrix based on a projection frame.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTarget.Clear(System.Boolean)">
+            <summary>
+            Clears the filter texture.
+            </summary>
+            <param name="bind">Should we bind our framebuffer before clearing?</param>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTarget.Destroy">
+            <summary>
+            Destroys the render target.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTarget.Resize(System.Single,System.Single)">
+            <summary>
+            Resizes the texture to the specified width and height.
+            </summary>
+            <param name="width">The new width of the texture.</param>
+            <param name="height">The new height of the texture.</param>
+        </member>
+        <member name="T:Bridge.Pixi.ScaleMode">
+            <summary>
+            The scale modes that are supported by Pixi.
+            </summary>
+        </member>
+        <member name="F:Bridge.Pixi.ScaleMode.Default">
+            <summary>
+            Default mode. Can be set at Pixi.DefaultScaleMode.
+            </summary>
+        </member>
+        <member name="F:Bridge.Pixi.ScaleMode.Linear">
+            <summary>
+            Smooth scaling.
+            </summary>
+        </member>
+        <member name="F:Bridge.Pixi.ScaleMode.Nearest">
+            <summary>
+            Pixelating scaling.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Sprite">
+            <summary>
+            The Sprite object is the base for all textured objects that are rendered to the screen.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Sprite.FromImage(System.String,System.Boolean,Bridge.Pixi.ScaleMode)">
+            <summary>
+            Helper function that creates a sprite that will contain a texture from the TextureCache
+            based on the frameId The frame ids are created when a Texture packer file has been loaded.
+            </summary>
+            <param name="imageId">The image url of the texture.</param>
+            <param name="crossorigin">if you want to specify the cross-origin parameter.</param>
+            <param name="scaleMode">The scale mode of the texture.</param>
+            <returns>A new Sprite using a texture from the texture cache matching the frameId.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Sprite.FromFrame(System.String)">
+            <summary>
+            Helper function that creates a sprite that will contain a texture based on an image
+            url If the image is not in the texture cache it will be loaded.
+            </summary>
+            <param name="frameId">The frame Id of the texture in the cache.</param>
+            <returns>A new Sprite using a texture from the texture cache matching the image id.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Sprite.#ctor(Bridge.Pixi.Texture)">
+            <param name="texture">The texture for this sprite.</param>
+        </member>
+        <member name="P:Bridge.Pixi.Sprite.Anchor">
+            <summary>
+            The anchor sets the origin point of the texture.
+            The default is 0,0 this means the texture's origin is the top left.
+            Setting the anchor to 0.5,0.5 means the texture's origin is centered.
+            Setting the anchor to 1,1 would mean the texture's origin point will be the bottom right corner.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Sprite.BlendMode">
+            <summary>
+            The blend mode to be applied to the sprite. Apply a value of Normal to reset the blend mode.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Sprite.ButtonMode">
+            <summary>
+            Defines whether hand cursor appears when mouse is over this sprite.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Sprite.CachedTint">
+            <summary>
+            An internal cached value of the tint.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Sprite.LocalBounds">
+            <summary>
+            Gets the local bounds of the sprite object.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Sprite.Shader">
+            <summary>
+            The shader that will be used to render the sprite.
+            Set to null to remove a current shader.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Sprite.Texture">
+            <summary>
+            The texture that the sprite is using.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Sprite.Tint">
+            <summary>
+            The tint applied to the sprite. This is a hex value.
+            A value of 0xFFFFFF will remove any tint effect.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Sprite.ContainsPoint(Bridge.Pixi.Point)">
+            <summary>
+            Tests if a point is inside this sprite.
+            </summary>
+            <param name="point">The point to test.</param>
+            <returns>The result of the test.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Sprite.Destroy(System.Boolean,System.Boolean)">
+            <summary>
+            Destroys this sprite and optionally its texture.
+            </summary>
+            <param name="destroyChildren">Should it destroy the current texture of the sprite as well.</param>
+            <param name="destroyTexture">Should it destroy the base texture of the sprite as well.</param>
+        </member>
+        <member name="T:Bridge.Pixi.StencilMaskStack">
+            <summary>
+            Generic Mask Stack data structure.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.StencilMaskStack.#ctor(Bridge.Pixi.WebGLRenderer)">
+            <param name="renderer">The renderer this manager works for.</param>
+        </member>
+        <member name="P:Bridge.Pixi.StencilMaskStack.Count">
+            <summary>
+            Internal count.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.StencilMaskStack.StencilStack">
+            <summary>
+            The actual stack.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.RenderTexture">
+            <summary>
+            A RenderTexture is a special texture that allows any Pixi display object to be rendered to it.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTexture.Renderer">
+            <summary>
+            The renderer this RenderTexture uses.
+            A RenderTexture can only belong to one renderer at the moment if its webGL.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.RenderTexture.Resolution">
+            <summary>
+            The Resolution of the texture.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTexture.Clear">
+            <summary>
+            Clears the RenderTexture.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTexture.GetBase64">
+            <summary>
+            Will return a a base64 encoded string of this texture.
+            It works by calling Canvas and then running toDataURL on that.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTexture.GetCanvas">
+            <summary>
+            Creates a Canvas element, renders this RenderTexture to it and then returns it.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTexture.GetImage">
+            <summary>
+            Will return a HTML Image of the texture.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTexture.GetPixel(System.Single,System.Single)">
+            <summary>
+            Will return a one-dimensional array containing the pixel data of a pixel within
+            the texture in RGBA order, with integer values between 0 and 255 (included).
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTexture.GetPixels">
+            <summary>
+            Will return a one-dimensional array containing the pixel data of the entire texture
+            in RGBA order, with integer values between 0 and 255 (included).
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTexture.Render(Bridge.Pixi.DisplayObject,Bridge.Pixi.Matrix,System.Boolean,System.Boolean)">
+            <summary>
+            Draw/render the given DisplayObject onto the texture.
+            </summary>
+            <param name="displayObject">The display object to render this texture on.</param>
+            <param name="matrix">Optional matrix to apply to the display object before rendering.</param>
+            <param name="clear">If true the texture will be cleared before the DisplayObject is drawn.</param>
+            <param name="updateTransform">
+            If true the DisplayObject's WorldTransform/WorldAlpha and all children transformations
+            will be restored. Not restoring this information will be a little faster.
+            </param>
+        </member>
+        <member name="M:Bridge.Pixi.RenderTexture.Resize(System.Single,System.Single,System.Boolean)">
+            <summary>
+            Resizes the RenderTexture.
+            </summary>
+            <param name="width">The width to resize to.</param>
+            <param name="height">The height to resize to.</param>
+            <param name="updateBase">Should the BaseTexture.Width and height values be resized as well?</param>
+        </member>
+        <member name="T:Bridge.Pixi.Texture">
+            <summary>
+            A texture stores the information that represents an image or part of an image.
+            It cannot be added to the display list directly. Instead use it as the texture for a Sprite.
+            If no frame is provided then the whole image is used.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.Empty">
+            <summary>
+            An empty texture, used often to not have to create multiple empty textures.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.AddTextureToCache(Bridge.Pixi.Texture,System.String)">
+            <summary>
+            Adds a texture to the global utils.TextureCache.
+            This cache is shared across the whole PIXI object.
+            </summary>
+            <param name="texture">The Texture to add to the cache.</param>
+            <param name="id">The id that the texture will be stored against.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.FromCanvas(Bridge.Html5.HTMLCanvasElement,Bridge.Pixi.ScaleMode)">
+            <summary>
+            Helper function that creates a new Texture based on the given canvas element.
+            </summary>
+            <param name="canvas">The canvas element source of the texture.</param>
+            <param name="scaleMode">The scale mode of the texture.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.FromFrame(System.String)">
+            <summary>
+            Helper function that creates a sprite that will contain a texture from the TextureCache
+            based on the frameId The frame ids are created when a Texture packer file has been loaded.
+            </summary>
+            <param name="frameId">The frame Id of the texture in the cache.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.FromImage(System.String,System.Boolean,Bridge.Pixi.ScaleMode)">
+            <summary>
+            Helper function that creates a Texture object from the given image url.
+            If the image is not in the texture cache it will be created and loaded.
+            </summary>
+            <param name="imageUrl">The image url of the texture.</param>
+            <param name="crossorigin">Whether requests should be treated as crossorigin.</param>
+            <param name="scaleMode">The scale mode of the texture.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.FromVideo(Bridge.Html5.HTMLVideoElement,Bridge.Pixi.ScaleMode)">
+            <summary>
+            Helper function that creates a new Texture based on the given video element.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.FromVideoURL(System.String,Bridge.Pixi.ScaleMode)">
+            <summary>
+            Helper function that creates a new Texture based on the video url.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.RemoveAddTextureFromCache(System.String)">
+            <summary>
+            Remove a texture from the global utils.TextureCache.
+            </summary>
+            <param name="id">The id of the texture to be removed.</param>
+            <returns>The texture that was removed.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.#ctor(Bridge.Pixi.BaseTexture,Bridge.Pixi.Rectangle,Bridge.Pixi.Rectangle,Bridge.Pixi.Rectangle,System.Boolean)">
+            <param name="baseTexture">The base texture source to create the texture from.</param>
+            <param name="frame">The rectangle frame of the texture to show.</param>
+            <param name="crop">The area of original texture.</param>
+            <param name="trim">Trimmed texture rectangle.</param>
+            <param name="rotate">
+            Indicates whether the texture should be rotated by 90 degrees (used by texture packer).
+            </param>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.BaseTexture">
+            <summary>
+            The base texture that this texture uses.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.Crop">
+            <summary>
+            This is the area of the BaseTexture image to actually copy to the
+            Canvas/WebGL when rendering, irrespective of the actual frame size or placement
+            (which can be influenced by trimmed texture atlases).
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.Frame">
+            <summary>
+            The frame specifies the region of the base texture that this texture uses.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.Height">
+            <summary>
+            The height of the Texture in pixels.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.NoFrame">
+            <summary>
+            Does this Texture have any frame data assigned to it?
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.RequiresUpdate">
+            <summary>
+            This will let a renderer know that a texture has been updated (used mainly for WebGL UV updates).
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.Trim">
+            <summary>
+            The texture trim data.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.Valid">
+            <summary>
+            This will let the renderer know if the texture is valid.
+            If it's not then it cannot be rendered.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Texture.Width">
+            <summary>
+            The width of the Texture in pixels.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.Clone">
+            <summary>
+            Creates a new texture object that acts the same as this one.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.Destroy(System.Boolean)">
+            <summary>
+            Destroys this texture.
+            </summary>
+            <param name="destroyBase">Whether to destroy the base texture as well.</param>
+        </member>
+        <member name="M:Bridge.Pixi.Texture.Update">
+            <summary>
+            Updates this texture on the GPU.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.VideoBaseTexture">
+            <summary>
+            A texture of a playing Video.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.VideoBaseTexture.AutoUpdate">
+            <summary>
+            Should the base texture automatically update itself, set to true by default.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.VideoBaseTexture.Source">
+            <summary>
+            The image source that is used to create the texture.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.VideoInfo.Source">
+            <summary>
+            One of the source urls for the video.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.VideoInfo.Mime">
+            <summary>
+            The mimetype of the video (e.g. 'video/mp4').
+            If not specified the url's extension will be used as the second part of the mime type.
+            </summary>
+        </member>
+        <member name="T:Bridge.Pixi.Ticker.Ticker">
+            <summary>
+            A Ticker class that runs an update loop that other objects listen to.
+            This class is composed around an EventEmitter object to add listeners
+            meant for execution on the next requested animation frame.
+            Animation frames are requested only when necessary,
+            e.g. When the ticker is started and the emitter has listeners.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ticker.Ticker.AutoStart">
+            <summary>
+            Whether or not this ticker should invoke the method Start automatically when a listener is added.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ticker.Ticker.DeltaTime">
+            <summary>
+            Scalar time value from last frame to this frame.
+            This value is capped by setting MinFPS and is scaled with Speed.
+            Note: The cap may be exceeded by scaling.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ticker.Ticker.Elapsed">
+            <summary>
+            Time elapsed in milliseconds from last frame to this frame.
+            Opposed to what the DeltaTime is based, this value is neither capped nor scaled.
+            If the platform supports DOMHighResTimeStamp, this value will have a precision of 1 µs.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ticker.Ticker.FPS">
+            <summary>
+            The frames per second at which this ticker is running.
+            The default is approximately 60 in most modern browsers.
+            Note: This does not factor in the value of Speed, which is specific to scaling DeltaTime.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ticker.Ticker.LastTime">
+            <summary>
+            The last time Update was invoked.
+            This value is also reset internally outside of invoking update,
+            but only when a new animation frame is requested.
+            If the platform supports DOMHighResTimeStamp, this value will have a precision of 1 µs.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ticker.Ticker.MinFPS">
+            <summary>
+            Manages the maximum amount of milliseconds allowed to elapse between invoking Update.
+            This value is used to cap DeltaTime, but does not effect the measured value of FPS.
+            When setting this property it is clamped to a value between 0 and Pixi.TargetFPMS * 1000.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ticker.Ticker.Speed">
+            <summary>
+            Factor of DeltaTime.
+            </summary>
+        </member>
+        <member name="P:Bridge.Pixi.Ticker.Ticker.Started">
+            <summary>
+            Whether or not this ticker has been started.
+            True if Start has been called.
+            False if Stop has been called.
+            While false, this value may change to true in the event of AutoStart being true and a listener is added.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Ticker.Ticker.Add(Bridge.Pixi.Ticker.Ticker.UpdateDelegate,System.Object)">
+            <summary>
+            Calls module:eventemitter3.EventEmitter#on internally for the internal 'tick' event.
+            It checks if the emitter has listeners, and if so it requests a new animation frame at this point.
+            </summary>
+            <param name="fn">The listener function to be added for updates.</param>
+            <param name="context">The listener context.</param>
+            <returns>This.</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Ticker.Ticker.AddOnce(Bridge.Pixi.Ticker.Ticker.UpdateDelegate,System.Object)">
+            <summary>
+            Calls module:eventemitter3.EventEmitter#once internally for the internal 'tick' event.
+            It checks if the emitter has listeners, and if so it requests a new animation frame at this point.
+            </summary>
+            <param name="fn">The listener function to be added for one update.</param>
+            <param name="context">The listener context.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Ticker.Ticker.Remove(Bridge.Pixi.Ticker.Ticker.UpdateDelegate,System.Object)">
+            <summary>
+            Calls module:eventemitter3.EventEmitter#off internally for 'tick' event.
+            It checks if the emitter has listeners for 'tick' event. If it does, then it cancels the animation frame.
+            </summary>
+            <param name="fn">The listener function to be removed.</param>
+            <param name="context">The listener context to be removed.</param>
+            <returns>this</returns>
+        </member>
+        <member name="M:Bridge.Pixi.Ticker.Ticker.Start">
+            <summary>
+            Starts the ticker. If the ticker has listeners a new animation frame is requested at this point.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Ticker.Ticker.Stop">
+            <summary>
+            Stops the ticker. If the ticker has requested an animation frame it is canceled at this point.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Ticker.Ticker.Update">
+            <summary>
+            Triggers an update.
+            An update entails setting the current Elapsed, the current DeltaTime, invoking all listeners with
+            current DeltaTime, and then finally setting LastTime with the value of CurrentTime that was provided.
+            This method will be called automatically by animation frame callbacks if the ticker
+            instance has been started and listeners are added.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.Ticker.Ticker.Update(System.Single)">
+            <summary>
+            Triggers an update.
+            An update entails setting the current Elapsed, the current DeltaTime, invoking all listeners with
+            current DeltaTime, and then finally setting LastTime with the value of CurrentTime that was provided.
+            This method will be called automatically by animation frame callbacks if the ticker
+            instance has been started and listeners are added.
+            </summary>
+            <param name="currentTime">The current time of execution.</param>
+        </member>
+        <member name="M:Bridge.Pixi.WebGLManager.#ctor(Bridge.Pixi.WebGLRenderer)">
+            <param name="renderer">The renderer this manager works for.</param>
+        </member>
+        <member name="P:Bridge.Pixi.WebGLManager.Renderer">
+            <summary>
+            The renderer this manager works for.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.WebGLManager.Destroy">
+            <summary>
+            Generic destroy methods to be overridden by the subclass.
+            </summary>
+        </member>
+        <member name="M:Bridge.Pixi.WebGLManager.OnContextChange">
+            <summary>
+            Generic method called when there is a WebGL context change.
+            </summary>
+        </member>
+    </members>
+</doc>

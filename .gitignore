@@ -1,3 +1,6 @@
 DwarvesWorld/bin/*
-DwarvesWorld/obj/Debug/*
+DwarvesWorld/obj/*
 .vs/*
+WebGame/Bridge/output/*
+WebGame/bin/*
+WebGame/obj/*
