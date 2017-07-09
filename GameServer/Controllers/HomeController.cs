@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DwarvesWorld.Controllers
+namespace GameServer.Controllers
 {
     public class HomeController : Controller
     {

@@ -8,14 +8,17 @@ namespace WebGame
     public class Loader
     {
         private static Graphics graphics;
+        private static IRenderer app;
+        private static Container stage;
+
         delegate void MyDelegate(MyObject e);
 
         public static void Main(string[] args)
         {
-            var app = Pixi.AutoDetectRenderer(800, 600);
+            app = Pixi.AutoDetectRenderer(800, 600);
             Document.Body.AppendChild(app.View);
 
-            var stage = new Container();
+            stage = new Container();
             graphics = new Graphics();
 
             // set a fill and line style
@@ -29,26 +32,28 @@ namespace WebGame
             graphics.EndFill();
 
             stage.AddChild(graphics);
-
-            app.Render(stage);
+            Animate();
 
             MyDelegate myDelegate = new MyDelegate(OnKeyPress2);
             jQuery.Document.On("keypress", myDelegate);
         }
 
+        private static void Animate()
+        {
+            Window.RequestAnimationFrame(Animate);
+            app.Render(stage);
+        }
 
         private static void OnKeyPress2(MyObject e)
         {
-
             if (e.Which == 97)
                 graphics.Position.X = graphics.Position.X - 10;
             if (e.Which == 100)
                 graphics.Position.X = graphics.Position.X + 10;
             if (e.Which == 119)
-                graphics.Position.Y = graphics.Position.X - 10;
+                graphics.Position.Y = graphics.Position.Y - 10;
             if (e.Which == 115)
-                graphics.Position.Y = graphics.Position.X + 10;
-
+                graphics.Position.Y = graphics.Position.Y + 10;
         }
     }
 

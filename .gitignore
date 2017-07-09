@@ -1,5 +1,5 @@
-DwarvesWorld/bin/*
-DwarvesWorld/obj/*
+GameServer/bin/*
+GameServer/obj/*
 .vs/*
 WebGame/Bridge/output/*
 WebGame/bin/*
