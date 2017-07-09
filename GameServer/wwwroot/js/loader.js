@@ -35,7 +35,7 @@ $(document).on('keypress', function (e) {
     else if (e.which === 115)
         graphics.position.y = graphics.position.y + 10;
 
-    if (!socket || socket.readyState != WebSocket.OPEN) {
+    if (!socket || socket.readyState !== WebSocket.OPEN) {
         alert("socket not connected");
     }
     var context = { "header": { "connectionId": connectId}, value: "test"};
@@ -47,7 +47,7 @@ $(document).on('keypress', function (e) {
 
 
 var socket;
-var scheme = document.location.protocol == "https:" ? "wss" : "ws";
+var scheme = document.location.protocol === "https:" ? "wss" : "ws";
 var port = document.location.port ? (":" + document.location.port) : "";
 var url = scheme + "://" + document.location.hostname + port + "/ws";
 function updateState() {
