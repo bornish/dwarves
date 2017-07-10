@@ -48,7 +48,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Js\Connection.cs" />
+    <Compile Include="Js\Game.cs" />
+    <Compile Include="Js\Input.cs" />
+    <Compile Include="Js\JsGame.cs" />
     <Compile Include="Loader.cs" />
+    <Compile Include="Js\JsInput.cs" />
+    <Compile Include="Js\Socket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
