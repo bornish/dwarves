@@ -38,6 +38,8 @@ namespace GameServer
             services.AddNativeWebSockets(options => {
                 options.RegisterInvocator<ServerWebSocketCommandInvocator>(WebSocketCommands.All);
             });
+
+            services.AddSingleton<IMainLoop, MainLoop>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

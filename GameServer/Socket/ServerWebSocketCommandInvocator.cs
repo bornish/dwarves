@@ -8,17 +8,19 @@ namespace GameServer.Socket
 {
     public class ServerWebSocketCommandInvocator : IServerWebSocketCommandInvocator
     {
-        private readonly IConnectionManager _connectionManager;
-        public ServerWebSocketCommandInvocator(IConnectionManager connectionManager)
+        private readonly IConnectionManager connectionManager;
+        private readonly IMainLoop mainLoop;
+        public ServerWebSocketCommandInvocator(IConnectionManager connectionManager, IMainLoop mainLoop)
         {
-            _connectionManager = connectionManager;
+            this.connectionManager = connectionManager;
+            this.mainLoop = mainLoop;
         }
 
         public async Task InvokeAsync(WebSocketMessageContext context)
         {
             var connection = context.GetConnectionId();
-            await _connectionManager.SendAsync(connection, context);
-            // Sending incoming data from Backend zone to the Clients (Browsers)
+            mainLoop.RegisterEvent(connection);
+            await Task.CompletedTask;//_connectionManager.SendAsync(connection, context);
         }
     }
 }
