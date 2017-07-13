@@ -1,4 +1,5 @@
-﻿using Bridge.jQuery2;
+﻿using Bridge.Html5;
+using Bridge.jQuery2;
 using WebGame.Common;
 
 namespace WebGame.PixiJs
@@ -9,21 +10,35 @@ namespace WebGame.PixiJs
 
         public JsInput()
         {
-            MyDelegate myDelegate = new MyDelegate(OnKeyPress2);
-            jQuery.Document.On("keypress", myDelegate);
+            MyDelegate keyDown = new MyDelegate(OnKeyDown);
+            jQuery.Document.On("keydown", keyDown);
+
+            MyDelegate keyUp = new MyDelegate(OnKeyUp);
+            jQuery.Document.On("keyup", keyUp);
         }
 
-        private void OnKeyPress2(MyObject e)
+        private void OnKeyDown(MyObject e)
         {
-            if (e.which == 97)
-                PressButtonA();
-            if (e.which == 100)
-                PressButtonD();
-            if (e.which == 119)
-                PressButtonS();
-            if (e.which == 115)
-                PressButtonW();
+            if (e.which == 65)
+                DownButtonA();
+            if (e.which == 68)
+                DownButtonD();
+            if (e.which == 83)
+                DownButtonS();
+            if (e.which == 87)
+                DownButtonW();
+        }
 
+        private void OnKeyUp(MyObject e)
+        {
+            if (e.which == 65)
+                UpButtonA();
+            if (e.which == 68)
+                UpButtonD();
+            if (e.which == 83)
+                UpButtonS();
+            if (e.which == 87)
+                UpButtonW();
         }
 
         public class MyObject

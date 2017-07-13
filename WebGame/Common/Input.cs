@@ -10,24 +10,49 @@ namespace WebGame.Common
     {
         public Game Controller { get; internal set; }
 
-        protected void PressButtonW()
+        protected void DownButtonW()
         {
-            Controller.PressButtonW();
+            Send("StartGo", "Up");
         }
 
-        protected void PressButtonA()
+        protected void DownButtonA()
         {
-            Controller.PressButtonA();
+            Send("StartGo", "Left");
         }
 
-        protected void PressButtonD()
+        protected void DownButtonD()
         {
-            Controller.PressButtonD();
+            Send("StartGo", "Right");
         }
 
-        protected void PressButtonS()
+        protected void DownButtonS()
         {
-            Controller.PressButtonS();
+            Send("StartGo", "Down");
+        }
+
+        protected void UpButtonW()
+        {
+            Send("StopGo", "Up");
+        }
+
+        protected void UpButtonA()
+        {
+            Send("StopGo", "Left");
+        }
+
+        protected void UpButtonD()
+        {
+            Send("StopGo", "Right");
+        }
+
+        protected void UpButtonS()
+        {
+            Send("StopGo", "Down");
+        }
+
+        private void Send(string action, string param)
+        {
+            Controller.Send(action, param);
         }
     }
 }

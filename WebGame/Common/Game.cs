@@ -16,11 +16,11 @@ namespace WebGame.Common
             this.connection = connection;
         }
 
-        internal abstract void PressButtonW();
-        internal abstract void PressButtonA();
-        internal abstract void PressButtonD();
-        internal abstract void PressButtonS();
-
         public abstract void OnMessage(float x, float y);
+
+        internal void Send(string action, string param)
+        {
+            connection.SendData(action, param);
+        }
     }
 }

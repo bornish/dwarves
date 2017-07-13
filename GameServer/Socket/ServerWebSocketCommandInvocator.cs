@@ -22,20 +22,10 @@ namespace GameServer.Socket
         {
             var connection = context.GetConnectionId();
             var data = (JObject)context.Value;
-            var x = data.GetValue("x").Value<float>();
-            var y = data.GetValue("y").Value<float>();
-            if (x > 30)
-                x = 30;
-            if (y > 30)
-                y = 30;
-
-            var answer = new WebSocketMessageContext();
-            answer.Command = WebSocketCommands.DataSend;
-            answer.Value = new { X = x, Y = y };
-            await _connectionManager.SendAsync(connection, answer);
-            // Sending incoming data from Backend zone to the Clients (Browsers)
-            //mainLoop.RegisterEvent(connection);
-            //await Task.CompletedTask;//_connectionManager.SendAsync(connection, context);        }
+            var action = data.GetValue("action").Value<string>();
+            var param = data.GetValue("param").Value<string>();
+            mainLoop.RegisterEvent(connection, action, param);
+            await Task.CompletedTask;//_connectionManager.SendAsync(connection, context);
+        }
     }
-
 }

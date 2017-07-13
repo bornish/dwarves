@@ -39,30 +39,6 @@ namespace WebGame.PixiJs
             graphics.Position.Y = y;
         }
 
-        internal override void PressButtonA()
-        {
-            //graphics.Position.X = graphics.Position.X - 10;
-            connection.SendData(graphics.Position.X - 10, graphics.Position.Y);
-        }
-
-        internal override void PressButtonD()
-        {
-            //graphics.Position.X = graphics.Position.X + 10;
-            connection.SendData(graphics.Position.X + 10, graphics.Position.Y);
-        }
-
-        internal override void PressButtonS()
-        {
-            //graphics.Position.Y = graphics.Position.Y - 10;
-            connection.SendData(graphics.Position.X, graphics.Position.Y - 10);
-        }
-
-        internal override void PressButtonW()
-        {
-            //graphics.Position.Y = graphics.Position.Y + 10;
-            connection.SendData(graphics.Position.X, graphics.Position.Y + 10);
-        }
-
         private void Animate()
         {
             Window.RequestAnimationFrame(Animate);

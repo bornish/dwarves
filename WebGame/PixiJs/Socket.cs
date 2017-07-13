@@ -33,13 +33,13 @@ namespace WebGame.PixiJs
             };
         }
 
-        public override void SendData(float x, float y)
+        public override void SendData(string action, string param)
         {
             if (socket == null || socket.ReadyState != WebSocket.State.Open)
             {
                 Window.Alert("socket not connected");
             }
-            var context = new { header = new { connectionId = connectId }, value = new { x = x, y = y} };
+            var context = new { header = new { connectionId = connectId }, value = new { action = action, param = param } };
             var str = JSON.Stringify(context);
             socket.Send(str);
         }
