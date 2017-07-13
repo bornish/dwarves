@@ -48,13 +48,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Js\Connection.cs" />
-    <Compile Include="Js\Game.cs" />
-    <Compile Include="Js\Input.cs" />
-    <Compile Include="Js\JsGame.cs" />
+    <Compile Include="Common\Connection.cs" />
+    <Compile Include="Common\Game.cs" />
+    <Compile Include="Common\Input.cs" />
+    <Compile Include="PixiJs\JsGame.cs" />
     <Compile Include="Loader.cs" />
-    <Compile Include="Js\JsInput.cs" />
-    <Compile Include="Js\Socket.cs" />
+    <Compile Include="PixiJs\JsInput.cs" />
+    <Compile Include="PixiJs\Socket.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,16 +62,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Bridge\output\bridge.js" />
-    <Content Include="Bridge\output\bridge.min.js" />
-    <Content Include="Bridge\output\webGame.js" />
-    <Content Include="Bridge\output\webGame.min.js" />
     <Content Include="Bridge\www\demo.html" />
     <Content Include="Bridge\www\jquery-2.x-git.min.js" />
     <Content Include="Bridge\www\pixi.js" />
     <Content Include="Bridge\www\pixi.min.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Bridge\output\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Bridge.Min.15.7.0\build\Bridge.Min.targets" Condition="Exists('..\packages\Bridge.Min.15.7.0\build\Bridge.Min.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebGame.Js
+namespace WebGame.Common
 {
     abstract class Game
     {
@@ -20,5 +20,7 @@ namespace WebGame.Js
         internal abstract void PressButtonA();
         internal abstract void PressButtonD();
         internal abstract void PressButtonS();
+
+        public abstract void OnMessage(float x, float y);
     }
 }

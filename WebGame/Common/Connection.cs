@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebGame.Js;
 
-namespace WebGame.Js
+namespace WebGame.Common
 {
     abstract class Connection
     {
         public Game Reception { get; internal set; }
-        public abstract void SendData();
+        public abstract void SendData(float x, float y);
     }
 }

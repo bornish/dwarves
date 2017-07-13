@@ -1,15 +1,10 @@
 ﻿using Bridge.Html5;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebGame.Common;
 
-namespace WebGame.Js
+namespace WebGame.PixiJs
 {
     class Socket : Connection
     {
-
         private string connectId;
         private WebSocket socket;
 
@@ -22,25 +17,29 @@ namespace WebGame.Js
             socket = new WebSocket(url)
             {
                 //socket.OnOpen = 
-
                 OnMessage = (ev) =>
                 {
-                    EventObject data = JSON.Parse<EventObject>((string)ev.Data);
+                    //Window.Alert((string)ev.Data);
+                    dynamic data = JSON.Parse<EventObject>((string)ev.Data);
                     if (data.Command == 4)
                     {
-                        connectId = data.Value;
+                        connectId = (string)data.Value;
+                    }
+                    else if (data.Command == 2)
+                    {
+                        Reception.OnMessage(data.Value.X, data.Value.Y);
                     }
                 }
             };
         }
 
-        public override void SendData()
+        public override void SendData(float x, float y)
         {
             if (socket == null || socket.ReadyState != WebSocket.State.Open)
             {
                 Window.Alert("socket not connected");
             }
-            var context = new { header = new { connectionId = connectId }, value = "test" };
+            var context = new { header = new { connectionId = connectId }, value = new { x = x, y = y} };
             var str = JSON.Stringify(context);
             socket.Send(str);
         }
@@ -49,6 +48,12 @@ namespace WebGame.Js
     public class EventObject
     {
         public int Command { get; set; }
-        public string Value { get; set; }
+        public object Value { get; set; }
+    }
+
+    public class DataObject
+    {
+        public float x;
+        public float y;
     }
 }

@@ -1,5 +1,6 @@
 GameServer/bin/*
 GameServer/obj/*
+GameServer/wwwroot/js/output/*
 .vs/*
 WebGame/Bridge/output/*
 WebGame/bin/*

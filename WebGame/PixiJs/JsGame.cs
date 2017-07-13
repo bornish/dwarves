@@ -1,12 +1,9 @@
-﻿using Bridge.Html5;
+﻿using System;
+using Bridge.Html5;
 using Bridge.Pixi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebGame.Common;
 
-namespace WebGame.Js
+namespace WebGame.PixiJs
 {
     class JsGame : Game
     {
@@ -36,28 +33,34 @@ namespace WebGame.Js
             Animate();
         }
 
+        public override void OnMessage(float x, float y)
+        {
+            graphics.Position.X = x;
+            graphics.Position.Y = y;
+        }
+
         internal override void PressButtonA()
         {
-            graphics.Position.X = graphics.Position.X - 10;
-            connection.SendData();
+            //graphics.Position.X = graphics.Position.X - 10;
+            connection.SendData(graphics.Position.X - 10, graphics.Position.Y);
         }
 
         internal override void PressButtonD()
         {
-            graphics.Position.X = graphics.Position.X + 10;
-            connection.SendData();
+            //graphics.Position.X = graphics.Position.X + 10;
+            connection.SendData(graphics.Position.X + 10, graphics.Position.Y);
         }
 
         internal override void PressButtonS()
         {
-            graphics.Position.Y = graphics.Position.Y - 10;
-            connection.SendData();
+            //graphics.Position.Y = graphics.Position.Y - 10;
+            connection.SendData(graphics.Position.X, graphics.Position.Y - 10);
         }
 
         internal override void PressButtonW()
         {
-            graphics.Position.Y = graphics.Position.Y + 10;
-            connection.SendData();
+            //graphics.Position.Y = graphics.Position.Y + 10;
+            connection.SendData(graphics.Position.X, graphics.Position.Y + 10);
         }
 
         private void Animate()

@@ -7,6 +7,19 @@
   <PropertyGroup>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot/js\output\bridge.js" />
+    <Content Remove="wwwroot/js\output\bridge.min.js" />
+    <Content Remove="wwwroot/js\output\deleteme.txt" />
+    <Content Remove="wwwroot/js\output\readme.txt" />
+    <Content Remove="wwwroot/js\output\webGame.common.js" />
+    <Content Remove="wwwroot/js\output\webGame.common.min.js" />
+    <Content Remove="wwwroot/js\output\webGame.js" />
+    <Content Remove="wwwroot/js\output\webGame.min.js" />
+    <Content Remove="wwwroot/js\output\webGame.pixiJs.js" />
+    <Content Remove="wwwroot/js\output\webGame.pixiJs.min.js" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
@@ -21,6 +34,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebGame\WebGame.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\js\output\" />
   </ItemGroup>
 
 </Project>

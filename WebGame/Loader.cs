@@ -1,4 +1,5 @@
-﻿using WebGame.Js;
+﻿
+using WebGame.PixiJs;
 
 namespace WebGame
 {
