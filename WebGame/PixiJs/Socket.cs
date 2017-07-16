@@ -1,5 +1,6 @@
 ﻿using Bridge.Html5;
 using WebGame.Common;
+using WebGame.Common.Types;
 
 namespace WebGame.PixiJs
 {
@@ -27,7 +28,8 @@ namespace WebGame.PixiJs
                     }
                     else if (data.Command == 2)
                     {
-                        Reception.OnMessage(data.Value.X, data.Value.Y);
+                        WordlState state = data.Value;
+                        Reception.OnMessage(state);
                     }
                 }
             };

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WebGame.Common.Types;
 
 namespace GameServer.Socket
 {
@@ -21,7 +22,7 @@ namespace GameServer.Socket
             var timer = new Timer(LoopAsync, null, 100, Timeout.Infinite);
         }
 
-        private async void LoopAsync(object state)
+        private async void LoopAsync(object empty)
         {
             try
             {
@@ -43,6 +44,7 @@ namespace GameServer.Socket
                         }
                         var action = playerAction.Value.Action;
 
+                        // TODO по диогонали слишком быстро
                         if ((action & ActionState.GoDown) == ActionState.GoDown)
                             playerData.y = playerData.y + 1;
 
@@ -67,7 +69,15 @@ namespace GameServer.Socket
                         var playerData = playersData[connection.Key];
                         var answer = new WebSocketMessageContext();
                         answer.Command = WebSocketCommands.DataSend;
-                        answer.Value = new { X = playerData.x, Y = playerData.y };
+                        var state = new WordlState()
+                        {
+                            persons = new Person[1],
+                            tiles = new TileType[20,20]
+                        };
+                        state.persons[0] = new Person() { x = playerData.x, y = playerData.y };
+                        state.tiles[5, 5] = TileType.Stone;
+                        state.tiles[1, 1] = TileType.Stone;
+                        answer.Value = state;
                         connectionManager.SendAsync(connection.Key, answer);
                     }
                     // запоминаем время конца

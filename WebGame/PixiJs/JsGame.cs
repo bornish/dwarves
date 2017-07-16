@@ -2,47 +2,48 @@
 using Bridge.Html5;
 using Bridge.Pixi;
 using WebGame.Common;
+using WebGame.Common.Types;
+using WebGame.PixiJs.Display;
+using WebGame.Common.Display;
 
 namespace WebGame.PixiJs
 {
     class JsGame : Game
     {
-        private Graphics graphics;
         private IRenderer app;
-        private Container stage;
+        private Container rootContainer;
+        private Container personsContainer;
+        private Container mapContainer;
 
         public JsGame():base(new JsInput(), new Socket())
         {
             app = Pixi.AutoDetectRenderer(800, 600);
             Document.Body.AppendChild(app.View);
-
-            stage = new Container();
-            graphics = new Graphics();
-
-            // set a fill and line style
-            graphics.BeginFill(0xFF3300);
-            graphics.LineStyle(4, 0xffd900, 1);
-
-            // draw a circle, set the lineStyle to zero so the circle doesn't have an outline
-            graphics.LineStyle(0);
-            graphics.BeginFill(0xFFFF0B, 0.5f);
-            graphics.DrawCircle(470, 90, 60);
-            graphics.EndFill();
-
-            stage.AddChild(graphics);
+            personsContainer = new Container();
+            mapContainer = new Container();
+            rootContainer = new Container();
+            
+            
+            rootContainer.AddChild(mapContainer);
+            rootContainer.AddChild(personsContainer);
             Animate();
         }
 
-        public override void OnMessage(float x, float y)
+        internal override Map CreateMap()
         {
-            graphics.Position.X = x;
-            graphics.Position.Y = y;
+            return new JsMap(mapContainer);
+        }
+
+        internal override Person CreatePerson()
+        {
+            return new JsPerson(personsContainer);
         }
 
         private void Animate()
         {
             Window.RequestAnimationFrame(Animate);
-            app.Render(stage);
+
+            app.Render(rootContainer);
         }
     }
 }

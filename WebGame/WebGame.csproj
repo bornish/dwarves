@@ -49,8 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Connection.cs" />
+    <Compile Include="Common\Display\Map.cs" />
+    <Compile Include="Common\Display\Person.cs" />
     <Compile Include="Common\Game.cs" />
     <Compile Include="Common\Input.cs" />
+    <Compile Include="Common\Types\ConnectionStates.cs" />
+    <Compile Include="PixiJs\Display\JsMap.cs" />
+    <Compile Include="PixiJs\Display\JsPerson.cs" />
     <Compile Include="PixiJs\JsGame.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="PixiJs\JsInput.cs" />

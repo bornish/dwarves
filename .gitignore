@@ -5,3 +5,5 @@ GameServer/wwwroot/js/output/*
 WebGame/Bridge/output/*
 WebGame/bin/*
 WebGame/obj/*
+Common/bin/*
+Common/obj/*

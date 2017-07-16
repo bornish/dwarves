@@ -13,10 +13,16 @@
     <Content Remove="wwwroot/js\output\bridge.min.js" />
     <Content Remove="wwwroot/js\output\deleteme.txt" />
     <Content Remove="wwwroot/js\output\readme.txt" />
+    <Content Remove="wwwroot/js\output\webGame.common.display.js" />
+    <Content Remove="wwwroot/js\output\webGame.common.display.min.js" />
     <Content Remove="wwwroot/js\output\webGame.common.js" />
     <Content Remove="wwwroot/js\output\webGame.common.min.js" />
+    <Content Remove="wwwroot/js\output\webGame.common.types.js" />
+    <Content Remove="wwwroot/js\output\webGame.common.types.min.js" />
     <Content Remove="wwwroot/js\output\webGame.js" />
     <Content Remove="wwwroot/js\output\webGame.min.js" />
+    <Content Remove="wwwroot/js\output\webGame.pixiJs.display.js" />
+    <Content Remove="wwwroot/js\output\webGame.pixiJs.display.min.js" />
     <Content Remove="wwwroot/js\output\webGame.pixiJs.js" />
     <Content Remove="wwwroot/js\output\webGame.pixiJs.min.js" />
   </ItemGroup>
@@ -33,10 +39,11 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebGame\WebGame.csproj" />
+    <Folder Include="wwwroot\js\output\" />
+    <Folder Include="wwwroot\js\output\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\js\output\" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>
