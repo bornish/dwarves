@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Camera.cs" />
     <Compile Include="Common\Connection.cs" />
     <Compile Include="Common\Display\Map.cs" />
     <Compile Include="Common\Display\Person.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Common\Types\ConnectionStates.cs" />
     <Compile Include="PixiJs\Display\JsMap.cs" />
     <Compile Include="PixiJs\Display\JsPerson.cs" />
+    <Compile Include="PixiJs\JsCamera.cs" />
     <Compile Include="PixiJs\JsGame.cs" />
     <Compile Include="Loader.cs" />
     <Compile Include="PixiJs\JsInput.cs" />

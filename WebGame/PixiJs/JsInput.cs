@@ -1,4 +1,5 @@
-﻿using Bridge.Html5;
+﻿using System;
+using Bridge.Html5;
 using Bridge.jQuery2;
 using WebGame.Common;
 
@@ -15,6 +16,18 @@ namespace WebGame.PixiJs
 
             MyDelegate keyUp = new MyDelegate(OnKeyUp);
             jQuery.Document.On("keyup", keyUp);
+
+            MyDelegate scrool = new MyDelegate(OnScroll);
+            jQuery.Document.Bind("mousewheel DOMMouseScroll", scrool);
+        }
+
+        private void OnScroll(MyObject ev)
+        {
+            dynamic e = ev;
+            if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0)
+                WheelUp();
+            else
+                WheelDown();
         }
 
         private void OnKeyDown(MyObject e)

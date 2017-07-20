@@ -25,11 +25,13 @@ namespace WebGame.PixiJs
                     if (data.Command == 4)
                     {
                         connectId = (string)data.Value;
+                        SendData("Registration", login);
+
                     }
                     else if (data.Command == 2)
                     {
                         WordlState state = data.Value;
-                        Reception.OnMessage(state);
+                        reception.OnMessage(state);
                     }
                 }
             };

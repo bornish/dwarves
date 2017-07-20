@@ -13,17 +13,20 @@ namespace WebGame.Common
         protected Connection connection;
         private Person person;
         private Map map;
+        protected Camera camera;
         public Game(Input input, Connection connection)
         {
-            input.Controller = this;
-            connection.Reception = this;
+            input.controller = this;
+            connection.reception = this;
             this.connection = connection;
+            
         }
 
-        public void Init()
+        protected void Init(Camera camera)
         {
             map = CreateMap();
             person = CreatePerson();
+            this.camera = camera;
         }
 
         internal abstract Map CreateMap();
@@ -34,6 +37,18 @@ namespace WebGame.Common
             person.Y = worldState.persons[0].y;
 
             map.Update(worldState.tiles, 20, 20);
+
+            camera.SetPersonPosition(person.X, person.Y);
+        }
+
+        internal void ScaleUp()
+        {
+            camera.ScaleUp();
+        }
+
+        internal void ScaleDown()
+        {
+            camera.ScaleDown();
         }
 
         internal void Send(string action, string param)

@@ -23,6 +23,7 @@ namespace WebGame.PixiJs.Display
 
         public void Update(dynamic tiles, int tilesLenghtX, int tilesLenghtY)
         {
+            // TODO перерисовывть каждый кадр не практично, хорошо бы получать от сервера число, если оно изменилось то перерисуем.
             graphics.Clear();
             graphics.LineStyle(0);
             for (var i = 0; i < tilesLenghtX; ++i)

@@ -10,6 +10,8 @@ namespace WebGame.PixiJs
 {
     class JsGame : Game
     {
+        
+
         private IRenderer app;
         private Container rootContainer;
         private Container personsContainer;
@@ -17,7 +19,7 @@ namespace WebGame.PixiJs
 
         public JsGame():base(new JsInput(), new Socket())
         {
-            app = Pixi.AutoDetectRenderer(800, 600);
+            app = Pixi.AutoDetectRenderer(Camera.ScreenWidth, Camera.ScreenHeight);
             Document.Body.AppendChild(app.View);
             personsContainer = new Container();
             mapContainer = new Container();
@@ -27,6 +29,11 @@ namespace WebGame.PixiJs
             rootContainer.AddChild(mapContainer);
             rootContainer.AddChild(personsContainer);
             Animate();
+        }
+
+        public void InitAll()
+        {
+            Init(new JsCamera(rootContainer));
         }
 
         internal override Map CreateMap()

@@ -9,9 +9,9 @@ namespace WebGame
 
         public static void Main(string[] args)
         {
-            Window.Alert("version 16");
+            //Window.Alert("version 20");
             var game = new JsGame();
-            game.Init();
+            game.InitAll();
         }
     }
 }

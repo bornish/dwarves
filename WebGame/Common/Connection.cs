@@ -8,7 +8,11 @@ namespace WebGame.Common
 {
     abstract class Connection
     {
-        public Game Reception { get; internal set; }
+        public Game reception;
+        protected bool isRegister;
+        protected string login = "test";
+
         public abstract void SendData(string action, string param);
+        
     }
 }

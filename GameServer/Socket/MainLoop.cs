@@ -11,13 +11,25 @@ namespace GameServer.Socket
 {
     public class MainLoop : IMainLoop
     {
+        private const int width = 100;
+        private const int widthLength = 20;
+        private const int heightLenght = 20;
+
+
         private IConnectionManager connectionManager;
+        private ConcurrentDictionary<string, string> logins = new ConcurrentDictionary<string, string>();
         private ConcurrentDictionary<string, PlayerAction> playersActions = new ConcurrentDictionary<string, PlayerAction>();
         private Dictionary<string, PlayerData> playersData = new Dictionary<string, PlayerData>();
+        private TileType[,] tiles;
 
         public MainLoop(IConnectionManager connectionManager)
         {
             this.connectionManager = connectionManager;
+            tiles = new TileType[widthLength, heightLenght];
+
+            tiles[5, 5] = TileType.Stone;
+            tiles[1, 1] = TileType.Stone;
+            tiles[1, 0] = TileType.Stone;
 
             var timer = new Timer(LoopAsync, null, 100, Timeout.Infinite);
         }
@@ -43,40 +55,42 @@ namespace GameServer.Socket
                             playersData[playerAction.Key] = playerData;
                         }
                         var action = playerAction.Value.Action;
-
+                        var newX = playerData.x;
+                        var newY = playerData.y;
                         // TODO по диогонали слишком быстро
                         if ((action & ActionState.GoDown) == ActionState.GoDown)
-                            playerData.y = playerData.y + 1;
+                            newY = playerData.y + 1;
 
                         if ((action & ActionState.GoUp) == ActionState.GoUp)
-                            playerData.y = playerData.y - 1;
+                            newY = playerData.y - 1;
 
                         if ((action & ActionState.GoLeft) == ActionState.GoLeft)
-                            playerData.x = playerData.x - 1;
+                            newX = playerData.x - 1;
 
                         if ((action & ActionState.GoRight) == ActionState.GoRight)
-                            playerData.x = playerData.x + 1;
+                            newX = playerData.x + 1;
 
-                        if (playerData.x > 30)
-                            playerData.x = 30;
-                        if (playerData.y > 30)
-                            playerData.y = 30;
+                        if (CanMove(newX, newY, tiles))
+                        {
+                            playerData.x = newX;
+                            playerData.y = newY;
+                        }
                     }
 
                     // отправляем сообщения
                     foreach (var connection in connectionManager.Connections)
                     {
-                        var playerData = playersData[connection.Key];
+
+                        var playerData = playersData[logins[connection.Key]];
                         var answer = new WebSocketMessageContext();
                         answer.Command = WebSocketCommands.DataSend;
                         var state = new WordlState()
                         {
                             persons = new Person[1],
-                            tiles = new TileType[20,20]
+                            tiles = tiles
                         };
                         state.persons[0] = new Person() { x = playerData.x, y = playerData.y };
-                        state.tiles[5, 5] = TileType.Stone;
-                        state.tiles[1, 1] = TileType.Stone;
+                        
                         answer.Value = state;
                         connectionManager.SendAsync(connection.Key, answer);
                     }
@@ -92,35 +106,58 @@ namespace GameServer.Socket
             }
         }
 
+        private bool CanMove(float newX, float newY, TileType[,] tiles)
+        {
+            if (newX > width * widthLength || newX < 0)
+                return false;
+
+            if (newY > width * heightLenght || newY < 0)
+                return false;
+            int i = (int)newX / width;
+            int j = (int)newY / width;
+            if (tiles[i, j] == TileType.Stone)
+                return false;
+
+            return true;
+        }
+
         public void RegisterEvent(string connection, string action, string param)
         {
-            ActionState lastAction = ActionState.None;
-            if (playersActions.ContainsKey(connection))
-                lastAction = playersActions[connection].Action;
+            if (action == "Registration")
+            {
+                var login = param;
+                logins[connection] = login;
+                playersActions[login] = new PlayerAction { Action = ActionState.None };
+            }
+            else
+            {
+                var login = logins[connection];
+                var lastAction = playersActions[login].Action;
 
-            if (action == "StartGo")
-            {
-                if (param == "Right")
-                    lastAction = lastAction | ActionState.GoRight;
-                else if (param == "Left")
-                    lastAction = lastAction | ActionState.GoLeft;
-                else if (param == "Up")
-                    lastAction = lastAction | ActionState.GoUp;
-                else if (param == "Down")
-                    lastAction = lastAction | ActionState.GoDown;
+                if (action == "StartGo")
+                {
+                    if (param == "Right")
+                        lastAction = lastAction | ActionState.GoRight;
+                    else if (param == "Left")
+                        lastAction = lastAction | ActionState.GoLeft;
+                    else if (param == "Up")
+                        lastAction = lastAction | ActionState.GoUp;
+                    else if (param == "Down")
+                        lastAction = lastAction | ActionState.GoDown;
+                }
+                else if (action == "StopGo")
+                {
+                    if (param == "Right")
+                        lastAction = lastAction & ~ActionState.GoRight;
+                    else if (param == "Left")
+                        lastAction = lastAction & ~ActionState.GoLeft;
+                    else if (param == "Up")
+                        lastAction = lastAction & ~ActionState.GoUp;
+                    else if (param == "Down")
+                        lastAction = lastAction & ~ActionState.GoDown;
+                }
+                playersActions[login] = new PlayerAction { Action = lastAction };
             }
-            else if (action == "StopGo")
-            {
-                if (param == "Right")
-                    lastAction = lastAction & ~ActionState.GoRight;
-                else if (param == "Left")
-                    lastAction = lastAction & ~ActionState.GoLeft;
-                else if (param == "Up")
-                    lastAction = lastAction & ~ActionState.GoUp;
-                else if (param == "Down")
-                    lastAction = lastAction & ~ActionState.GoDown;
-            }
-            playersActions[connection] = new PlayerAction { Action = lastAction };
         }
     }
 

@@ -8,7 +8,7 @@ namespace WebGame.Common
 {
     abstract class Input
     {
-        public Game Controller { get; internal set; }
+        public Game controller;
 
         protected void DownButtonW()
         {
@@ -50,9 +50,19 @@ namespace WebGame.Common
             Send("StopGo", "Down");
         }
 
+        protected void WheelUp()
+        {
+            controller.ScaleUp();
+        }
+
+        protected void WheelDown()
+        {
+            controller.ScaleDown();
+        }
+
         private void Send(string action, string param)
         {
-            Controller.Send(action, param);
+            controller.Send(action, param);
         }
     }
 }
