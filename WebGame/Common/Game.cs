@@ -11,7 +11,8 @@ namespace WebGame.Common
     abstract class Game
     {
         protected Connection connection;
-        private Person person;
+        private Dictionary<long, Person> players = new Dictionary<long, Person>();
+        private Dictionary<long, Person> npc = new Dictionary<long, Person>();
         private Map map;
         protected Camera camera;
         public Game(Input input, Connection connection)
@@ -25,7 +26,6 @@ namespace WebGame.Common
         protected void Init(Camera camera)
         {
             map = CreateMap();
-            person = CreatePerson();
             this.camera = camera;
         }
 
@@ -33,12 +33,27 @@ namespace WebGame.Common
         internal abstract Person CreatePerson();
         public void OnMessage(WordlState worldState)
         {
-            person.X = worldState.persons[0].x;
-            person.Y = worldState.persons[0].y;
+
+            // TODO удалять элементы тоже можно
+            foreach (var person in worldState.players)
+            {
+                if (!players.ContainsKey(person.id))
+                    players[person.id] = CreatePerson();
+                players[person.id].X = person.x;
+                players[person.id].Y = person.y;
+            }
+
+            foreach (var person in worldState.npc)
+            {
+                if (!npc.ContainsKey(person.id))
+                    npc[person.id] = CreatePerson();
+                npc[person.id].X = person.x;
+                npc[person.id].Y = person.y;
+            }
 
             map.Update(worldState.tiles, 20, 20);
 
-            camera.SetPersonPosition(person.X, person.Y);
+            camera.SetPersonPosition(players[worldState.myId].X, players[worldState.myId].Y);
         }
 
         internal void ScaleUp()

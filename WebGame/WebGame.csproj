@@ -86,6 +86,7 @@
     <Error Condition="!Exists('..\packages\Bridge.Min.15.7.0\build\Bridge.Min.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Bridge.Min.15.7.0\build\Bridge.Min.targets'))" />
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>xcopy  /Y "$(ProjectDir)\Bridge\output" "$(ProjectDir)\..\GameServer\wwwroot\js\output"</PostBuildEvent>
+    <PostBuildEvent>xcopy  /Y "$(ProjectDir)\Bridge\output" "$(ProjectDir)\..\GameServer\wwwroot\js\output"
+xcopy  /Y "$(ProjectDir)\Common\Types" "$(ProjectDir)\..\Common\Common\Types"</PostBuildEvent>
   </PropertyGroup>
 </Project>

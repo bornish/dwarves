@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WebGame.Common.Types;
@@ -15,11 +14,15 @@ namespace GameServer.Socket
         private const int widthLength = 20;
         private const int heightLenght = 20;
 
-
+        private volatile int currentPersonId;
+        private long currentNpcId;
         private IConnectionManager connectionManager;
-        private ConcurrentDictionary<string, string> logins = new ConcurrentDictionary<string, string>();
-        private ConcurrentDictionary<string, PlayerAction> playersActions = new ConcurrentDictionary<string, PlayerAction>();
-        private Dictionary<string, PlayerData> playersData = new Dictionary<string, PlayerData>();
+        private ConcurrentDictionary<string, string> loginedUsers = new ConcurrentDictionary<string, string>();
+        private ConcurrentDictionary<string, int> connectionDictionary = new ConcurrentDictionary<string, int>();
+        private ConcurrentDictionary<int, PlayerAction> playersActions = new ConcurrentDictionary<int, PlayerAction>();
+
+        private Dictionary<int, ServerDataPerson> playersData = new Dictionary<int, ServerDataPerson>();
+        private Dictionary<long, ServerDataPerson> npcData = new Dictionary<long, ServerDataPerson>();
         private TileType[,] tiles;
 
         public MainLoop(IConnectionManager connectionManager)
@@ -31,7 +34,40 @@ namespace GameServer.Socket
             tiles[1, 1] = TileType.Stone;
             tiles[1, 0] = TileType.Stone;
 
+            var npc = new ServerDataPerson() { x = 0f, y = 0f, id = GetNextNpcId() };
+            npcData.Add(npc.id, npc);
+
             var timer = new Timer(LoopAsync, null, 100, Timeout.Infinite);
+        }
+
+        private long GetNextNpcId()
+        {
+            currentNpcId += 1;
+            return currentNpcId;
+        }
+
+        private (float, float) Move(float x, float y, ActionState action)
+        {
+            var newX = x;
+            var newY = y;
+            // TODO по диогонали слишком быстро
+            if ((action & ActionState.GoDown) == ActionState.GoDown)
+                newY = y + 1;
+
+            if ((action & ActionState.GoUp) == ActionState.GoUp)
+                newY = y - 1;
+
+            if ((action & ActionState.GoLeft) == ActionState.GoLeft)
+                newX = x - 1;
+
+            if ((action & ActionState.GoRight) == ActionState.GoRight)
+                newX = x + 1;
+
+            if (CanMove(newX, newY, tiles))
+            {
+                return (newX, newY);
+            }
+            return (x, y);
         }
 
         private async void LoopAsync(object empty)
@@ -44,53 +80,55 @@ namespace GameServer.Socket
                     // делаем дела
                     foreach (var playerAction in playersActions)
                     {
-                        PlayerData playerData;
+                        ServerDataPerson playerData;
                         if (playersData.ContainsKey(playerAction.Key))
                         {
                             playerData = playersData[playerAction.Key];
                         }
                         else
                         {
-                            playerData = new PlayerData() { x = 0f, y = 0f };
+                            playerData = new ServerDataPerson() { x = 0f, y = 0f, id = playerAction.Key };
                             playersData[playerAction.Key] = playerData;
                         }
                         var action = playerAction.Value.Action;
-                        var newX = playerData.x;
-                        var newY = playerData.y;
-                        // TODO по диогонали слишком быстро
-                        if ((action & ActionState.GoDown) == ActionState.GoDown)
-                            newY = playerData.y + 1;
 
-                        if ((action & ActionState.GoUp) == ActionState.GoUp)
-                            newY = playerData.y - 1;
+                        (playerData.x, playerData.y) = Move(playerData.x, playerData.y, action);
+                    }
 
-                        if ((action & ActionState.GoLeft) == ActionState.GoLeft)
-                            newX = playerData.x - 1;
-
-                        if ((action & ActionState.GoRight) == ActionState.GoRight)
-                            newX = playerData.x + 1;
-
-                        if (CanMove(newX, newY, tiles))
-                        {
-                            playerData.x = newX;
-                            playerData.y = newY;
-                        }
+                    foreach (var npc in npcData.Values)
+                    {
+                        (npc.x, npc.y) = Move(npc.x, npc.y, ActionState.GoDown);
                     }
 
                     // отправляем сообщения
                     foreach (var connection in connectionManager.Connections)
                     {
-
-                        var playerData = playersData[logins[connection.Key]];
+                        var id = connectionDictionary[connection.Key];
+                        var playerData = playersData[id];
                         var answer = new WebSocketMessageContext();
                         answer.Command = WebSocketCommands.DataSend;
                         var state = new WordlState()
                         {
-                            persons = new Person[1],
+                            players = new DataPerson[playersData.Count],
+                            npc = new DataPerson[npcData.Count],
+                            myId = id,
                             tiles = tiles
                         };
-                        state.persons[0] = new Person() { x = playerData.x, y = playerData.y };
-                        
+
+                        var i = 0;
+                        foreach (var data in playersData.Values)
+                        {
+                            state.players[i] = data;
+                            i++;
+                        }
+
+                        i = 0;
+                        foreach (var data in npcData.Values)
+                        {
+                            state.npc[i] = data;
+                            i++;
+                        }
+
                         answer.Value = state;
                         connectionManager.SendAsync(connection.Key, answer);
                     }
@@ -108,10 +146,10 @@ namespace GameServer.Socket
 
         private bool CanMove(float newX, float newY, TileType[,] tiles)
         {
-            if (newX > width * widthLength || newX < 0)
+            if (newX >= width * widthLength || newX < 0)
                 return false;
 
-            if (newY > width * heightLenght || newY < 0)
+            if (newY >= width * heightLenght || newY < 0)
                 return false;
             int i = (int)newX / width;
             int j = (int)newY / width;
@@ -126,13 +164,14 @@ namespace GameServer.Socket
             if (action == "Registration")
             {
                 var login = param;
-                logins[connection] = login;
-                playersActions[login] = new PlayerAction { Action = ActionState.None };
+                var id = GetNextPersonId();
+                connectionDictionary[connection] = id;
+                playersActions[id] = new PlayerAction(ActionState.None);
             }
             else
             {
-                var login = logins[connection];
-                var lastAction = playersActions[login].Action;
+                var id = connectionDictionary[connection];
+                var lastAction = playersActions[id].Action;
 
                 if (action == "StartGo")
                 {
@@ -156,14 +195,25 @@ namespace GameServer.Socket
                     else if (param == "Down")
                         lastAction = lastAction & ~ActionState.GoDown;
                 }
-                playersActions[login] = new PlayerAction { Action = lastAction };
+                playersActions[id] = new PlayerAction(lastAction);
             }
+        }
+
+        private int GetNextPersonId()
+        {
+            currentPersonId += 1;
+            return currentPersonId;
         }
     }
 
     public struct PlayerAction
     {
-        public ActionState Action { get; set; }
+        public ActionState Action { get; }
+
+        public PlayerAction(ActionState action)
+        {
+            Action = action;
+        }
     }
 
     public enum ActionState
@@ -171,10 +221,9 @@ namespace GameServer.Socket
         None = 0, GoRight = 1, GoLeft = 2, GoUp = 4, GoDown = 8,
     }
 
-    public class PlayerData
+    public class ServerDataPerson : DataPerson
     {
-        public float x;
-        public float y;
+        public string serverSecretData = "secret";
     }
 
     public interface IMainLoop

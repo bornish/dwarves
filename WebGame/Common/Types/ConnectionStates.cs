@@ -4,12 +4,15 @@ namespace WebGame.Common.Types
 
     public class WordlState
     {
-        public DataPerson[] persons;
+        public DataPerson[] players;
+        public DataPerson[] npc;
         public TileType[,] tiles;
+        public long myId;
     }
 
     public class DataPerson
     {
+        public long id;
         public float x;
         public float y;
     }
