@@ -23,8 +23,9 @@ namespace GameServer.Socket
             var connection = context.GetConnectionId();
             var data = (JObject)context.Value;
             var action = data.GetValue("action").Value<string>();
-            var param = data.GetValue("param").Value<string>();
-            mainLoop.RegisterEvent(connection, action, param);
+            var param1 = data.GetValue("param1").Value<string>();
+            var param2 = data.GetValue("param2").Value<string>();
+            mainLoop.RegisterEvent(connection, action, param1, param2);
             await Task.CompletedTask;//_connectionManager.SendAsync(connection, context);
         }
     }

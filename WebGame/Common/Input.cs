@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebGame.Common.Connection;
 
 namespace WebGame.Common
 {
@@ -48,6 +49,17 @@ namespace WebGame.Common
         protected void UpButtonS()
         {
             Send("StopGo", "Down");
+        }
+
+        // TODO переделать
+        public void Click(long personId)
+        {
+            Click(ClickEventType.Player, personId);
+        }
+
+        protected void Click(ClickEventType clickEventType, long personId)
+        {
+            controller.SendExtend("Click", clickEventType.ToString(), personId.ToString());
         }
 
         protected void WheelUp()

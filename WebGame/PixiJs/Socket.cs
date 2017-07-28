@@ -1,10 +1,11 @@
-﻿using Bridge.Html5;
+﻿using System;
+using Bridge.Html5;
 using WebGame.Common;
-using WebGame.Common.Types;
+using WebGame.Common.Connection;
 
 namespace WebGame.PixiJs
 {
-    class Socket : Connection
+    class Socket : Connect
     {
         private string connectId;
         private WebSocket socket;
@@ -25,7 +26,7 @@ namespace WebGame.PixiJs
                     if (data.Command == 4)
                     {
                         connectId = (string)data.Value;
-                        SendData("Registration", login);
+                        SendData("Registration", login, null);
 
                     }
                     else if (data.Command == 2)
@@ -37,13 +38,13 @@ namespace WebGame.PixiJs
             };
         }
 
-        public override void SendData(string action, string param)
+        public override void SendData(string action, string param1, string param2)
         {
             if (socket == null || socket.ReadyState != WebSocket.State.Open)
             {
                 Window.Alert("socket not connected");
             }
-            var context = new { header = new { connectionId = connectId }, value = new { action = action, param = param } };
+            var context = new { header = new { connectionId = connectId }, value = new { action = action, param1 = param1, param2 = param2 } };
             var str = JSON.Stringify(context);
             socket.Send(str);
         }

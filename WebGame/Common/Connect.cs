@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace WebGame.Common
 {
-    abstract class Connection
+    abstract class Connect
     {
         public Game reception;
         protected bool isRegister;
         protected string login = "test";
 
-        public abstract void SendData(string action, string param);
-        
+        public abstract void SendData(string action, string param1, string param2);
+
+
     }
 }

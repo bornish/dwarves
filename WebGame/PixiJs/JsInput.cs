@@ -2,6 +2,7 @@
 using Bridge.Html5;
 using Bridge.jQuery2;
 using WebGame.Common;
+using WebGame.Common.Connection;
 
 namespace WebGame.PixiJs
 {
@@ -58,5 +59,7 @@ namespace WebGame.PixiJs
         {
             public int which;
         }
+
+       
     }
 }

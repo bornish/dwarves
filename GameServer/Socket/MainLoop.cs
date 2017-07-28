@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using WebGame.Common.Types;
+using WebGame.Common.Connection;
 
 namespace GameServer.Socket
 {
@@ -13,6 +13,7 @@ namespace GameServer.Socket
         private const int width = 100;
         private const int widthLength = 20;
         private const int heightLenght = 20;
+        private const int SPEED = 4;
 
         private volatile int currentPersonId;
         private long currentNpcId;
@@ -46,22 +47,23 @@ namespace GameServer.Socket
             return currentNpcId;
         }
 
-        private (float, float) Move(float x, float y, ActionState action)
+        private (float, float) Move(float x, float y, LongAction action)
         {
             var newX = x;
             var newY = y;
             // TODO по диогонали слишком быстро
-            if ((action & ActionState.GoDown) == ActionState.GoDown)
-                newY = y + 1;
+            // TODO оставить множитель для всех дел со временем
+            if ((action & LongAction.GoDown) == LongAction.GoDown)
+                newY = y + SPEED;
 
-            if ((action & ActionState.GoUp) == ActionState.GoUp)
-                newY = y - 1;
+            if ((action & LongAction.GoUp) == LongAction.GoUp)
+                newY = y - SPEED;
 
-            if ((action & ActionState.GoLeft) == ActionState.GoLeft)
-                newX = x - 1;
+            if ((action & LongAction.GoLeft) == LongAction.GoLeft)
+                newX = x - SPEED;
 
-            if ((action & ActionState.GoRight) == ActionState.GoRight)
-                newX = x + 1;
+            if ((action & LongAction.GoRight) == LongAction.GoRight)
+                newX = x + SPEED;
 
             if (CanMove(newX, newY, tiles))
             {
@@ -90,19 +92,21 @@ namespace GameServer.Socket
                             playerData = new ServerDataPerson() { x = 0f, y = 0f, id = playerAction.Key };
                             playersData[playerAction.Key] = playerData;
                         }
-                        var action = playerAction.Value.Action;
+                        var action = playerAction.Value.LongAction;
 
                         (playerData.x, playerData.y) = Move(playerData.x, playerData.y, action);
                     }
 
                     foreach (var npc in npcData.Values)
                     {
-                        (npc.x, npc.y) = Move(npc.x, npc.y, ActionState.GoDown);
+                        (npc.x, npc.y) = Move(npc.x, npc.y, LongAction.GoDown);
                     }
 
                     // отправляем сообщения
                     foreach (var connection in connectionManager.Connections)
                     {
+                        if (!connectionDictionary.ContainsKey(connection.Key))
+                            continue;
                         var id = connectionDictionary[connection.Key];
                         var playerData = playersData[id];
                         var answer = new WebSocketMessageContext();
@@ -128,11 +132,12 @@ namespace GameServer.Socket
                             state.npc[i] = data;
                             i++;
                         }
-
+                        state.timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
                         answer.Value = state;
+                        // TODO надо отправлять текущее время еще.
                         connectionManager.SendAsync(connection.Key, answer);
                     }
-                    // запоминаем время конца
+                    //TODO запоминаем время конца
                     // спим
                     await Task.Delay(40);
                 }
@@ -159,43 +164,49 @@ namespace GameServer.Socket
             return true;
         }
 
-        public void RegisterEvent(string connection, string action, string param)
+        public void RegisterEvent(string connection, string action, string param1, string param2)
         {
             if (action == "Registration")
             {
-                var login = param;
+                var login = param1;
                 var id = GetNextPersonId();
                 connectionDictionary[connection] = id;
-                playersActions[id] = new PlayerAction(ActionState.None);
+                playersActions[id] = new PlayerAction(LongAction.None, null);
             }
             else
             {
                 var id = connectionDictionary[connection];
-                var lastAction = playersActions[id].Action;
+                var lastLongAction = playersActions[id].LongAction;
+                var attackInfo = playersActions[id].AttackInfo;
 
                 if (action == "StartGo")
                 {
-                    if (param == "Right")
-                        lastAction = lastAction | ActionState.GoRight;
-                    else if (param == "Left")
-                        lastAction = lastAction | ActionState.GoLeft;
-                    else if (param == "Up")
-                        lastAction = lastAction | ActionState.GoUp;
-                    else if (param == "Down")
-                        lastAction = lastAction | ActionState.GoDown;
+                    if (param1 == "Right")
+                        lastLongAction = lastLongAction | LongAction.GoRight;
+                    else if (param1 == "Left")
+                        lastLongAction = lastLongAction | LongAction.GoLeft;
+                    else if (param1 == "Up")
+                        lastLongAction = lastLongAction | LongAction.GoUp;
+                    else if (param1 == "Down")
+                        lastLongAction = lastLongAction | LongAction.GoDown;
                 }
                 else if (action == "StopGo")
                 {
-                    if (param == "Right")
-                        lastAction = lastAction & ~ActionState.GoRight;
-                    else if (param == "Left")
-                        lastAction = lastAction & ~ActionState.GoLeft;
-                    else if (param == "Up")
-                        lastAction = lastAction & ~ActionState.GoUp;
-                    else if (param == "Down")
-                        lastAction = lastAction & ~ActionState.GoDown;
+                    if (param1 == "Right")
+                        lastLongAction = lastLongAction & ~LongAction.GoRight;
+                    else if (param1 == "Left")
+                        lastLongAction = lastLongAction & ~LongAction.GoLeft;
+                    else if (param1 == "Up")
+                        lastLongAction = lastLongAction & ~LongAction.GoUp;
+                    else if (param1 == "Down")
+                        lastLongAction = lastLongAction & ~LongAction.GoDown;
                 }
-                playersActions[id] = new PlayerAction(lastAction);
+                else if (action == "Click")
+                {
+                    lastLongAction = lastLongAction | LongAction.Attack;
+                    attackInfo = new AttackInfo(long.Parse(param2));
+                }
+                playersActions[id] = new PlayerAction(lastLongAction, attackInfo);
             }
         }
 
@@ -208,18 +219,31 @@ namespace GameServer.Socket
 
     public struct PlayerAction
     {
-        public ActionState Action { get; }
+        public LongAction LongAction { get; }
+        public AttackInfo? AttackInfo { get; }
 
-        public PlayerAction(ActionState action)
+        public PlayerAction(LongAction action, AttackInfo? attackInfo)
         {
-            Action = action;
+            LongAction = action;
+            AttackInfo = attackInfo;
         }
     }
 
-    public enum ActionState
+    public enum LongAction
     {
-        None = 0, GoRight = 1, GoLeft = 2, GoUp = 4, GoDown = 8,
+        None = 0, GoRight = 1, GoLeft = 2, GoUp = 4, GoDown = 8, Attack = 16,
     }
+
+    public struct AttackInfo
+    {
+        public long TargetId { get; }
+
+        public AttackInfo(long targetId)
+        {
+            TargetId = targetId;
+        }
+    }
+
 
     public class ServerDataPerson : DataPerson
     {
@@ -228,6 +252,6 @@ namespace GameServer.Socket
 
     public interface IMainLoop
     {
-        void RegisterEvent(string connection, string action, string param);
+        void RegisterEvent(string connection, string action, string param1, string param2);
     }
 }

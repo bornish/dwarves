@@ -2,7 +2,7 @@
 using Bridge.Html5;
 using Bridge.Pixi;
 using WebGame.Common;
-using WebGame.Common.Types;
+using WebGame.Common.Connection;
 using WebGame.PixiJs.Display;
 using WebGame.Common.Display;
 
@@ -10,8 +10,6 @@ namespace WebGame.PixiJs
 {
     class JsGame : Game
     {
-        
-
         private IRenderer app;
         private Container rootContainer;
         private Container personsContainer;
@@ -41,16 +39,18 @@ namespace WebGame.PixiJs
             return new JsMap(mapContainer);
         }
 
-        internal override Person CreatePerson()
+        internal override Person CreatePerson(long id)
         {
-            return new JsPerson(personsContainer);
+            return new JsPerson(id, personsContainer, input);
         }
 
         private void Animate()
         {
             Window.RequestAnimationFrame(Animate);
-
+            UpdateWorld();
             app.Render(rootContainer);
         }
+
+        
     }
 }

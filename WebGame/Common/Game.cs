@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebGame.Common.Display;
-using WebGame.Common.Types;
+using WebGame.Common.Connection;
 
 namespace WebGame.Common
 {
     abstract class Game
     {
-        protected Connection connection;
+        protected Connect connection;
         private Dictionary<long, Person> players = new Dictionary<long, Person>();
         private Dictionary<long, Person> npc = new Dictionary<long, Person>();
         private Map map;
         protected Camera camera;
-        public Game(Input input, Connection connection)
+        protected Input input;
+
+        private long currentServerTime = 0;
+        private long lastServerTime = 0;
+        private long myId = -1;
+
+        public Game(Input input, Connect connection)
         {
+            this.input = input;
             input.controller = this;
             connection.reception = this;
             this.connection = connection;
@@ -30,30 +34,78 @@ namespace WebGame.Common
         }
 
         internal abstract Map CreateMap();
-        internal abstract Person CreatePerson();
+        internal abstract Person CreatePerson(long id);
+
+        protected void UpdateWorld()
+        {
+            if (0 > myId)
+                return;
+
+            // TODO по настоящему считать прошедшее время
+            float delta = 10;
+            foreach (var person in players.Values)
+            {
+                var changeX = (person.needX - person.lastX) * delta / (currentServerTime - lastServerTime);
+                var changeY = (person.needY - person.lastY) * delta / (currentServerTime - lastServerTime);
+                person.X += changeX;
+                person.Y += changeY;
+            }
+
+            foreach (var person in npc.Values)
+            {
+                var changeX = (person.needX - person.lastX) * delta / (currentServerTime - lastServerTime);
+                var changeY = (person.needY - person.lastY) * delta / (currentServerTime - lastServerTime);
+                person.X += changeX;
+                person.Y += changeY;
+            }
+
+            camera.SetPersonPosition(players[myId].X, players[myId].Y);
+        }
+
         public void OnMessage(WordlState worldState)
         {
+            dynamic temp = worldState.timestamp;
+            long temp2 = temp;
+            if (temp2 < lastServerTime)
+                return;
 
+            lastServerTime = currentServerTime;
+            currentServerTime = temp2;
             // TODO удалять элементы тоже можно
             foreach (var person in worldState.players)
             {
                 if (!players.ContainsKey(person.id))
-                    players[person.id] = CreatePerson();
-                players[person.id].X = person.x;
-                players[person.id].Y = person.y;
+                {
+                    players[person.id] = CreatePerson(person.id);
+                    players[person.id].X = person.x;
+                    players[person.id].Y = person.y;
+                }
+                SetNeedPosition(players[person.id], person.x, person.y);
+
             }
 
             foreach (var person in worldState.npc)
             {
                 if (!npc.ContainsKey(person.id))
-                    npc[person.id] = CreatePerson();
-                npc[person.id].X = person.x;
-                npc[person.id].Y = person.y;
+                {
+                    npc[person.id] = CreatePerson(person.id);
+                    npc[person.id].X = person.x;
+                    npc[person.id].Y = person.y;
+                }
+
+                SetNeedPosition(npc[person.id], person.x, person.y);
             }
 
+            myId = worldState.myId;
             map.Update(worldState.tiles, 20, 20);
+        }
 
-            camera.SetPersonPosition(players[worldState.myId].X, players[worldState.myId].Y);
+        private void SetNeedPosition(Person person, float x, float y)
+        {
+            person.lastX = person.X;
+            person.lastY = person.Y;
+            person.needX = x;
+            person.needY = y;
         }
 
         internal void ScaleUp()
@@ -68,7 +120,14 @@ namespace WebGame.Common
 
         internal void Send(string action, string param)
         {
-            connection.SendData(action, param);
+            connection.SendData(action, param, null);
         }
+
+        internal void SendExtend(string action, string param1, string param2)
+        {
+            connection.SendData(action, param1, param2);
+        }
+
+        
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bridge.Pixi;
 using WebGame.Common.Display;
-using WebGame.Common.Types;
+using WebGame.Common.Connection;
 
 namespace WebGame.PixiJs.Display
 {

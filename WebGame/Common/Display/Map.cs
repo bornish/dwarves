@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebGame.Common.Types;
+using WebGame.Common.Connection;
 
 namespace WebGame.Common.Display
 {

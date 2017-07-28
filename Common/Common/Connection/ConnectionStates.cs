@@ -1,5 +1,5 @@
 ﻿
-namespace WebGame.Common.Types
+namespace WebGame.Common.Connection
 {
 
     public class WordlState
@@ -8,6 +8,7 @@ namespace WebGame.Common.Types
         public DataPerson[] npc;
         public TileType[,] tiles;
         public long myId;
+        public long timestamp;
     }
 
     public class DataPerson
