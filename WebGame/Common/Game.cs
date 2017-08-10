@@ -80,6 +80,7 @@ namespace WebGame.Common
                     players[person.id].X = person.x;
                     players[person.id].Y = person.y;
                 }
+                players[person.id].SetDirection(person.direction);
                 SetNeedPosition(players[person.id], person.x, person.y);
 
             }
@@ -93,11 +94,12 @@ namespace WebGame.Common
                     npc[person.id].Y = person.y;
                 }
 
+                npc[person.id].SetDirection(person.direction);
                 SetNeedPosition(npc[person.id], person.x, person.y);
             }
 
             myId = worldState.myId;
-            map.Update(worldState.tiles, 20, 20);
+            map.Update(worldState.tiles, MapConst.WIDTH, MapConst.HEIGHT);
         }
 
         private void SetNeedPosition(Person person, float x, float y)

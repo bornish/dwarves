@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using WebGame.Common.Connection;
 
 namespace WebGame.Common.Display
 {
-    interface IPerson
-    {
-        float X { get; set; }
-        float Y { get; set; }
-    }
-
-    public abstract class Person : IPerson
+    public abstract class Person
     {
         public long id;
         public float needX;
         public float needY;
         public float lastX;
         public float lastY;
+        protected Direction oldDirection;
 
         public Person(long id)
         {
@@ -27,5 +18,6 @@ namespace WebGame.Common.Display
 
         public abstract float X { get; set; }
         public abstract float Y { get; set; }
+        public abstract void SetDirection(Direction direction);
     }
 }

@@ -3,8 +3,8 @@ namespace WebGame.Common
 {
     abstract class Camera
     {
-        public const int ScreenWidth = 800;
-        public const int ScreenHeight = 600;
+        public const int ScreenWidth = 1500;
+        public const int ScreenHeight = 800;
 
         private float offsetX;
         private float offsetY;

@@ -1,9 +1,9 @@
 ﻿using System;
 using Bridge.Pixi;
 using WebGame.Common.Display;
-using Bridge.Html5;
 using Bridge.Pixi.Interaction;
 using WebGame.Common;
+using WebGame.Common.Connection;
 
 namespace WebGame.PixiJs.Display
 {
@@ -23,18 +23,7 @@ namespace WebGame.PixiJs.Display
         {
             graphics = new Graphics();
 
-            // draw a circle, set the lineStyle to zero so the circle doesn't have an outline
-            graphics.LineStyle(2, 0x000000);
-
-            int w = 60;
-            int h = 30;
-
-            DrawBody(graphics, w, h);
-            DrawHead(graphics, h);
-            DrawArms(graphics, w, h);
-
-
-
+            UpdateGraphics(graphics, Direction.Down);
 
             graphics.Interactive = true;
             var func = new TestDelegate(Click);
@@ -53,13 +42,17 @@ namespace WebGame.PixiJs.Display
             graphics.EndFill();
         }
 
-        private void DrawHead(Graphics graphics, int heightPerson)
+        private void DrawHead(Graphics graphics, int heightPerson, Direction direction)
         {
-            int radius = 13;
+            int radius = 16;
             graphics.BeginFill(0xF4CD8A);
             graphics.DrawCircle(0, -heightPerson + SHIFT_Y, radius);
             graphics.EndFill();
             graphics.BeginFill(0x000000);
+
+            if (direction == Direction.Up)
+                return;
+
             graphics.MoveTo(- radius / 2, -heightPerson + SHIFT_Y - radius / 3);
             graphics.LineTo(- radius / 2 + 2, -heightPerson + SHIFT_Y - radius / 3);
             graphics.MoveTo(radius / 2, -heightPerson + SHIFT_Y - radius / 3);
@@ -83,8 +76,8 @@ namespace WebGame.PixiJs.Display
         private void DrawArms(Graphics graphics, int widthPerson, int heightPerson)
         {
             graphics.BeginFill(0xF4CD8A);
-            graphics.DrawCircle(-widthPerson/2 +15, -heightPerson/2 + SHIFT_Y, 6);
-            graphics.DrawCircle(widthPerson / 2 - 15, -heightPerson / 2 + SHIFT_Y, 6);
+            graphics.DrawCircle(-widthPerson/2 +15, -heightPerson/2 + SHIFT_Y, 9);
+            graphics.DrawCircle(widthPerson / 2 - 15, -heightPerson / 2 + SHIFT_Y, 9);
             graphics.EndFill();
         }
 
@@ -92,6 +85,38 @@ namespace WebGame.PixiJs.Display
             private void Click(InteractionEvent e)
         {
             input.Click(id);
+        }
+
+        public override void SetDirection(Direction direction)
+        {
+            if (oldDirection == direction)
+                return;
+
+            oldDirection = direction;
+            
+            UpdateGraphics(graphics, direction);
+        }
+
+        private void UpdateGraphics(Graphics graphics, Direction direction)
+        {
+            graphics.Clear();
+            graphics.LineStyle(2, 0x000000);
+
+            int w = 80;
+            int h = 40;
+            
+            if (direction == Direction.Up)
+            {
+                DrawHead(graphics, h, direction);
+                DrawArms(graphics, w, h);
+                DrawBody(graphics, w, h);
+            }
+            else
+            {
+                DrawBody(graphics, w, h);
+                DrawHead(graphics, h, direction);
+                DrawArms(graphics, w, h);
+            }
         }
     }
 }

@@ -10,9 +10,6 @@ namespace GameServer.Socket
 {
     public class MainLoop : IMainLoop
     {
-        private const int width = 100;
-        private const int widthLength = 20;
-        private const int heightLenght = 20;
         private const int SPEED = 4;
 
         private volatile int currentPersonId;
@@ -29,7 +26,7 @@ namespace GameServer.Socket
         public MainLoop(IConnectionManager connectionManager)
         {
             this.connectionManager = connectionManager;
-            tiles = new TileType[widthLength, heightLenght];
+            tiles = new TileType[MapConst.WIDTH, MapConst.HEIGHT];
 
             tiles[5, 5] = TileType.Stone;
             tiles[1, 1] = TileType.Stone;
@@ -47,29 +44,41 @@ namespace GameServer.Socket
             return currentNpcId;
         }
 
-        private (float, float) Move(float x, float y, LongAction action)
+        private (float, float, Direction) Move(float x, float y, LongAction action, Direction direction)
         {
             var newX = x;
             var newY = y;
             // TODO по диогонали слишком быстро
             // TODO оставить множитель для всех дел со временем
             if ((action & LongAction.GoDown) == LongAction.GoDown)
+            {
                 newY = y + SPEED;
-
-            if ((action & LongAction.GoUp) == LongAction.GoUp)
-                newY = y - SPEED;
+                direction = Direction.Down;
+            }
 
             if ((action & LongAction.GoLeft) == LongAction.GoLeft)
+            {
                 newX = x - SPEED;
+                direction = Direction.Left;
+            }
 
             if ((action & LongAction.GoRight) == LongAction.GoRight)
+            {
                 newX = x + SPEED;
+                direction = Direction.Right;
+            }
+
+            if ((action & LongAction.GoUp) == LongAction.GoUp)
+            {
+                newY = y - SPEED;
+                direction = Direction.Up;
+            }
 
             if (CanMove(newX, newY, tiles))
             {
-                return (newX, newY);
+                return (newX, newY, direction);
             }
-            return (x, y);
+            return (x, y, direction);
         }
 
         private async void LoopAsync(object empty)
@@ -94,12 +103,12 @@ namespace GameServer.Socket
                         }
                         var action = playerAction.Value.LongAction;
 
-                        (playerData.x, playerData.y) = Move(playerData.x, playerData.y, action);
+                        (playerData.x, playerData.y, playerData.direction) = Move(playerData.x, playerData.y, action, playerData.direction);
                     }
 
                     foreach (var npc in npcData.Values)
                     {
-                        (npc.x, npc.y) = Move(npc.x, npc.y, LongAction.GoDown);
+                        (npc.x, npc.y, npc.direction) = Move(npc.x, npc.y, LongAction.GoDown, npc.direction);
                     }
 
                     // отправляем сообщения
@@ -151,13 +160,13 @@ namespace GameServer.Socket
 
         private bool CanMove(float newX, float newY, TileType[,] tiles)
         {
-            if (newX >= width * widthLength || newX < 0)
+            if (newX >= MapConst.TILE_SIZE * MapConst.WIDTH || newX < 0)
                 return false;
 
-            if (newY >= width * heightLenght || newY < 0)
+            if (newY >= MapConst.TILE_SIZE * MapConst.HEIGHT || newY < 0)
                 return false;
-            int i = (int)newX / width;
-            int j = (int)newY / width;
+            int i = (int)newX / MapConst.TILE_SIZE;
+            int j = (int)newY / MapConst.TILE_SIZE;
             if (tiles[i, j] == TileType.Stone)
                 return false;
 

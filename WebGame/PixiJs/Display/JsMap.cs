@@ -11,7 +11,6 @@ namespace WebGame.PixiJs.Display
 {
     class JsMap : Map
     {
-        private const int width = 100; //80 
         private Graphics graphics;
 
         public JsMap(Container mapContainer)
@@ -33,13 +32,13 @@ namespace WebGame.PixiJs.Display
                     if (tiles[i][j] == TileType.Empty)
                     {
                         graphics.BeginFill(0x00FF00);
-                        graphics.DrawRect(i * width, j * width, width, width);
+                        graphics.DrawRect(i * MapConst.TILE_SIZE, j * MapConst.TILE_SIZE, MapConst.TILE_SIZE, MapConst.TILE_SIZE);
                         graphics.EndFill();
                     }
                     else
                     {
                         graphics.BeginFill(0xFFFFFF);
-                        graphics.DrawRect(i * width, j * width, width, width);
+                        graphics.DrawRect(i * MapConst.TILE_SIZE, j * MapConst.TILE_SIZE, MapConst.TILE_SIZE, MapConst.TILE_SIZE);
                         graphics.EndFill();
                     }
                 }
