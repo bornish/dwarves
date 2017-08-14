@@ -37,8 +37,11 @@ namespace WebGame.PixiJs.Display
         private void DrawBody(Graphics graphics, int width, int height)
         {
             graphics.BeginFill(0xA9A9A9);
-            graphics.MoveTo(width/2, SHIFT_Y);
-            graphics.Arc(0, SHIFT_Y, width / 2, (float)Math.PI, 2 * (float)Math.PI);
+            
+            graphics.MoveTo(-width / 2, SHIFT_Y);
+            graphics.BezierCurveTo(-width / 2, -height * 4 / 3 + SHIFT_Y, width / 2, -height * 4 / 3 + SHIFT_Y, width / 2, SHIFT_Y);
+            graphics.LineTo(-width / 2, SHIFT_Y);
+            
             graphics.EndFill();
         }
 
@@ -117,6 +120,11 @@ namespace WebGame.PixiJs.Display
                 DrawHead(graphics, h, direction);
                 DrawArms(graphics, w, h);
             }
+        }
+
+        public override void UpdateAnimation()
+        {
+            // смотрим какие анимации сейчас активны и устанавливаем положение тела исходя из них
         }
     }
 }

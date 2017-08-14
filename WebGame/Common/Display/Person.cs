@@ -1,4 +1,5 @@
-﻿using WebGame.Common.Connection;
+﻿using System;
+using WebGame.Common.Connection;
 
 namespace WebGame.Common.Display
 {
@@ -19,5 +20,7 @@ namespace WebGame.Common.Display
         public abstract float X { get; set; }
         public abstract float Y { get; set; }
         public abstract void SetDirection(Direction direction);
+
+        public abstract void UpdateAnimation();
     }
 }

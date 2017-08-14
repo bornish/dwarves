@@ -49,6 +49,7 @@ namespace WebGame.Common
                 var changeY = (person.needY - person.lastY) * delta / (currentServerTime - lastServerTime);
                 person.X += changeX;
                 person.Y += changeY;
+                person.UpdateAnimation();
             }
 
             foreach (var person in npc.Values)
@@ -57,6 +58,7 @@ namespace WebGame.Common
                 var changeY = (person.needY - person.lastY) * delta / (currentServerTime - lastServerTime);
                 person.X += changeX;
                 person.Y += changeY;
+                person.UpdateAnimation();
             }
 
             camera.SetPersonPosition(players[myId].X, players[myId].Y);
