@@ -14,6 +14,7 @@ namespace WebGame.PixiJs
         private Container rootContainer;
         private Container personsContainer;
         private Container mapContainer;
+        private IRender render;
 
         public JsGame():base(new JsInput(), new Socket())
         {
@@ -22,6 +23,7 @@ namespace WebGame.PixiJs
             personsContainer = new Container();
             mapContainer = new Container();
             rootContainer = new Container();
+            render = new JsRender(personsContainer);
             
             
             rootContainer.AddChild(mapContainer);
@@ -41,7 +43,7 @@ namespace WebGame.PixiJs
 
         internal override Person CreatePerson(long id)
         {
-            return new JsPerson(id, personsContainer, input);
+            return new HumanPerson(render, id);
         }
 
         private void Animate()

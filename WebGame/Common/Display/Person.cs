@@ -5,6 +5,8 @@ namespace WebGame.Common.Display
 {
     public abstract class Person
     {
+        public const float SHIFT_Y = 10;
+
         public long id;
         public float needX;
         public float needY;
