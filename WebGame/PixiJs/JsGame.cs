@@ -43,7 +43,7 @@ namespace WebGame.PixiJs
 
         internal override Person CreatePerson(long id)
         {
-            return new HumanPerson(render, id);
+            return new HumanPerson(render, id, input);
         }
 
         private void Animate()

@@ -1,34 +1,37 @@
-﻿using WebGame.Common.Connection;
+﻿using Bridge.Pixi.Interaction;
+using WebGame.Common.Connection;
 
 namespace WebGame.Common.Display
 {
     class HumanPerson : Person
     {
+        // TODO delete
+        delegate void TestDelegate(InteractionEvent e);
+        private Input input;
+
         private IContainer person;
         private IContainer containerAll;
         private IGraphics body;
         IRender render;
 
-        public HumanPerson(IRender render, long id) : base(id)
+        public HumanPerson(IRender render, long id, Input input) : base(id)
         {
             this.render = render;
+            this.input = input;
 
             // регистрируем в рендере нужные нам объекты
             person = render.CreateContainerOnStage();
             containerAll = render.CreateContainerOnContainer(person);
             body = render.CreateGraphicsOnContainer(containerAll);
 
-            /*
-             delegate void TestDelegate(InteractionEvent e);
-            person.Interactive = true;
+            
+             
+            person.SetInteractive(true);
             var func = new TestDelegate(Click);
             person.On("pointerdown", func);
 
-            private void Click(InteractionEvent e)
-        {
-            input.Click(id);
-        }
-            */
+            
+            
 
             // определяем их параметры
             containerAll.SetPositionY(SHIFT_Y);
@@ -36,6 +39,11 @@ namespace WebGame.Common.Display
             UpdateGraphics(body, Direction.Down);
 
             
+        }
+
+        private void Click(InteractionEvent e)
+        {
+            input.Click(id);
         }
 
         public override float X { get { return person.GetPositionX(); } set { person.SetPositionX(value); } }

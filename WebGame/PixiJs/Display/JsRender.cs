@@ -1,4 +1,5 @@
 ﻿
+using System;
 using Bridge.Pixi;
 using WebGame.Common.Display;
 
@@ -62,6 +63,16 @@ namespace WebGame.PixiJs.Display
         public float GetPositionY()
         {
             return value.Position.Y;
+        }
+
+        public void On(string v, Delegate func)
+        {
+            value.On(v, func);
+        }
+
+        public void SetInteractive(bool v)
+        {
+            value.Interactive = v;
         }
 
         public void SetPositionX(float x)

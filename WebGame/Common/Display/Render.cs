@@ -1,5 +1,4 @@
-﻿
-
+﻿using System;
 using WebGame.PixiJs.Display;
 
 namespace WebGame.Common.Display
@@ -23,6 +22,9 @@ namespace WebGame.Common.Display
         void AddChild(JsContainer container);
         float GetPositionY();
         void AddChild(JsGraphics graphics);
+        void SetInteractive(bool v);
+        
+        void On(string v, Delegate func);
     }
 
     public interface IGraphics
