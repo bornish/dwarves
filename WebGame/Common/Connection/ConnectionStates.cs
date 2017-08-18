@@ -17,10 +17,37 @@ namespace WebGame.Common.Connection
         public float x;
         public float y;
         public Direction direction;
+        public AnimationDescription currentAnimation;
     }
+
+    public class AnimationDescription
+    {
+        public AnimationNames name;
+        public long timeStart;
+        public long duration;
+        public float t;
+        public bool start;
+        public bool end;
+
+        public AnimationDescription() { }
+        public AnimationDescription(AnimationNames name, long duration, long currentTime)
+        {
+            this.name = name;
+            this.duration = duration;
+            timeStart = currentTime;
+            t = 0;
+            start = true;
+        }
+    }
+
+    public enum AnimationNames
+    {
+        Attack = 0
+    }
+
     public enum Direction
     {
-        Left = 0,Up = 1, Right=2, Down=3,
+        Left = 0, Up = 1, Right = 2, Down = 3,
     }
     public enum TileType
     {

@@ -89,26 +89,36 @@ namespace GameServer.Socket
                 {
                     // запоминаем время начала
                     // делаем дела
+                    var currentTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
                     foreach (var playerAction in playersActions)
                     {
-                        ServerDataPerson playerData;
+                        ServerDataPerson data;
                         if (playersData.ContainsKey(playerAction.Key))
                         {
-                            playerData = playersData[playerAction.Key];
+                            data = playersData[playerAction.Key];
                         }
                         else
                         {
-                            playerData = new ServerDataPerson() { x = 0f, y = 0f, id = playerAction.Key };
-                            playersData[playerAction.Key] = playerData;
+                            data = new ServerDataPerson() { x = 0f, y = 0f, id = playerAction.Key };
+                            playersData[playerAction.Key] = data;
                         }
                         var action = playerAction.Value.LongAction;
 
-                        (playerData.x, playerData.y, playerData.direction) = Move(playerData.x, playerData.y, action, playerData.direction);
+                        DoContinueAnimation(data.currentAnimation, currentTime);
+                        (data.x, data.y, data.direction) = Move(data.x, data.y, action, data.direction);
+
+                        if (playerAction.Value.FastAction != null && !playerAction.Value.FastAction.processed)
+                        {
+                            playerAction.Value.FastAction.processed = true;
+                            data.currentAnimation = new AnimationDescription(AnimationNames.Attack, 2000, currentTime);
+                        }
                     }
 
-                    foreach (var npc in npcData.Values)
+                    foreach (var data in npcData.Values)
                     {
-                        (npc.x, npc.y, npc.direction) = Move(npc.x, npc.y, LongAction.GoDown, npc.direction);
+                        DoContinueAnimation(data.currentAnimation, currentTime);
+                        (data.x, data.y, data.direction) = Move(data.x, data.y, LongAction.GoDown, data.direction);
                     }
 
                     // отправляем сообщения
@@ -141,7 +151,7 @@ namespace GameServer.Socket
                             state.npc[i] = data;
                             i++;
                         }
-                        state.timestamp = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                        state.timestamp = currentTime;
                         answer.Value = state;
                         // TODO надо отправлять текущее время еще.
                         connectionManager.SendAsync(connection.Key, answer);
@@ -156,6 +166,24 @@ namespace GameServer.Socket
                 Console.Write("Критическая ошибка");
                 Console.Write(e);
             }
+        }
+
+        private void DoContinueAnimation(AnimationDescription currentAnimation, long currentTime)
+        {
+            if (currentAnimation == null || currentAnimation.end)
+                return;
+
+            currentAnimation.start = false;
+            if (currentTime - currentAnimation.timeStart > currentAnimation.duration)
+            {
+                currentAnimation.end = true;
+                currentAnimation.t = 1;
+            }
+            else
+            {
+                currentAnimation.t = (float)(currentTime - currentAnimation.timeStart) / currentAnimation.duration;
+            }
+            
         }
 
         private bool CanMove(float newX, float newY, TileType[,] tiles)
@@ -173,6 +201,7 @@ namespace GameServer.Socket
             return true;
         }
 
+        // TODO Action должен быть enum
         public void RegisterEvent(string connection, string action, string param1, string param2)
         {
             if (action == "Registration")
@@ -186,7 +215,7 @@ namespace GameServer.Socket
             {
                 var id = connectionDictionary[connection];
                 var lastLongAction = playersActions[id].LongAction;
-                var attackInfo = playersActions[id].AttackInfo;
+                var fastAction = playersActions[id].FastAction;
 
                 if (action == "StartGo")
                 {
@@ -212,10 +241,13 @@ namespace GameServer.Socket
                 }
                 else if (action == "Click")
                 {
-                    lastLongAction = lastLongAction | LongAction.Attack;
-                    attackInfo = new AttackInfo(long.Parse(param2));
+                    fastAction = new FastAction()
+                    {
+                        targetId = long.Parse(param2),
+                        type = FastActionType.Attack
+                    };
                 }
-                playersActions[id] = new PlayerAction(lastLongAction, attackInfo);
+                playersActions[id] = new PlayerAction(lastLongAction, fastAction);
             }
         }
 
@@ -226,31 +258,39 @@ namespace GameServer.Socket
         }
     }
 
-    public struct PlayerAction
+    // TODO вернуть структуры, помнить timestamp когда получили команду, в data помним timestamp последеней выполенной команды
+    public class PlayerAction
     {
         public LongAction LongAction { get; }
-        public AttackInfo? AttackInfo { get; }
+        public FastAction FastAction { get; }
 
-        public PlayerAction(LongAction action, AttackInfo? attackInfo)
+        public PlayerAction(LongAction action, FastAction fastAction)
         {
             LongAction = action;
-            AttackInfo = attackInfo;
+            FastAction = fastAction;
         }
     }
 
     public enum LongAction
     {
-        None = 0, GoRight = 1, GoLeft = 2, GoUp = 4, GoDown = 8, Attack = 16,
+        None = 0, GoRight = 1, GoLeft = 2, GoUp = 4, GoDown = 8,
     }
 
-    public struct AttackInfo
+    public class FastAction
     {
-        public long TargetId { get; }
+        public FastActionType type;
+        public bool processed;
+        public long targetId;
 
-        public AttackInfo(long targetId)
+        public FastAction()
         {
-            TargetId = targetId;
+            processed = false;
         }
+    }
+
+    public enum FastActionType
+    {
+        Attack
     }
 
 

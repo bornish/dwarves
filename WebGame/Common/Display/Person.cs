@@ -13,6 +13,7 @@ namespace WebGame.Common.Display
         public float lastX;
         public float lastY;
         protected Direction oldDirection;
+        internal AnimationDescription currentAnimation;
 
         public Person(long id)
         {
@@ -23,6 +24,6 @@ namespace WebGame.Common.Display
         public abstract float Y { get; set; }
         public abstract void SetDirection(Direction direction);
 
-        public abstract void UpdateAnimation();
+        public abstract void UpdateAnimation(long currentTime);
     }
 }

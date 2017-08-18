@@ -1,4 +1,5 @@
-﻿using Bridge.Pixi.Interaction;
+﻿using System;
+using Bridge.Pixi.Interaction;
 using WebGame.Common.Connection;
 
 namespace WebGame.Common.Display
@@ -59,7 +60,29 @@ namespace WebGame.Common.Display
             UpdateGraphics(body, direction);
         }
 
-        public override void UpdateAnimation()
+        public override void UpdateAnimation(long currentTime)
+        {
+            if (currentAnimation != null)
+            {
+                var t = (float)(currentTime - currentAnimation.timeStart) / currentAnimation.duration;
+
+                if (t < 1)
+                {
+                    ShowAnimation(currentAnimation.name, t);
+                }
+                else
+                {
+                    ClearAnimation(currentAnimation.name);
+                    currentAnimation = null;
+                }
+            }
+        }
+
+        private void ClearAnimation(AnimationNames name)
+        {
+        }
+
+        private void ShowAnimation(AnimationNames name, float t)
         {
         }
 

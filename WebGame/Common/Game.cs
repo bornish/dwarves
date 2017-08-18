@@ -41,6 +41,7 @@ namespace WebGame.Common
             if (0 > myId)
                 return;
 
+            var currentTime = DateTimeNow();
             // TODO по настоящему считать прошедшее время
             float delta = 10;
             foreach (var person in players.Values)
@@ -49,7 +50,7 @@ namespace WebGame.Common
                 var changeY = (person.needY - person.lastY) * delta / (currentServerTime - lastServerTime);
                 person.X += changeX;
                 person.Y += changeY;
-                person.UpdateAnimation();
+                person.UpdateAnimation(currentTime);
             }
 
             foreach (var person in npc.Values)
@@ -58,7 +59,7 @@ namespace WebGame.Common
                 var changeY = (person.needY - person.lastY) * delta / (currentServerTime - lastServerTime);
                 person.X += changeX;
                 person.Y += changeY;
-                person.UpdateAnimation();
+                person.UpdateAnimation(currentTime);
             }
 
             camera.SetPersonPosition(players[myId].X, players[myId].Y);
@@ -66,6 +67,7 @@ namespace WebGame.Common
 
         public void OnMessage(WordlState worldState)
         {
+            var currentTime = DateTimeNow();
             dynamic temp = worldState.timestamp;
             long temp2 = temp;
             if (temp2 < lastServerTime)
@@ -76,32 +78,37 @@ namespace WebGame.Common
             // TODO удалять элементы тоже можно
             foreach (var person in worldState.players)
             {
-                if (!players.ContainsKey(person.id))
-                {
-                    players[person.id] = CreatePerson(person.id);
-                    players[person.id].X = person.x;
-                    players[person.id].Y = person.y;
-                }
-                players[person.id].SetDirection(person.direction);
-                SetNeedPosition(players[person.id], person.x, person.y);
-
+                UpdateStatePerson(person, players, currentTime);
             }
 
             foreach (var person in worldState.npc)
             {
-                if (!npc.ContainsKey(person.id))
-                {
-                    npc[person.id] = CreatePerson(person.id);
-                    npc[person.id].X = person.x;
-                    npc[person.id].Y = person.y;
-                }
-
-                npc[person.id].SetDirection(person.direction);
-                SetNeedPosition(npc[person.id], person.x, person.y);
+                UpdateStatePerson(person, npc, currentTime);
             }
 
             myId = worldState.myId;
             map.Update(worldState.tiles, MapConst.WIDTH, MapConst.HEIGHT);
+        }
+
+        internal abstract long DateTimeNow();
+
+        private void UpdateStatePerson(DataPerson person, Dictionary<long, Person> players, long currentTime)
+        {
+            if (!players.ContainsKey(person.id))
+            {
+                players[person.id] = CreatePerson(person.id);
+                players[person.id].X = person.x;
+                players[person.id].Y = person.y;
+            }
+            players[person.id].SetDirection(person.direction);
+            SetNeedPosition(players[person.id], person.x, person.y);
+            if (person.currentAnimation != null && person.currentAnimation.start)
+            {
+                // начинаем новую анимацию
+                var currentAnimation = new AnimationDescription(person.currentAnimation.name, person.currentAnimation.duration, currentTime);
+                players[person.id].currentAnimation = currentAnimation;
+            }
+            
         }
 
         private void SetNeedPosition(Person person, float x, float y)

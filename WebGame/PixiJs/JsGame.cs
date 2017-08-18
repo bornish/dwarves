@@ -1,6 +1,7 @@
 ﻿using System;
 using Bridge.Html5;
 using Bridge.Pixi;
+using Bridge.Utils;
 using WebGame.Common;
 using WebGame.Common.Connection;
 using WebGame.PixiJs.Display;
@@ -44,6 +45,11 @@ namespace WebGame.PixiJs
         internal override Person CreatePerson(long id)
         {
             return new HumanPerson(render, id, input);
+        }
+
+        internal override long DateTimeNow()
+        {
+            return new Bridge.Date().GetUTCMilliseconds();
         }
 
         private void Animate()
