@@ -1,17 +1,28 @@
 ﻿using System;
 using Bridge.Pixi.Interaction;
 using WebGame.Common.Connection;
+using System.Collections.Generic;
 
 namespace WebGame.Common.Display
 {
     class HumanPerson : Person
     {
+        private Dictionary<AnimationNames, AnimationSource> animations = new Dictionary<AnimationNames, AnimationSource>
+        {
+            [AnimationNames.Attack] = new AnimationSource(
+                (h, t) => h.containerAll.SetPositionX(Spline.Calc(10, - 10, t)),                       (h) => h.containerAll.SetPositionX(0),
+                (h, t) => h.containerAll.SetPositionY(Spline.Calc(10 + SHIFT_Y,  - 10 + SHIFT_Y, t)),  (h) => h.containerAll.SetPositionY(0),
+                (h, t) => h.containerAll.SetPositionX(Spline.Calc(-10, 10, t)),                        (h) => h.containerAll.SetPositionX(0),
+                (h, t) => h.containerAll.SetPositionY(Spline.Calc(-10 + SHIFT_Y, 10 + SHIFT_Y, t)),    (h) => h.containerAll.SetPositionY(0)
+            ),
+        };
+
         // TODO delete
         delegate void TestDelegate(InteractionEvent e);
         private Input input;
 
         private IContainer person;
-        private IContainer containerAll;
+        public IContainer containerAll;
         private IGraphics body;
         IRender render;
 
@@ -24,15 +35,10 @@ namespace WebGame.Common.Display
             person = render.CreateContainerOnStage();
             containerAll = render.CreateContainerOnContainer(person);
             body = render.CreateGraphicsOnContainer(containerAll);
-
-            
              
             person.SetInteractive(true);
             var func = new TestDelegate(Click);
             person.On("pointerdown", func);
-
-            
-            
 
             // определяем их параметры
             containerAll.SetPositionY(SHIFT_Y);
@@ -80,10 +86,12 @@ namespace WebGame.Common.Display
 
         private void ClearAnimation(AnimationNames name)
         {
+            animations[name].ClearFor(oldDirection)(this);
         }
 
         private void ShowAnimation(AnimationNames name, float t)
         {
+            animations[name].DoFor(oldDirection)(this, t);
         }
 
         private void UpdateGraphics(IGraphics graphics, Direction direction)
