@@ -49,7 +49,14 @@ namespace WebGame.PixiJs
 
         internal override long DateTimeNow()
         {
-            return new Bridge.Date().GetUTCMilliseconds();
+            return (long)new Bridge.Date().GetTime();
+        }
+
+        internal override long GetLong(long i)
+        {
+            dynamic temp = i;
+            long temp2 = temp;
+            return temp2;
         }
 
         private void Animate()

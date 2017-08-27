@@ -105,11 +105,13 @@ namespace WebGame.Common
             if (person.currentAnimation != null && person.currentAnimation.start)
             {
                 // начинаем новую анимацию
-                var currentAnimation = new AnimationDescription(person.currentAnimation.name, person.currentAnimation.duration, currentTime);
+                var currentAnimation = new AnimationDescription(person.currentAnimation.name, GetLong(person.currentAnimation.duration), currentTime);
                 players[person.id].currentAnimation = currentAnimation;
             }
             
         }
+
+        internal abstract long GetLong(long duration);
 
         private void SetNeedPosition(Person person, float x, float y)
         {

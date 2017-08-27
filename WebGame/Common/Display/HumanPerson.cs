@@ -11,9 +11,9 @@ namespace WebGame.Common.Display
         {
             [AnimationNames.Attack] = new AnimationSource(
                 (h, t) => h.containerAll.SetPositionX(Spline.Calc(10, - 10, t)),                       (h) => h.containerAll.SetPositionX(0),
-                (h, t) => h.containerAll.SetPositionY(Spline.Calc(10 + SHIFT_Y,  - 10 + SHIFT_Y, t)),  (h) => h.containerAll.SetPositionY(0),
+                (h, t) => h.containerAll.SetPositionY(Spline.Calc(10 + SHIFT_Y,  - 10 + SHIFT_Y, t)),  (h) => h.containerAll.SetPositionY(SHIFT_Y),
                 (h, t) => h.containerAll.SetPositionX(Spline.Calc(-10, 10, t)),                        (h) => h.containerAll.SetPositionX(0),
-                (h, t) => h.containerAll.SetPositionY(Spline.Calc(-10 + SHIFT_Y, 10 + SHIFT_Y, t)),    (h) => h.containerAll.SetPositionY(0)
+                (h, t) => h.containerAll.SetPositionY(Spline.Calc(-10 + SHIFT_Y, 10 + SHIFT_Y, t)),    (h) => h.containerAll.SetPositionY(SHIFT_Y)
             ),
         };
 

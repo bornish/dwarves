@@ -118,7 +118,7 @@ namespace GameServer.Socket
                     foreach (var data in npcData.Values)
                     {
                         DoContinueAnimation(data.currentAnimation, currentTime);
-                        (data.x, data.y, data.direction) = Move(data.x, data.y, LongAction.GoDown, data.direction);
+                        (data.x, data.y, data.direction) = Move(data.x, data.y, LongAction.None, data.direction);
                     }
 
                     // отправляем сообщения
