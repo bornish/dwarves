@@ -11,9 +11,11 @@ namespace GameServer.Socket
     public class MainLoop : IMainLoop
     {
         private const int SPEED = 4;
+        private const int DELAY_TIME = 40;
 
         private volatile int currentPersonId;
         private long currentNpcId;
+        private long lastCurentTime;
         private IConnectionManager connectionManager;
         private ConcurrentDictionary<string, string> loginedUsers = new ConcurrentDictionary<string, string>();
         private ConcurrentDictionary<string, int> connectionDictionary = new ConcurrentDictionary<string, int>();
@@ -22,6 +24,8 @@ namespace GameServer.Socket
         private Dictionary<int, ServerDataPerson> playersData = new Dictionary<int, ServerDataPerson>();
         private Dictionary<long, ServerDataPerson> npcData = new Dictionary<long, ServerDataPerson>();
         private TileType[,] tiles;
+
+        private List<DeferredAction> deferredActions = new List<DeferredAction>();  // события будут выполняться в несколько потоков в нем
 
         public MainLoop(IConnectionManager connectionManager)
         {
@@ -85,11 +89,16 @@ namespace GameServer.Socket
         {
             try
             {
+                lastCurentTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
                 while (true)
                 {
                     // запоминаем время начала
-                    // делаем дела
+                    // делаем дела, думаю в один поток
                     var currentTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+                    var deltaTime = currentTime - lastCurentTime;
+                    lastCurentTime = currentTime;
+
 
                     foreach (var playerAction in playersActions)
                     {
@@ -111,7 +120,12 @@ namespace GameServer.Socket
                         if (playerAction.Value.FastAction != null && !playerAction.Value.FastAction.processed)
                         {
                             playerAction.Value.FastAction.processed = true;
-                            data.currentAnimation = new AnimationDescription(AnimationNames.Attack, 2000, currentTime);
+                            data.currentAnimation = new AnimationDescription(AnimationNames.Attack, 500, currentTime);
+
+                            // TODO надо сделать общий массив для всех персонажей. боты это не боты, targetId пока не трогаем,
+                            //playerAction.Value.FastAction.targetId;
+
+                            RegisterDeferredAction(new MeleeAttackDeferredAction(currentTime, 500));
                         }
                     }
 
@@ -120,6 +134,17 @@ namespace GameServer.Socket
                         DoContinueAnimation(data.currentAnimation, currentTime);
                         (data.x, data.y, data.direction) = Move(data.x, data.y, LongAction.None, data.direction);
                     }
+
+                    // TODO делать в несколько потоков
+                    foreach (var action in deferredActions)
+                        action.Update(deltaTime, currentTime);
+
+                    // опять в один поток
+                    foreach (var action in deferredActions)
+                        action.TestFinish();
+
+                    // TODO удалить лишние элементы, посмотреть как это сделать в c#
+                    //deferredActions.Remove all Execute
 
                     // отправляем сообщения
                     foreach (var connection in connectionManager.Connections)
@@ -158,7 +183,7 @@ namespace GameServer.Socket
                     }
                     //TODO запоминаем время конца
                     // спим
-                    await Task.Delay(40);
+                    await Task.Delay(DELAY_TIME);
                 }
             }
             catch (Exception e)
@@ -166,6 +191,11 @@ namespace GameServer.Socket
                 Console.Write("Критическая ошибка");
                 Console.Write(e);
             }
+        }
+
+        private void RegisterDeferredAction(DeferredAction deferredAction)
+        {
+            deferredActions.Add(deferredAction);
         }
 
         private void DoContinueAnimation(AnimationDescription currentAnimation, long currentTime)
@@ -280,6 +310,8 @@ namespace GameServer.Socket
     {
         public FastActionType type;
         public bool processed;
+
+        // Пока не трогаем, когда надо будет хранить больше данных, внутри структуры будет ссылка на dataAction класс, в котором храняться данные именно для этого действия
         public long targetId;
 
         public FastAction()
