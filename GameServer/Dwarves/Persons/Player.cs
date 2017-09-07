@@ -1,6 +1,6 @@
 ﻿using GameServer.Dwarves.Map;
+using GameServer.Dwarves.PersonActions;
 using GameServer.Socket;
-using System.Collections.Generic;
 using WebGame.Common.Connection;
 
 namespace GameServer.Dwarves.Persons
@@ -9,10 +9,14 @@ namespace GameServer.Dwarves.Persons
     {
         internal override void DoPersonAction(long currentTime, MapContainer container)
         {
-            var action = CurrentAction.LongAction;
+            var longAction = CurrentAction.LongAction;
+
+            if (longAction != LongAction.None)
+                lastDeferredAction?.MoveTryCancel();
 
             DoContinueAnimation(currentAnimation, currentTime);
-            (x, y, direction) = Move(x, y, action, direction, container);
+
+            (x, y, direction) = Move(x, y, longAction, direction, container);
 
             if (CurrentAction.FastAction != null && !CurrentAction.FastAction.processed)
             {
@@ -23,15 +27,41 @@ namespace GameServer.Dwarves.Persons
                 {
                     var id = CurrentAction.FastAction.targetId;
                     var enemy = container.FindPerson(id);
-
-                    var meleeAttackDeferredAction = new MeleeAttackDeferredAction(currentTime, 500, this, enemy);
-                    if (meleeAttackDeferredAction.CanExecute())
+                    if (ExecuteAction(new MeleeAttackDeferredAction(currentTime, 500, this, enemy), container, longAction))
                     {
                         currentAnimation = new AnimationDescription(AnimationNames.Attack, 500, currentTime);
-                        container.AddAction(meleeAttackDeferredAction);
+                    }
+
+
+                }
+                else if (fastAction.type == FastActionType.Dig)
+                {
+
+                    var deferredAction = new DigDeferredAction(currentTime, 5000, container, this, CurrentAction.FastAction.i, CurrentAction.FastAction.j);
+                    if (ExecuteAction(deferredAction, container, longAction))
+                    {
+                        // TODO Надо доработать идею анимаций. Нужны долгие зацикленные анимации
+                        currentAnimation = new AnimationDescription(AnimationNames.Dig, 5000, currentTime);
                     }
                 }
             }
+        }
+
+        protected bool ExecuteAction(DeferredAction action, MapContainer container, LongAction longAction)
+        {
+            if (action.PreventExecute(longAction))
+                return false;
+
+            if (lastDeferredAction.PreventNew())
+                return false;
+
+            if (action.CanExecute())
+            {
+                lastDeferredAction = action;
+                container.AddAction(action);
+                return true;
+            }
+            return false;
         }
     }
 }

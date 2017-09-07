@@ -1,9 +1,8 @@
 ﻿
 using GameServer.Dwarves.Persons;
-using GameServer.Socket;
 using System.Collections.Generic;
 using WebGame.Common.Connection;
-using System;
+using GameServer.Dwarves.PersonActions;
 
 namespace GameServer.Dwarves.Map
 {
@@ -26,6 +25,11 @@ namespace GameServer.Dwarves.Map
         internal void AddAction(DeferredAction action)
         {
             deferredActions.Add(action);
+        }
+
+        internal void DigTileFinish(long i, long j)
+        {
+            tiles[i, j] = TileType.Empty;
         }
 
         internal ServerDataPerson FindPerson(long id)

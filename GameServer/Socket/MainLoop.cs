@@ -137,9 +137,9 @@ namespace GameServer.Socket
         }
 
         // TODO Action должен быть enum
-        public void RegisterEvent(string connection, string action, string param1, string param2)
+        public void RegisterEvent(string connection, RequestPlayerAction action, string param1, string param2)
         {
-            if (action == "Registration")
+            if (action == RequestPlayerAction.Registration)
             {
                 var login = param1;
                 var id = GetNextPersonId();
@@ -152,7 +152,7 @@ namespace GameServer.Socket
                 var lastLongAction = playersActions[id].LongAction;
                 var fastAction = playersActions[id].FastAction;
 
-                if (action == "StartGo")
+                if (action == RequestPlayerAction.StartGo)
                 {
                     if (param1 == "Right")
                         lastLongAction = lastLongAction | LongAction.GoRight;
@@ -163,7 +163,7 @@ namespace GameServer.Socket
                     else if (param1 == "Down")
                         lastLongAction = lastLongAction | LongAction.GoDown;
                 }
-                else if (action == "StopGo")
+                else if (action == RequestPlayerAction.StopGo)
                 {
                     if (param1 == "Right")
                         lastLongAction = lastLongAction & ~LongAction.GoRight;
@@ -174,12 +174,21 @@ namespace GameServer.Socket
                     else if (param1 == "Down")
                         lastLongAction = lastLongAction & ~LongAction.GoDown;
                 }
-                else if (action == "Click")
+                else if (action == RequestPlayerAction.Attack)
                 {
                     fastAction = new FastAction()
                     {
-                        targetId = long.Parse(param2),
+                        targetId = long.Parse(param1),
                         type = FastActionType.Attack
+                    };
+                }
+                else if (action == RequestPlayerAction.Dig)
+                {
+                    fastAction = new FastAction()
+                    {
+                        i = long.Parse(param1),
+                        j = long.Parse(param2),
+                        type = FastActionType.Dig
                     };
                 }
                 playersActions[id] = new PlayerAction(lastLongAction, fastAction);
@@ -219,19 +228,17 @@ namespace GameServer.Socket
 
         // Пока не трогаем, когда надо будет хранить больше данных, внутри структуры будет ссылка на dataAction класс, в котором храняться данные именно для этого действия
         public long targetId;
-
+        public long i;
+        public long j;
     }
 
     public enum FastActionType
     {
-        Attack
+        Attack, Dig
     }
-
-
-    
 
     public interface IMainLoop
     {
-        void RegisterEvent(string connection, string action, string param1, string param2);
+        void RegisterEvent(string connection, RequestPlayerAction action, string param1, string param2);
     }
 }

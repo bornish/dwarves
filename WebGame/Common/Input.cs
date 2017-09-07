@@ -13,53 +13,61 @@ namespace WebGame.Common
 
         protected void DownButtonW()
         {
-            Send("StartGo", "Up");
+            Send(RequestPlayerAction.StartGo, "Up");
         }
 
         protected void DownButtonA()
         {
-            Send("StartGo", "Left");
+            Send(RequestPlayerAction.StartGo, "Left");
         }
 
         protected void DownButtonD()
         {
-            Send("StartGo", "Right");
+            Send(RequestPlayerAction.StartGo, "Right");
         }
 
         protected void DownButtonS()
         {
-            Send("StartGo", "Down");
+            Send(RequestPlayerAction.StartGo, "Down");
         }
 
         protected void UpButtonW()
         {
-            Send("StopGo", "Up");
+            Send(RequestPlayerAction.StopGo, "Up");
         }
 
         protected void UpButtonA()
         {
-            Send("StopGo", "Left");
+            Send(RequestPlayerAction.StopGo, "Left");
         }
 
         protected void UpButtonD()
         {
-            Send("StopGo", "Right");
+            Send(RequestPlayerAction.StopGo, "Right");
         }
 
         protected void UpButtonS()
         {
-            Send("StopGo", "Down");
+            Send(RequestPlayerAction.StopGo, "Down");
+        }
+
+        internal void ClickOnLandPosition(float x, float y)
+        {
+            if (x >= MapConst.TILE_SIZE * MapConst.WIDTH || x < 0)
+                return;
+
+            if (y >= MapConst.TILE_SIZE * MapConst.HEIGHT || y < 0)
+                return;
+
+            int i = (int)x / MapConst.TILE_SIZE;
+            int j = (int)y / MapConst.TILE_SIZE;
+            controller.SendData(RequestPlayerAction.Dig, i.ToString(), j.ToString());
         }
 
         // TODO переделать
-        public void Click(long personId)
+        public void AttackPerson(long personId)
         {
-            Click(ClickEventType.Player, personId);
-        }
-
-        protected void Click(ClickEventType clickEventType, long personId)
-        {
-            controller.SendExtend("Click", clickEventType.ToString(), personId.ToString());
+            controller.SendData(RequestPlayerAction.Attack, personId.ToString());
         }
 
         protected void WheelUp()
@@ -72,9 +80,9 @@ namespace WebGame.Common
             controller.ScaleDown();
         }
 
-        private void Send(string action, string param)
+        private void Send(RequestPlayerAction action, string param)
         {
-            controller.Send(action, param);
+            controller.SendData(action, param);
         }
     }
 }

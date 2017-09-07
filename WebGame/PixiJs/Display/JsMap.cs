@@ -6,18 +6,34 @@ using System.Threading.Tasks;
 using Bridge.Pixi;
 using WebGame.Common.Display;
 using WebGame.Common.Connection;
+using Bridge.Pixi.Interaction;
+using WebGame.Common;
 
 namespace WebGame.PixiJs.Display
 {
     class JsMap : Map
     {
+        // TODO delete
+        delegate void ClickDelegate(InteractionEvent e);
+        private Input input;
         private Graphics graphics;
 
-        public JsMap(Container mapContainer)
+        public JsMap(Container mapContainer, Input input)
         {
             graphics = new Graphics();
+            this.input = input;
+
+            graphics.Interactive = true;
+            var func = new ClickDelegate(Click);
+            graphics.On("pointerdown", func);
 
             mapContainer.AddChild(graphics);
+        }
+
+        private void Click(InteractionEvent e)
+        {
+            var point = e.Data.GetLocalPosition(e.Target);
+            input.ClickOnLandPosition(point.X, point.Y);
         }
 
         public void Update(dynamic tiles, int tilesLenghtX, int tilesLenghtY)

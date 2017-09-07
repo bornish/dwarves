@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebGame.Common.Connection;
 
 namespace GameServer.Socket
 {
@@ -22,7 +23,7 @@ namespace GameServer.Socket
         {
             var connection = context.GetConnectionId();
             var data = (JObject)context.Value;
-            var action = data.GetValue("action").Value<string>();
+            var action = (RequestPlayerAction) Enum.Parse(typeof(RequestPlayerAction), data.GetValue("action").Value<string>());
             var param1 = data.GetValue("param1").Value<string>();
             var param2 = data.GetValue("param2").Value<string>();
             mainLoop.RegisterEvent(connection, action, param1, param2);

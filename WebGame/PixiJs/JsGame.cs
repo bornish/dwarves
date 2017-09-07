@@ -39,7 +39,7 @@ namespace WebGame.PixiJs
 
         internal override Map CreateMap()
         {
-            return new JsMap(mapContainer);
+            return new JsMap(mapContainer, input);
         }
 
         internal override Person CreatePerson(long id)

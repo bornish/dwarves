@@ -15,10 +15,17 @@ namespace WebGame.Common.Display
                 (h, t) => h.containerAll.SetPositionX(Spline.Calc(-10, 10, t)),                        (h) => h.containerAll.SetPositionX(0),
                 (h, t) => h.containerAll.SetPositionY(Spline.Calc(-10 + SHIFT_Y, 10 + SHIFT_Y, t)),    (h) => h.containerAll.SetPositionY(SHIFT_Y)
             ),
+
+            [AnimationNames.Dig] = new AnimationSource(
+                (h, t) => h.containerAll.SetPositionX(Spline.Calc(10, -10, t)), (h) => h.containerAll.SetPositionX(0),
+                (h, t) => h.containerAll.SetPositionY(Spline.Calc(10 + SHIFT_Y, -10 + SHIFT_Y, t)), (h) => h.containerAll.SetPositionY(SHIFT_Y),
+                (h, t) => h.containerAll.SetPositionX(Spline.Calc(-10, 10, t)), (h) => h.containerAll.SetPositionX(0),
+                (h, t) => h.containerAll.SetPositionY(Spline.Calc(-10 + SHIFT_Y, 10 + SHIFT_Y, t)), (h) => h.containerAll.SetPositionY(SHIFT_Y)
+            ),
         };
 
         // TODO delete
-        delegate void TestDelegate(InteractionEvent e);
+        delegate void ClickDelegate(InteractionEvent e);
         private Input input;
 
         private IContainer person;
@@ -37,7 +44,7 @@ namespace WebGame.Common.Display
             body = render.CreateGraphicsOnContainer(containerAll);
              
             person.SetInteractive(true);
-            var func = new TestDelegate(Click);
+            var func = new ClickDelegate(Click);
             person.On("pointerdown", func);
 
             // определяем их параметры
@@ -50,7 +57,7 @@ namespace WebGame.Common.Display
 
         private void Click(InteractionEvent e)
         {
-            input.Click(id);
+            input.AttackPerson(id);
         }
 
         public override float X { get { return person.GetPositionX(); } set { person.SetPositionX(value); } }

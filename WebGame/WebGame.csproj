@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Common\Camera.cs" />
     <Compile Include="Common\Connect.cs" />
+    <Compile Include="Common\Connection\ConnectionRequestStates.cs" />
     <Compile Include="Common\Connection\MapConst.cs" />
     <Compile Include="Common\Display\AnimationSource.cs" />
     <Compile Include="Common\Display\HumanPerson.cs" />
@@ -58,8 +59,7 @@
     <Compile Include="Common\Display\Render.cs" />
     <Compile Include="Common\Game.cs" />
     <Compile Include="Common\Input.cs" />
-    <Compile Include="Common\Connection\ConnectionStates.cs" />
-    <Compile Include="Common\Connection\EventTypes.cs" />
+    <Compile Include="Common\Connection\ConnectionResponseStates.cs" />
     <Compile Include="PixiJs\Display\JsMap.cs" />
     <Compile Include="PixiJs\Display\JsRender.cs" />
     <Compile Include="PixiJs\JsCamera.cs" />

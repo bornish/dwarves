@@ -42,7 +42,7 @@ namespace WebGame.Common.Connection
 
     public enum AnimationNames
     {
-        Attack = 0
+        Attack = 0, Dig = 1
     }
 
     public enum Direction

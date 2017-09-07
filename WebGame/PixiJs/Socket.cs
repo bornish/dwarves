@@ -26,7 +26,7 @@ namespace WebGame.PixiJs
                     if (data.Command == 4)
                     {
                         connectId = (string)data.Value;
-                        SendData("Registration", login, null);
+                        SendData(RequestPlayerAction.Registration, login, null);
 
                     }
                     else if (data.Command == 2)
@@ -38,7 +38,7 @@ namespace WebGame.PixiJs
             };
         }
 
-        public override void SendData(string action, string param1, string param2)
+        public override void SendData(RequestPlayerAction action, string param1, string param2)
         {
             if (socket == null || socket.ReadyState != WebSocket.State.Open)
             {

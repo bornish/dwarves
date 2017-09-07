@@ -1,4 +1,5 @@
 ﻿using GameServer.Dwarves.Map;
+using GameServer.Dwarves.PersonActions;
 using GameServer.Socket;
 using WebGame.Common.Connection;
 
@@ -8,6 +9,7 @@ namespace GameServer.Dwarves.Persons
     {
         private const int SPEED = 4;
         public string serverSecretData = "secret";
+        public DeferredAction lastDeferredAction;
         public PlayerAction CurrentAction { get; set; }
 
         internal void DoAction(long currentTime, MapContainer container)

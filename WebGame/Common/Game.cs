@@ -116,12 +116,12 @@ namespace WebGame.Common
             camera.ScaleDown();
         }
 
-        internal void Send(string action, string param)
+        internal void SendData(RequestPlayerAction action, string param)
         {
             connection.SendData(action, param, null);
         }
 
-        internal void SendExtend(string action, string param1, string param2)
+        internal void SendData(RequestPlayerAction action, string param1, string param2)
         {
             connection.SendData(action, param1, param2);
         }
