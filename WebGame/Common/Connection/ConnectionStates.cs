@@ -4,8 +4,7 @@ namespace WebGame.Common.Connection
 
     public class WordlState
     {
-        public DataPerson[] players;
-        public DataPerson[] npc;
+        public DataPerson[] persons;
         public TileType[,] tiles;
         public long myId;
         public long timestamp;
@@ -18,6 +17,7 @@ namespace WebGame.Common.Connection
         public float y;
         public Direction direction;
         public AnimationDescription currentAnimation;
+        public PersonState state;
     }
 
     public class AnimationDescription
@@ -53,5 +53,10 @@ namespace WebGame.Common.Connection
     {
         //Unkonw = 0, Empty = 1, Stone = 2
         Empty = 0, Stone = 1
+    }
+
+    public enum PersonState
+    {
+        Alive = 0, Dead = 1
     }
 }

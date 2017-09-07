@@ -1,17 +1,30 @@
 ﻿using System;
+using GameServer.Dwarves.Persons;
+using WebGame.Common.Connection;
 
 namespace GameServer.Socket
 {
     internal class MeleeAttackDeferredAction : DeferredAction
     {
-        public MeleeAttackDeferredAction(long startTime, long duration) : base (startTime, duration)
+        private ServerDataPerson playerPerson;
+        private ServerDataPerson enemy;
+
+        public MeleeAttackDeferredAction(long startTime, long duration, ServerDataPerson playerPerson, ServerDataPerson enemy) : base(startTime, duration)
         {
+            this.playerPerson = playerPerson;
+            this.enemy = enemy;
         }
 
         protected override void Finish()
         {
+            enemy.Dead();
         }
 
+        internal bool CanExecute()
+        {
+            var distance = Math.Pow(playerPerson.x - enemy.x, 2) + Math.Pow(playerPerson.y - enemy.y, 2);
+            return distance < MapConst.TILE_SIZE;
+        }
     }
 
     internal abstract class DeferredAction

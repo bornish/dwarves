@@ -8,8 +8,7 @@ namespace WebGame.Common
     abstract class Game
     {
         protected Connect connection;
-        private Dictionary<long, Person> players = new Dictionary<long, Person>();
-        private Dictionary<long, Person> npc = new Dictionary<long, Person>();
+        private Dictionary<long, Person> persons = new Dictionary<long, Person>();
         private Map map;
         protected Camera camera;
         protected Input input;
@@ -44,7 +43,7 @@ namespace WebGame.Common
             var currentTime = DateTimeNow();
             // TODO по настоящему считать прошедшее время
             float delta = 10;
-            foreach (var person in players.Values)
+            foreach (var person in persons.Values)
             {
                 var changeX = (person.needX - person.lastX) * delta / (currentServerTime - lastServerTime);
                 var changeY = (person.needY - person.lastY) * delta / (currentServerTime - lastServerTime);
@@ -53,16 +52,7 @@ namespace WebGame.Common
                 person.UpdateAnimation(currentTime);
             }
 
-            foreach (var person in npc.Values)
-            {
-                var changeX = (person.needX - person.lastX) * delta / (currentServerTime - lastServerTime);
-                var changeY = (person.needY - person.lastY) * delta / (currentServerTime - lastServerTime);
-                person.X += changeX;
-                person.Y += changeY;
-                person.UpdateAnimation(currentTime);
-            }
-
-            camera.SetPersonPosition(players[myId].X, players[myId].Y);
+            camera.SetPersonPosition(persons[myId].X, persons[myId].Y);
         }
 
         public void OnMessage(WordlState worldState)
@@ -76,14 +66,9 @@ namespace WebGame.Common
             lastServerTime = currentServerTime;
             currentServerTime = temp2;
             // TODO удалять элементы тоже можно
-            foreach (var person in worldState.players)
+            foreach (var person in worldState.persons)
             {
-                UpdateStatePerson(person, players, currentTime);
-            }
-
-            foreach (var person in worldState.npc)
-            {
-                UpdateStatePerson(person, npc, currentTime);
+                UpdateStatePerson(person, persons, currentTime);
             }
 
             myId = worldState.myId;

@@ -1,4 +1,6 @@
-﻿using NetCoreStack.WebSockets;
+﻿using GameServer.Dwarves.Map;
+using GameServer.Dwarves.Persons;
+using NetCoreStack.WebSockets;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -10,80 +12,37 @@ namespace GameServer.Socket
 {
     public class MainLoop : IMainLoop
     {
-        private const int SPEED = 4;
         private const int DELAY_TIME = 40;
 
+        // TODO не самая красивая вещь, круто было бы переделать
         private volatile int currentPersonId;
-        private long currentNpcId;
         private long lastCurentTime;
         private IConnectionManager connectionManager;
         private ConcurrentDictionary<string, string> loginedUsers = new ConcurrentDictionary<string, string>();
         private ConcurrentDictionary<string, int> connectionDictionary = new ConcurrentDictionary<string, int>();
         private ConcurrentDictionary<int, PlayerAction> playersActions = new ConcurrentDictionary<int, PlayerAction>();
 
-        private Dictionary<int, ServerDataPerson> playersData = new Dictionary<int, ServerDataPerson>();
-        private Dictionary<long, ServerDataPerson> npcData = new Dictionary<long, ServerDataPerson>();
-        private TileType[,] tiles;
-
-        private List<DeferredAction> deferredActions = new List<DeferredAction>();  // события будут выполняться в несколько потоков в нем
+        private MapContainer container = new MapContainer();
 
         public MainLoop(IConnectionManager connectionManager)
         {
             this.connectionManager = connectionManager;
-            tiles = new TileType[MapConst.WIDTH, MapConst.HEIGHT];
+
+            var tiles = container.GetTiles();
 
             tiles[5, 5] = TileType.Stone;
             tiles[1, 1] = TileType.Stone;
             tiles[1, 0] = TileType.Stone;
 
-            var npc = new ServerDataPerson() { x = 0f, y = 0f, id = GetNextNpcId() };
-            npcData.Add(npc.id, npc);
+            var npc = new NpcPerson() { x = 0f, y = 0f, id = GetNextPersonId() };
+
+            var persons = container.getPersons();
+            persons.Add(npc.id, npc);
 
             var timer = new Timer(LoopAsync, null, 100, Timeout.Infinite);
         }
 
-        private long GetNextNpcId()
-        {
-            currentNpcId += 1;
-            return currentNpcId;
-        }
-
-        private (float, float, Direction) Move(float x, float y, LongAction action, Direction direction)
-        {
-            var newX = x;
-            var newY = y;
-            // TODO по диогонали слишком быстро
-            // TODO оставить множитель для всех дел со временем
-            if ((action & LongAction.GoDown) == LongAction.GoDown)
-            {
-                newY = y + SPEED;
-                direction = Direction.Down;
-            }
-
-            if ((action & LongAction.GoLeft) == LongAction.GoLeft)
-            {
-                newX = x - SPEED;
-                direction = Direction.Left;
-            }
-
-            if ((action & LongAction.GoRight) == LongAction.GoRight)
-            {
-                newX = x + SPEED;
-                direction = Direction.Right;
-            }
-
-            if ((action & LongAction.GoUp) == LongAction.GoUp)
-            {
-                newY = y - SPEED;
-                direction = Direction.Up;
-            }
-
-            if (CanMove(newX, newY, tiles))
-            {
-                return (newX, newY, direction);
-            }
-            return (x, y, direction);
-        }
+        
 
         private async void LoopAsync(object empty)
         {
@@ -99,41 +58,32 @@ namespace GameServer.Socket
                     var deltaTime = currentTime - lastCurentTime;
                     lastCurentTime = currentTime;
 
+                    var persons = container.getPersons();
+                    var deferredActions = container.getActions();
+                    var tiles = container.GetTiles();
 
                     foreach (var playerAction in playersActions)
                     {
                         ServerDataPerson data;
-                        if (playersData.ContainsKey(playerAction.Key))
+                        if (persons.ContainsKey(playerAction.Key))
                         {
-                            data = playersData[playerAction.Key];
+                            data = persons[playerAction.Key];
                         }
                         else
                         {
-                            data = new ServerDataPerson() { x = 0f, y = 0f, id = playerAction.Key };
-                            playersData[playerAction.Key] = data;
+                            data = new PlayerPerson() { x = 0f, y = 0f, id = playerAction.Key };
+                            persons[playerAction.Key] = data;
                         }
-                        var action = playerAction.Value.LongAction;
 
-                        DoContinueAnimation(data.currentAnimation, currentTime);
-                        (data.x, data.y, data.direction) = Move(data.x, data.y, action, data.direction);
-
-                        if (playerAction.Value.FastAction != null && !playerAction.Value.FastAction.processed)
-                        {
-                            playerAction.Value.FastAction.processed = true;
-                            data.currentAnimation = new AnimationDescription(AnimationNames.Attack, 500, currentTime);
-
-                            // TODO надо сделать общий массив для всех персонажей. боты это не боты, targetId пока не трогаем,
-                            //playerAction.Value.FastAction.targetId;
-
-                            RegisterDeferredAction(new MeleeAttackDeferredAction(currentTime, 500));
-                        }
+                        data.CurrentAction = playerAction.Value;
                     }
 
-                    foreach (var data in npcData.Values)
+                    foreach (var person in persons.Values)
                     {
-                        DoContinueAnimation(data.currentAnimation, currentTime);
-                        (data.x, data.y, data.direction) = Move(data.x, data.y, LongAction.None, data.direction);
+                        person.DoAction(currentTime, container);
                     }
+
+                    
 
                     // TODO делать в несколько потоков
                     foreach (var action in deferredActions)
@@ -152,30 +102,23 @@ namespace GameServer.Socket
                         if (!connectionDictionary.ContainsKey(connection.Key))
                             continue;
                         var id = connectionDictionary[connection.Key];
-                        var playerData = playersData[id];
+                        var playerData = persons[id];
                         var answer = new WebSocketMessageContext();
                         answer.Command = WebSocketCommands.DataSend;
                         var state = new WordlState()
                         {
-                            players = new DataPerson[playersData.Count],
-                            npc = new DataPerson[npcData.Count],
+                            persons = new DataPerson[persons.Count],
                             myId = id,
                             tiles = tiles
                         };
 
                         var i = 0;
-                        foreach (var data in playersData.Values)
+                        foreach (var data in persons.Values)
                         {
-                            state.players[i] = data;
+                            state.persons[i] = data;
                             i++;
                         }
 
-                        i = 0;
-                        foreach (var data in npcData.Values)
-                        {
-                            state.npc[i] = data;
-                            i++;
-                        }
                         state.timestamp = currentTime;
                         answer.Value = state;
                         // TODO надо отправлять текущее время еще.
@@ -191,44 +134,6 @@ namespace GameServer.Socket
                 Console.Write("Критическая ошибка");
                 Console.Write(e);
             }
-        }
-
-        private void RegisterDeferredAction(DeferredAction deferredAction)
-        {
-            deferredActions.Add(deferredAction);
-        }
-
-        private void DoContinueAnimation(AnimationDescription currentAnimation, long currentTime)
-        {
-            if (currentAnimation == null || currentAnimation.end)
-                return;
-
-            currentAnimation.start = false;
-            if (currentTime - currentAnimation.timeStart > currentAnimation.duration)
-            {
-                currentAnimation.end = true;
-                currentAnimation.t = 1;
-            }
-            else
-            {
-                currentAnimation.t = (float)(currentTime - currentAnimation.timeStart) / currentAnimation.duration;
-            }
-            
-        }
-
-        private bool CanMove(float newX, float newY, TileType[,] tiles)
-        {
-            if (newX >= MapConst.TILE_SIZE * MapConst.WIDTH || newX < 0)
-                return false;
-
-            if (newY >= MapConst.TILE_SIZE * MapConst.HEIGHT || newY < 0)
-                return false;
-            int i = (int)newX / MapConst.TILE_SIZE;
-            int j = (int)newY / MapConst.TILE_SIZE;
-            if (tiles[i, j] == TileType.Stone)
-                return false;
-
-            return true;
         }
 
         // TODO Action должен быть enum
@@ -283,13 +188,13 @@ namespace GameServer.Socket
 
         private int GetNextPersonId()
         {
-            currentPersonId += 1;
-            return currentPersonId;
+            int id = ++currentPersonId;
+            return id;
         }
     }
 
-    // TODO вернуть структуры, помнить timestamp когда получили команду, в data помним timestamp последеней выполенной команды
-    public class PlayerAction
+    
+    public struct PlayerAction
     {
         public LongAction LongAction { get; }
         public FastAction FastAction { get; }
@@ -306,6 +211,7 @@ namespace GameServer.Socket
         None = 0, GoRight = 1, GoLeft = 2, GoUp = 4, GoDown = 8,
     }
 
+    // TODO если будет желание вернуть структуры, помнить timestamp когда получили команду, в data помним timestamp последеней выполенной команды
     public class FastAction
     {
         public FastActionType type;
@@ -314,10 +220,6 @@ namespace GameServer.Socket
         // Пока не трогаем, когда надо будет хранить больше данных, внутри структуры будет ссылка на dataAction класс, в котором храняться данные именно для этого действия
         public long targetId;
 
-        public FastAction()
-        {
-            processed = false;
-        }
     }
 
     public enum FastActionType
@@ -326,10 +228,7 @@ namespace GameServer.Socket
     }
 
 
-    public class ServerDataPerson : DataPerson
-    {
-        public string serverSecretData = "secret";
-    }
+    
 
     public interface IMainLoop
     {
