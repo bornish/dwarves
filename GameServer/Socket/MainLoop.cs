@@ -28,11 +28,7 @@ namespace GameServer.Socket
         {
             this.connectionManager = connectionManager;
 
-            var tiles = container.GetTiles();
-
-            tiles[5, 5] = TileType.Stone;
-            tiles[1, 1] = TileType.Stone;
-            tiles[1, 0] = TileType.Stone;
+            container.GenerateTiles();
 
             var npc = new NpcPerson() { x = 0f, y = 0f, id = GetNextPersonId() };
 

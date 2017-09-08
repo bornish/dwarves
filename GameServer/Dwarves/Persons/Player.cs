@@ -52,7 +52,7 @@ namespace GameServer.Dwarves.Persons
             if (action.PreventExecute(longAction))
                 return false;
 
-            if (lastDeferredAction.PreventNew())
+            if (lastDeferredAction != null && lastDeferredAction.PreventNew())
                 return false;
 
             if (action.CanExecute())

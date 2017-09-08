@@ -85,15 +85,18 @@ namespace WebGame.Common.Display
                 }
                 else
                 {
-                    ClearAnimation(currentAnimation.name);
-                    currentAnimation = null;
+                    ClearAnimation();
                 }
             }
         }
 
-        private void ClearAnimation(AnimationNames name)
+        public override void ClearAnimation()
         {
-            animations[name].ClearFor(oldDirection)(this);
+            if (currentAnimation != null)
+            {
+                animations[currentAnimation.name].ClearFor(oldDirection)(this);
+                currentAnimation = null;
+            }
         }
 
         private void ShowAnimation(AnimationNames name, float t)

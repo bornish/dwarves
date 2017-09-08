@@ -21,7 +21,7 @@ namespace GameServer.Dwarves.PersonActions
 
         internal override bool CanExecute()
         {
-            var distance = Math.Pow(ownerAction.x - enemy.x, 2) + Math.Pow(ownerAction.y - enemy.y, 2);
+            var distance = Math.Sqrt(Math.Pow(ownerAction.x - enemy.x, 2) + Math.Pow(ownerAction.y - enemy.y, 2));
             return distance < MapConst.TILE_SIZE;
         }
     }

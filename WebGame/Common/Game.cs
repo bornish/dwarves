@@ -93,6 +93,10 @@ namespace WebGame.Common
                 var currentAnimation = new AnimationDescription(person.currentAnimation.name, GetLong(person.currentAnimation.duration), currentTime);
                 players[person.id].currentAnimation = currentAnimation;
             }
+            if (person.currentAnimation == null && players[person.id].currentAnimation != null)
+            {
+                players[person.id].ClearAnimation();
+            }
             
         }
 

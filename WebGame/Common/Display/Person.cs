@@ -25,5 +25,6 @@ namespace WebGame.Common.Display
         public abstract void SetDirection(Direction direction);
 
         public abstract void UpdateAnimation(long currentTime);
+        public abstract void ClearAnimation();
     }
 }
