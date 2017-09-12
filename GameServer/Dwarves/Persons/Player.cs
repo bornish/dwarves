@@ -25,14 +25,14 @@ namespace GameServer.Dwarves.Persons
 
                 if (fastAction.type == FastActionType.Attack)
                 {
-                    var id = CurrentAction.FastAction.targetId;
-                    var enemy = container.FindPerson(id);
-                    if (ExecuteAction(new MeleeAttackDeferredAction(currentTime, 500, this, enemy), container, longAction))
+                    if (id != CurrentAction.FastAction.targetId)
                     {
-                        currentAnimation = new AnimationDescription(AnimationNames.Attack, 500, currentTime);
+                        var enemy = container.FindPerson(CurrentAction.FastAction.targetId);
+                        if (ExecuteAction(new MeleeAttackDeferredAction(currentTime, 500, this, enemy), container, longAction))
+                        {
+                            currentAnimation = new AnimationDescription(AnimationNames.Attack, 500, currentTime);
+                        }
                     }
-
-
                 }
                 else if (fastAction.type == FastActionType.Dig)
                 {

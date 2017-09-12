@@ -77,11 +77,18 @@ namespace WebGame.Common.Display
         {
             if (currentAnimation != null)
             {
-                var t = (float)(currentTime - currentAnimation.timeStart) / currentAnimation.duration;
-
-                if (t < 1)
+                var allTime = (float)(currentTime - currentAnimation.timeStart) / currentAnimation.allDuration;
+                if (allTime < 1)
                 {
-                    ShowAnimation(currentAnimation.name, t);
+                    if (currentAnimation.longAnimation)
+                    {
+                        var t = (float)(currentTime - currentAnimation.timeStart) / currentAnimation.smallDuration;
+                        ShowAnimation(currentAnimation.name, t - (float)Math.Truncate(t));
+                    }
+                    else
+                    {
+                        ShowAnimation(currentAnimation.name, allTime);
+                    }
                 }
                 else
                 {

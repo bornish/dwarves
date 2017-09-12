@@ -24,18 +24,29 @@ namespace WebGame.Common.Connection
     {
         public AnimationNames name;
         public long timeStart;
-        public long duration;
-        public float t;
+        public long allDuration;
+        public long smallDuration;
+        public bool longAnimation;
         public bool start;
         public bool end;
 
         public AnimationDescription() { }
-        public AnimationDescription(AnimationNames name, long duration, long currentTime)
+        public AnimationDescription(AnimationNames name, long allDuration, long currentTime)
         {
             this.name = name;
-            this.duration = duration;
+            this.allDuration = allDuration;
             timeStart = currentTime;
-            t = 0;
+            longAnimation = false;
+            start = true;
+        }
+
+        public AnimationDescription(AnimationNames name, long allDuration, long smallDuration, long currentTime)
+        {
+            this.name = name;
+            this.allDuration = allDuration;
+            this.smallDuration = smallDuration;
+            timeStart = currentTime;
+            longAnimation = true;
             start = true;
         }
     }

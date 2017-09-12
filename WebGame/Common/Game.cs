@@ -89,9 +89,14 @@ namespace WebGame.Common
             SetNeedPosition(players[person.id], person.x, person.y);
             if (person.currentAnimation != null && person.currentAnimation.start)
             {
+                if (players[person.id].currentAnimation != null)
+                    players[person.id].ClearAnimation();
+
                 // начинаем новую анимацию
-                var currentAnimation = new AnimationDescription(person.currentAnimation.name, GetLong(person.currentAnimation.duration), currentTime);
-                players[person.id].currentAnimation = currentAnimation;
+                if (person.currentAnimation.longAnimation)
+                    players[person.id].currentAnimation = new AnimationDescription(person.currentAnimation.name, GetLong(person.currentAnimation.allDuration), GetLong(person.currentAnimation.smallDuration), currentTime);
+                else
+                    players[person.id].currentAnimation = new AnimationDescription(person.currentAnimation.name, GetLong(person.currentAnimation.allDuration), currentTime); ;
             }
             if (person.currentAnimation == null && players[person.id].currentAnimation != null)
             {

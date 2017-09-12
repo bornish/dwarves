@@ -33,16 +33,10 @@ namespace GameServer.Dwarves.Persons
                 return;
 
             currentAnimation.start = false;
-            if (currentTime - currentAnimation.timeStart > currentAnimation.duration)
+            if (currentTime - currentAnimation.timeStart > currentAnimation.allDuration)
             {
                 currentAnimation.end = true;
-                currentAnimation.t = 1;
             }
-            else
-            {
-                currentAnimation.t = (float)(currentTime - currentAnimation.timeStart) / currentAnimation.duration;
-            }
-
         }
 
         internal void Dead()
