@@ -26,5 +26,7 @@ namespace WebGame.Common.Display
 
         public abstract void UpdateAnimation(long currentTime);
         public abstract void ClearAnimation();
+
+        public abstract void SetState(PersonState state);
     }
 }

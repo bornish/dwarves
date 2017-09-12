@@ -25,6 +25,7 @@ namespace WebGame.Common.Display
         void SetInteractive(bool v);
         
         void On(string v, Delegate func);
+        void SetRotation(float value);
     }
 
     public interface IGraphics

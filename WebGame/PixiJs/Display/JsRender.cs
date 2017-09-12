@@ -84,6 +84,11 @@ namespace WebGame.PixiJs.Display
         {
             value.Position.Y = y;
         }
+
+        public void SetRotation(float v)
+        {
+            value.Rotation = v;
+        }
     }
 
     public class JsGraphics : IGraphics

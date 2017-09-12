@@ -53,7 +53,7 @@ namespace WebGame.PixiJs.Display
                     }
                     else
                     {
-                        graphics.BeginFill(0xFFFFFF);
+                        graphics.BeginFill(0x654321);
                         graphics.DrawRect(i * MapConst.TILE_SIZE, j * MapConst.TILE_SIZE, MapConst.TILE_SIZE, MapConst.TILE_SIZE);
                         graphics.EndFill();
                     }

@@ -268,5 +268,17 @@ namespace WebGame.Common.Display
 
             
         }
+
+        public override void SetState(PersonState state)
+        {
+            if (state == PersonState.Alive)
+            {
+                containerAll.SetRotation(0);
+            }
+            else
+            {
+                containerAll.SetRotation((float)Math.PI / 2);
+            }
+        }
     }
 }

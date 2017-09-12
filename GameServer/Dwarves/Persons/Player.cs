@@ -40,8 +40,7 @@ namespace GameServer.Dwarves.Persons
                     var deferredAction = new DigDeferredAction(currentTime, 5000, container, this, CurrentAction.FastAction.i, CurrentAction.FastAction.j);
                     if (ExecuteAction(deferredAction, container, longAction))
                     {
-                        // TODO Надо доработать идею анимаций. Нужны долгие зацикленные анимации
-                        currentAnimation = new AnimationDescription(AnimationNames.Dig, 5000, currentTime);
+                        currentAnimation = new AnimationDescription(AnimationNames.Dig, 5000, 300, currentTime);
                     }
                 }
             }

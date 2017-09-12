@@ -102,7 +102,8 @@ namespace WebGame.Common
             {
                 players[person.id].ClearAnimation();
             }
-            
+            players[person.id].SetState(person.state);
+
         }
 
         internal abstract long GetLong(long duration);

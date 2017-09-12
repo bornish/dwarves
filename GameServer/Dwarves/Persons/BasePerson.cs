@@ -56,6 +56,12 @@ namespace GameServer.Dwarves.Persons
                 direction = Direction.Down;
             }
 
+            if ((action & LongAction.GoUp) == LongAction.GoUp)
+            {
+                newY = y - SPEED;
+                direction = Direction.Up;
+            }
+
             if ((action & LongAction.GoLeft) == LongAction.GoLeft)
             {
                 newX = x - SPEED;
@@ -68,11 +74,6 @@ namespace GameServer.Dwarves.Persons
                 direction = Direction.Right;
             }
 
-            if ((action & LongAction.GoUp) == LongAction.GoUp)
-            {
-                newY = y - SPEED;
-                direction = Direction.Up;
-            }
 
             if (CanMove(newX, newY, container))
             {
