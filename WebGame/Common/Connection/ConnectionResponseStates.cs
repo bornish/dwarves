@@ -6,6 +6,7 @@ namespace WebGame.Common.Connection
     {
         public DataPerson[] persons;
         public TileType[,] tiles;
+        public Thing[] things;
         public long myId;
         public long timestamp;
     }
@@ -60,10 +61,25 @@ namespace WebGame.Common.Connection
     {
         Left = 0, Up = 1, Right = 2, Down = 3,
     }
+
+    public class Thing
+    {
+        public ThingType type;
+        public long i;
+        public long j;
+        public long count;
+        public string guid;
+    }
+
+    public enum ThingType
+    {
+        Gold = 0
+    }
+
     public enum TileType
     {
         //Unkonw = 0, Empty = 1, Stone = 2
-        Empty = 0, Stone = 1
+        Empty = 0, Stone = 1, Gold = 2
     }
 
     public enum PersonState

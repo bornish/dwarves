@@ -1,11 +1,10 @@
-﻿using System;
-using Bridge.Html5;
+﻿using Bridge.Html5;
 using Bridge.Pixi;
-using Bridge.Utils;
 using WebGame.Common;
-using WebGame.Common.Connection;
 using WebGame.PixiJs.Display;
 using WebGame.Common.Display;
+using System;
+using WebGame.Common.Connection;
 
 namespace WebGame.PixiJs
 {
@@ -45,6 +44,12 @@ namespace WebGame.PixiJs
         internal override Person CreatePerson(long id)
         {
             return new HumanPerson(render, id, input);
+        }
+
+        internal override DisplayThing CreateThing(Thing thing)
+        {
+            // TODO переделать humanPerson и рендеры. логика слоев должна быть в game. сделать ловлю событий нормально заодно
+            return new DisplayThing(thing);
         }
 
         internal override long DateTimeNow()

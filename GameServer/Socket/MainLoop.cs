@@ -32,7 +32,7 @@ namespace GameServer.Socket
 
             var npc = new NpcPerson() { x = 0f, y = 0f, id = GetNextPersonId() };
 
-            var persons = container.getPersons();
+            var persons = container.GetPersons();
             persons.Add(npc.id, npc);
 
             var timer = new Timer(LoopAsync, null, 100, Timeout.Infinite);
@@ -54,7 +54,7 @@ namespace GameServer.Socket
                     var deltaTime = currentTime - lastCurentTime;
                     lastCurentTime = currentTime;
 
-                    var persons = container.getPersons();
+                    var persons = container.GetPersons();
                     var deferredActions = container.getActions();
                     var tiles = container.GetTiles();
 
@@ -93,6 +93,23 @@ namespace GameServer.Socket
                     //deferredActions.Remove all Execute
 
                     // отправляем сообщения
+                    var sendedPersons = new DataPerson[persons.Count];
+
+                    var i = 0;
+                    foreach (var data in persons.Values)
+                    {
+                        sendedPersons[i] = data;
+                        i++;
+                    }
+
+                    var things = container.GetThings();
+                    var sendedThings = new Thing[things.Count];
+                    i = 0;
+                    foreach (var data in things.Values)
+                    {
+                        sendedThings[i] = data;
+                        i++;
+                    }
                     foreach (var connection in connectionManager.Connections)
                     {
                         if (!connectionDictionary.ContainsKey(connection.Key))
@@ -103,17 +120,11 @@ namespace GameServer.Socket
                         answer.Command = WebSocketCommands.DataSend;
                         var state = new WordlState()
                         {
-                            persons = new DataPerson[persons.Count],
+                            persons = sendedPersons,
                             myId = id,
-                            tiles = tiles
+                            tiles = tiles,
+                            things = sendedThings
                         };
-
-                        var i = 0;
-                        foreach (var data in persons.Values)
-                        {
-                            state.persons[i] = data;
-                            i++;
-                        }
 
                         state.timestamp = currentTime;
                         answer.Value = state;

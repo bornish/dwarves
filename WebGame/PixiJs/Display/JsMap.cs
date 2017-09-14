@@ -51,9 +51,15 @@ namespace WebGame.PixiJs.Display
                         graphics.DrawRect(i * MapConst.TILE_SIZE, j * MapConst.TILE_SIZE, MapConst.TILE_SIZE, MapConst.TILE_SIZE);
                         graphics.EndFill();
                     }
-                    else
+                    else if (tiles[i][j] == TileType.Stone)
                     {
                         graphics.BeginFill(0x654321);
+                        graphics.DrawRect(i * MapConst.TILE_SIZE, j * MapConst.TILE_SIZE, MapConst.TILE_SIZE, MapConst.TILE_SIZE);
+                        graphics.EndFill();
+                    }
+                    else if (tiles[i][j] == TileType.Gold)
+                    {
+                        graphics.BeginFill(0xFFFF00);
                         graphics.DrawRect(i * MapConst.TILE_SIZE, j * MapConst.TILE_SIZE, MapConst.TILE_SIZE, MapConst.TILE_SIZE);
                         graphics.EndFill();
                     }
