@@ -2,6 +2,7 @@
 using GameServer.Dwarves.Persons;
 using GameServer.Socket;
 using WebGame.Common.Connection;
+using GameServer.Dwarves.Map;
 
 namespace GameServer.Dwarves.PersonActions
 {
@@ -9,7 +10,7 @@ namespace GameServer.Dwarves.PersonActions
     {
         private ServerDataPerson enemy;
 
-        public MeleeAttackDeferredAction(long startTime, long duration, ServerDataPerson ownerAction, ServerDataPerson enemy) : base(ownerAction, startTime, duration)
+        public MeleeAttackDeferredAction(long startTime, long duration, ServerDataPerson ownerAction, ServerDataPerson enemy, MapContainer container) : base(ownerAction, startTime, duration, container)
         {
             this.enemy = enemy;
         }
@@ -33,12 +34,14 @@ namespace GameServer.Dwarves.PersonActions
         protected long startTime;
         protected long duration;
         protected ServerDataPerson ownerAction;
+        protected MapContainer container;
 
-        public DeferredAction(ServerDataPerson ownerAction, long startTime, long duration)
+        public DeferredAction(ServerDataPerson ownerAction, long startTime, long duration, MapContainer container)
         {
             this.ownerAction = ownerAction;
             this.startTime = startTime;
             this.duration = duration;
+            this.container = container;
         }
 
         internal abstract bool CanExecute();
@@ -52,7 +55,7 @@ namespace GameServer.Dwarves.PersonActions
 
         internal virtual void Update(long deltaTime, long currentTime)
         {
-            if (currentTime - startTime > duration)
+            if (currentTime - startTime >= duration)
                 Execute = true;
         }
 

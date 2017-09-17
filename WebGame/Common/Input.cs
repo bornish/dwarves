@@ -61,13 +61,18 @@ namespace WebGame.Common
 
             int i = (int)x / MapConst.TILE_SIZE;
             int j = (int)y / MapConst.TILE_SIZE;
-            controller.SendData(RequestPlayerAction.Dig, i.ToString(), j.ToString());
+            controller.SendData(RequestPlayerAction.DigTile, i.ToString(), j.ToString());
+        }
+
+        internal void takeItem(string guid)
+        {
+            controller.SendData(RequestPlayerAction.TakeItem, guid);
         }
 
         // TODO переделать
         public void AttackPerson(long personId)
         {
-            controller.SendData(RequestPlayerAction.Attack, personId.ToString());
+            controller.SendData(RequestPlayerAction.AttackPerson, personId.ToString());
         }
 
         protected void WheelUp()

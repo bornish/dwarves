@@ -53,7 +53,7 @@
     <Compile Include="Common\Connection\ConnectionRequestStates.cs" />
     <Compile Include="Common\Connection\MapConst.cs" />
     <Compile Include="Common\Display\AnimationSource.cs" />
-    <Compile Include="Common\Display\DisplayThing.cs" />
+    <Compile Include="Common\Display\DisplayItem.cs" />
     <Compile Include="Common\Display\HumanPerson.cs" />
     <Compile Include="Common\Display\Map.cs" />
     <Compile Include="Common\Display\Person.cs" />

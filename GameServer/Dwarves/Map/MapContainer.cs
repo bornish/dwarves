@@ -12,7 +12,7 @@ namespace GameServer.Dwarves.Map
         private List<DeferredAction> deferredActions = new List<DeferredAction>();  // события будут выполняться в несколько потоков в нем
         private Dictionary<long, ServerDataPerson> persons = new Dictionary<long, ServerDataPerson>();
         private TileType[,] tiles;
-        private Dictionary<string, Thing> things = new Dictionary<string, Thing>();
+        private Dictionary<string, Item> items = new Dictionary<string, Item>();
 
         internal TileType[,] GetTiles()
         {
@@ -24,9 +24,9 @@ namespace GameServer.Dwarves.Map
             return persons;
         }
 
-        public Dictionary<string, Thing> GetThings()
+        public Dictionary<string, Item> GetItems()
         {
-            return things;
+            return items;
         }
 
         internal void AddAction(DeferredAction action)
@@ -37,14 +37,14 @@ namespace GameServer.Dwarves.Map
         internal void DigTileFinish(long i, long j)
         {
             if (tiles[i, j] == TileType.Gold)
-                AddThing(ThingType.Gold, 10, i, j);
+                AddThing(ItemType.Gold, 10, i, j);
             tiles[i, j] = TileType.Empty;
         }
 
-        private void AddThing(ThingType thingType, long count, long i, long j)
+        private void AddThing(ItemType thingType, long count, long i, long j)
         {
-            var thing = new Thing() { type = thingType, count = count, i = i, j = j, guid = Guid.NewGuid().ToString()};
-            things[thing.guid] = thing;
+            var thing = new Item() { type = thingType, count = count, i = i, j = j, guid = Guid.NewGuid().ToString()};
+            items[thing.guid] = thing;
         }
 
         internal ServerDataPerson FindPerson(long id)

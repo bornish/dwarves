@@ -28,7 +28,7 @@ namespace GameServer.Dwarves.Persons
                     if (id != CurrentAction.FastAction.targetId)
                     {
                         var enemy = container.FindPerson(CurrentAction.FastAction.targetId);
-                        if (ExecuteAction(new MeleeAttackDeferredAction(currentTime, 500, this, enemy), container, longAction))
+                        if (ExecuteAction(new MeleeAttackDeferredAction(currentTime, 500, this, enemy, container), container, longAction))
                         {
                             currentAnimation = new AnimationDescription(AnimationNames.Attack, 500, currentTime);
                         }
@@ -42,6 +42,12 @@ namespace GameServer.Dwarves.Persons
                     {
                         currentAnimation = new AnimationDescription(AnimationNames.Dig, 5000, 300, currentTime);
                     }
+                }
+                else if (fastAction.type == FastActionType.Take)
+                {
+
+                    var deferredAction = new TakeItemDeferredAction(this, currentTime, 0, container, CurrentAction.FastAction.guid);
+                    ExecuteAction(deferredAction, container, longAction);
                 }
             }
         }

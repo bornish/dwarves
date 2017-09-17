@@ -5,8 +5,9 @@ namespace WebGame.Common.Connection
     {
         StartGo = 0,
         StopGo = 1,
-        Attack = 2,
+        AttackPerson = 2,
         Registration = 3,
-        Dig = 4,
+        DigTile = 4,
+        TakeItem = 5,
     }
 }

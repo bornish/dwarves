@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebGame", "WebGame\WebGame.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameServer", "GameServer\GameServer.csproj", "{4B43CD2B-0A2C-40CC-AB0F-3A977D8C2B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9CF1CD29-BC8E-47ED-9024-1B3D6D8F0184}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{9CF1CD29-BC8E-47ED-9024-1B3D6D8F0184}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B018A563-E3D9-4F36-AD96-13A9E9D15094}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{9CF1CD29-BC8E-47ED-9024-1B3D6D8F0184}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CF1CD29-BC8E-47ED-9024-1B3D6D8F0184}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CF1CD29-BC8E-47ED-9024-1B3D6D8F0184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B018A563-E3D9-4F36-AD96-13A9E9D15094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B018A563-E3D9-4F36-AD96-13A9E9D15094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B018A563-E3D9-4F36-AD96-13A9E9D15094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B018A563-E3D9-4F36-AD96-13A9E9D15094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

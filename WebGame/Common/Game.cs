@@ -9,7 +9,7 @@ namespace WebGame.Common
     {
         protected Connect connection;
         private Dictionary<long, Person> persons = new Dictionary<long, Person>();
-        private Dictionary<string, DisplayThing> things = new Dictionary<string, DisplayThing>();
+        private Dictionary<string, DisplayItem> items = new Dictionary<string, DisplayItem>();
         private Map map;
         protected Camera camera;
         protected Input input;
@@ -35,7 +35,7 @@ namespace WebGame.Common
 
         internal abstract Map CreateMap();
         internal abstract Person CreatePerson(long id);
-        internal abstract DisplayThing CreateThing(Thing thing);
+        internal abstract DisplayItem CreateThing(Item thing);
 
         protected void UpdateWorld()
         {
@@ -73,25 +73,23 @@ namespace WebGame.Common
                 UpdateStatePerson(person, persons, currentTime);
             }
 
-            foreach (var thing in things.Values)
+            foreach (var thing in items.Values)
             {
                 thing.needRemove = true;
             }
-
-            foreach (var thing in worldState.things)
+            foreach (var thing in worldState.items)
             {
-                if (things[thing.guid] == null)
-                    things[thing.guid] = CreateThing(thing);
+                if (!items.ContainsKey(thing.guid))
+                    items[thing.guid] = CreateThing(thing);
 
-                things[thing.guid].needRemove = false;
+                items[thing.guid].needRemove = false;
             }
-
-            foreach (var thing in things)
+            foreach (var thing in items)
             {
                 if (thing.Value.needRemove)
                 {
                     thing.Value.Remove();
-                    things.Remove(thing.Key);
+                    items.Remove(thing.Key);
                 }
             }
 

@@ -102,12 +102,12 @@ namespace GameServer.Socket
                         i++;
                     }
 
-                    var things = container.GetThings();
-                    var sendedThings = new Thing[things.Count];
+                    var things = container.GetItems();
+                    var sendedItems = new Item[things.Count];
                     i = 0;
                     foreach (var data in things.Values)
                     {
-                        sendedThings[i] = data;
+                        sendedItems[i] = data;
                         i++;
                     }
                     foreach (var connection in connectionManager.Connections)
@@ -123,7 +123,7 @@ namespace GameServer.Socket
                             persons = sendedPersons,
                             myId = id,
                             tiles = tiles,
-                            things = sendedThings
+                            items = sendedItems
                         };
 
                         state.timestamp = currentTime;
@@ -181,7 +181,7 @@ namespace GameServer.Socket
                     else if (param1 == "Down")
                         lastLongAction = lastLongAction & ~LongAction.GoDown;
                 }
-                else if (action == RequestPlayerAction.Attack)
+                else if (action == RequestPlayerAction.AttackPerson)
                 {
                     fastAction = new FastAction()
                     {
@@ -189,13 +189,21 @@ namespace GameServer.Socket
                         type = FastActionType.Attack
                     };
                 }
-                else if (action == RequestPlayerAction.Dig)
+                else if (action == RequestPlayerAction.DigTile)
                 {
                     fastAction = new FastAction()
                     {
                         i = long.Parse(param1),
                         j = long.Parse(param2),
                         type = FastActionType.Dig
+                    };
+                }
+                else if (action == RequestPlayerAction.TakeItem)
+                {
+                    fastAction = new FastAction()
+                    {
+                        guid = param1,
+                        type = FastActionType.Take
                     };
                 }
                 playersActions[id] = new PlayerAction(lastLongAction, fastAction);
@@ -237,11 +245,12 @@ namespace GameServer.Socket
         public long targetId;
         public long i;
         public long j;
+        public string guid;
     }
 
     public enum FastActionType
     {
-        Attack, Dig
+        Attack, Dig, Take
     }
 
     public interface IMainLoop

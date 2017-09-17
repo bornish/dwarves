@@ -1,4 +1,5 @@
-﻿using GameServer.Dwarves.Map;
+﻿using System;
+using GameServer.Dwarves.Map;
 using GameServer.Dwarves.PersonActions;
 using GameServer.Socket;
 using WebGame.Common.Connection;
@@ -20,9 +21,13 @@ namespace GameServer.Dwarves.Persons
             }
             else 
             {
-                // TODO здесь анимация прерывается, надо бы на клиенте сделать обработку прерывания анимаций
                 currentAnimation = null;
             }
+        }
+
+        public void TakeItem(Item item)
+        {
+            // TODO надо бы здесь давать игроку золото или новое оружие
         }
 
         internal abstract void DoPersonAction(long currentTime, MapContainer container);
@@ -93,7 +98,7 @@ namespace GameServer.Dwarves.Persons
                 return false;
             int i = (int)newX / MapConst.TILE_SIZE;
             int j = (int)newY / MapConst.TILE_SIZE;
-            if (tiles[i, j] == TileType.Stone)
+            if (tiles[i, j] != TileType.Empty)
                 return false;
 
             return true;

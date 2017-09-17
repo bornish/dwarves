@@ -10,13 +10,11 @@ namespace GameServer.Dwarves.PersonActions
     {
         private long i;
         private long j;
-        private MapContainer container;
 
-        public DigDeferredAction(long startTime, long duration, MapContainer container, PlayerPerson playerPerson, long i, long j) : base(playerPerson, startTime, duration)
+        public DigDeferredAction(long startTime, long duration, MapContainer container, PlayerPerson playerPerson, long i, long j) : base(playerPerson, startTime, duration, container)
         {
             this.i = i;
             this.j = j;
-            this.container = container;
         }
 
         protected override void Finish()

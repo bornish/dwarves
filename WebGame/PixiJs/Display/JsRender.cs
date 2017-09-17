@@ -34,6 +34,18 @@ namespace WebGame.PixiJs.Display
             container.AddChild(graphics);
             return graphics;
         }
+
+        public IGraphics CreateGraphicsOnStage()
+        {
+            var graphics = new JsGraphics();
+            stage.AddChild(graphics.value);
+            return graphics;
+        }
+
+        public void RemoveGraphicsOnStage(IGraphics graph)
+        {
+            stage.RemoveChild(((JsGraphics)graph).value);
+        }
     }
 
     public class JsContainer : IContainer
@@ -89,15 +101,52 @@ namespace WebGame.PixiJs.Display
         {
             value.Rotation = v;
         }
+
+
     }
 
     public class JsGraphics : IGraphics
     {
         public Graphics value;
 
+        public void SetInteractive(bool v)
+        {
+            value.Interactive = v;
+        }
+
+        public void SetRotation(float v)
+        {
+            value.Rotation = v;
+        }
+
+        public void On(string v, Delegate func)
+        {
+            value.On(v, func);
+        }
+
         public JsGraphics()
         {
             value = new Graphics();
+        }
+
+        public float GetPositionX()
+        {
+            return value.Position.X;
+        }
+
+        public float GetPositionY()
+        {
+            return value.Position.Y;
+        }
+
+        public void SetPositionX(float x)
+        {
+            value.Position.X = x;
+        }
+
+        public void SetPositionY(float y)
+        {
+            value.Position.Y = y;
         }
 
         public void BeginFill(int color)

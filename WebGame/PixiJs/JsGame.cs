@@ -12,21 +12,23 @@ namespace WebGame.PixiJs
     {
         private IRenderer app;
         private Container rootContainer;
-        private Container personsContainer;
         private Container mapContainer;
-        private IRender render;
+        private IRender personRender;
+        private IRender thingRender;
 
         public JsGame():base(new JsInput(), new Socket())
         {
             app = Pixi.AutoDetectRenderer(Camera.ScreenWidth, Camera.ScreenHeight);
             Document.Body.AppendChild(app.View);
-            personsContainer = new Container();
+            var personsContainer = new Container();
+            var thingContainer = new Container();
             mapContainer = new Container();
             rootContainer = new Container();
-            render = new JsRender(personsContainer);
-            
+            personRender = new JsRender(personsContainer);
+            thingRender = new JsRender(thingContainer);
             
             rootContainer.AddChild(mapContainer);
+            rootContainer.AddChild(thingContainer);
             rootContainer.AddChild(personsContainer);
             Animate();
         }
@@ -43,13 +45,13 @@ namespace WebGame.PixiJs
 
         internal override Person CreatePerson(long id)
         {
-            return new HumanPerson(render, id, input);
+            return new HumanPerson(personRender, id, input);
         }
 
-        internal override DisplayThing CreateThing(Thing thing)
+        internal override DisplayItem CreateThing(Item thing)
         {
-            // TODO переделать humanPerson и рендеры. логика слоев должна быть в game. сделать ловлю событий нормально заодно
-            return new DisplayThing(thing);
+            // TODO логика слоев должна быть в game. сделать ловлю событий нормально заодно
+            return new DisplayItem(input, thingRender, thing);
         }
 
         internal override long DateTimeNow()
